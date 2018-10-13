@@ -17,5 +17,13 @@ void Engine::Draw()
 
 void Engine::Run()
 {
-	renderer->MessageLoop();
+	//renderer->MessageLoop();
+
+	while (renderer->MessageExist())
+	{
+		Draw();
+
+		renderer->EndFrame();
+	}
+	
 }

@@ -5,6 +5,7 @@
 #include <d3d11.h>
 #include <sstream>
 #include <string>
+#include "SimpleShader.h"
 
 #pragma comment(lib, "d3d11.lib")
 
@@ -31,6 +32,8 @@
 		ID3D11RenderTargetView* backBufferRTV;
 		ID3D11DepthStencilView* depthStencilView;
 
+		SimpleVertexShader* vertexShader;
+		SimplePixelShader* pixelShader;
 	
 	public:
 
@@ -38,10 +41,15 @@
 		int Test();
 		void Init();
 		void MessageLoop();
+		bool MessageExist();
+		void EndFrame();
 
 		static WinRenderer* WinRendererInstance;
 		static LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 		HRESULT InitWindow();
+		HRESULT InitDirectX();
+		
+		void LoadShaders();
 	};
 
 #endif

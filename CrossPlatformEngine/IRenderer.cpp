@@ -20,6 +20,16 @@ void IRenderer::MessageLoop()
 {
 }
 
+
+bool IRenderer::MessageExist()
+{
+	return false;
+}
+
+void IRenderer::EndFrame()
+{
+}
+
 IRenderer * IRenderer::NewPlatformRenderer()
 {
 #ifdef WIN32
