@@ -25,15 +25,82 @@
 	void WinRenderer::Init()
 	{
 		hInstance = GetModuleHandle(0);
-
 		HRESULT status = InitWindow();
 		status = InitDirectX();
 
 		LoadShaders();
 
-		const float color[4] = { 0.4f, 0.6f, 0.75f, 0.0f };
-		context->ClearRenderTargetView(backBufferRTV, color);
-		context->ClearDepthStencilView(depthStencilView,D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,1.0f,0);
+		context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		
+
+
+		// Temp Code
+
+		XMMATRIX W = XMMatrixIdentity();
+		XMStoreFloat4x4(&worldMatrix, XMMatrixTranspose(W));
+
+		XMVECTOR pos = XMVectorSet(0, 0, -5, 0);
+		XMVECTOR dir = XMVectorSet(0, 0, 1, 0);
+		XMVECTOR up = XMVectorSet(0, 1, 0, 0);
+		XMMATRIX V = XMMatrixLookToLH(
+			pos,     // The position of the "camera"
+			dir,     // Direction the camera is looking
+			up);     // "Up" direction in 3D space (prevents roll)
+		XMStoreFloat4x4(&viewMatrix, XMMatrixTranspose(V)); // Transpose for HLSL!
+
+		XMMATRIX P = XMMatrixPerspectiveFovLH(
+			0.25f * 3.1415926535f,		// Field of View Angle
+			(float)width / height,		// Aspect ratio
+			0.1f,						// Near clip plane distance
+			100.0f);					// Far clip plane distance
+		XMStoreFloat4x4(&projectionMatrix, XMMatrixTranspose(P)); // Transpose for HLSL!
+
+
+		Vertex vertices[]
+		{
+		{ XMFLOAT3(+1.0f, +1.0f, +0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f) },
+		{ XMFLOAT3(-1.0f, +1.0f, +0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f) },
+		{ XMFLOAT3(+1.0f, -1.0f, +0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f) },
+		{ XMFLOAT3(-1.0f, -1.0f, +0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f) },
+		};
+
+
+		unsigned int indices[] = { 0, 2,1, 3, 1, 2 };
+
+		vertexBufferPointer = 0;
+		indexBufferPointer = 0;
+
+		D3D11_BUFFER_DESC vbd;
+		vbd.Usage = D3D11_USAGE_DEFAULT;
+		vbd.ByteWidth = sizeof(Vertex) * 4;
+		vbd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		vbd.CPUAccessFlags = 0;
+		vbd.MiscFlags = 0;
+		vbd.StructureByteStride = 0;
+
+		D3D11_SUBRESOURCE_DATA initialVertexData;
+		initialVertexData.pSysMem = vertices;
+
+		HRESULT hResult = device->CreateBuffer(&vbd, &initialVertexData, &vertexBufferPointer);
+
+
+		//Index Buffer Creation
+
+		D3D11_BUFFER_DESC ibd;
+		ibd.Usage = D3D11_USAGE_DEFAULT;
+		ibd.ByteWidth = sizeof(unsigned int) * 6;
+		ibd.BindFlags = D3D11_BIND_INDEX_BUFFER;
+		ibd.CPUAccessFlags = 0;
+		ibd.MiscFlags = 0;
+		ibd.StructureByteStride = 0;
+
+
+		D3D11_SUBRESOURCE_DATA initialIndexData;
+		initialIndexData.pSysMem = indices;
+
+		hResult = device->CreateBuffer(&ibd, &initialIndexData, &indexBufferPointer);
+
+		
 	}
 
 	void WinRenderer::MessageLoop()
@@ -63,6 +130,32 @@
 	void WinRenderer::EndFrame()
 	{
 		swapChain->Present(0, 0);
+	}
+
+	void WinRenderer::DrawQuad()
+	{
+		const float color[4] = { 0.4f, 0.6f, 0.75f, 0.0f };
+		context->ClearRenderTargetView(backBufferRTV, color);
+		context->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+		vertexShader->SetMatrix4x4("world", worldMatrix);
+		vertexShader->SetMatrix4x4("view", viewMatrix);
+		vertexShader->SetMatrix4x4("projection", projectionMatrix);
+
+		vertexShader->CopyAllBufferData();
+
+		vertexShader->SetShader();
+		pixelShader->SetShader();
+
+		UINT stride = sizeof(Vertex);
+		UINT offset = 0;
+
+		//ID3D11Buffer * v = vertexBufferPointer;
+
+		context->IASetVertexBuffers(0, 1, &vertexBufferPointer, &stride, &offset);
+		context->IASetIndexBuffer(indexBufferPointer, DXGI_FORMAT_R32_UINT, 0);
+		context->DrawIndexed(6,0,0);    
+
 	}
 
 
@@ -121,6 +214,8 @@
 	HRESULT WinRenderer::InitDirectX()
 	{
 		unsigned int deviceFlags = 0;
+
+		deviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
 
 		// Create a description of how our swap
 		// chain should work
@@ -221,10 +316,10 @@
 	void WinRenderer::LoadShaders()
 	{
 		vertexShader = new SimpleVertexShader(device, context);
-		vertexShader->LoadShaderFile(L"VertexShader.cso");
+		bool success = vertexShader->LoadShaderFile(L"VertexShader.cso");
 
 		pixelShader = new SimplePixelShader(device, context);
-		pixelShader->LoadShaderFile(L"PixelShader.cso");
+		success = pixelShader->LoadShaderFile(L"PixelShader.cso");
 	}
 
 

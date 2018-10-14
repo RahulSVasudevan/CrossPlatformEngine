@@ -13,6 +13,7 @@ public:
 	virtual void MessageLoop();
 	virtual bool MessageExist();
 	virtual void EndFrame();
+	virtual void DrawQuad();
 
 	IRenderer* NewPlatformRenderer();
 	//void CreateConsoleWindow();

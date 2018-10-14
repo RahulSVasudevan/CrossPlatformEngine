@@ -1,8 +1,2 @@
 ﻿  WinRenderer.cpp
-  IRenderer.cpp
-  Game.cpp
-  Engine.cpp
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  Main.cpp
   CrossPlatformEngine.vcxproj -> C:\Users\rahul\Documents\GitHub2\CrossPlatformEngine\x64\Debug\CrossPlatformEngine.exe

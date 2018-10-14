@@ -30,6 +30,10 @@ void IRenderer::EndFrame()
 {
 }
 
+void IRenderer::DrawQuad()
+{
+}
+
 IRenderer * IRenderer::NewPlatformRenderer()
 {
 #ifdef WIN32

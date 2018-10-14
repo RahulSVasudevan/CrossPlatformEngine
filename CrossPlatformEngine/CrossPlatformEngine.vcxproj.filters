@@ -61,10 +61,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\..\..\..\Desktop\Assignment2\DX11Starter\DX11Starter\PixelShader.hlsl">
+    <FxCompile Include="VertexShader.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="..\..\..\..\Desktop\Assignment2\DX11Starter\DX11Starter\VertexShader.hlsl">
+    <FxCompile Include="PixelShader.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>

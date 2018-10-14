@@ -11,7 +11,6 @@ void Game::Init()
 
 void Game::Draw()
 {
-
-
+	renderer->DrawQuad();
 
 }
