@@ -5,6 +5,11 @@ Game::Game()
 {
 }
 
+Game::~Game() {
+	delete[] gameObjects;
+	delete[] meshes;
+}
+
 void Game::Init()
 {
 }
