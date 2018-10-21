@@ -2,7 +2,8 @@
 
 #include "Transform.h"
 
-class GameObject {
+class GameObject
+{
 public:
 	GameObject();
 	GameObject(Vector3 position, Vector3 scale, Quaternion rotation);
@@ -10,5 +11,5 @@ public:
 private:
 	Transform transform;
 	int meshCount;
-	int *meshIDs
+	int *meshIDs;
 };
