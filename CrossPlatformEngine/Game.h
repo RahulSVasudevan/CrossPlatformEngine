@@ -3,6 +3,9 @@
 #include"Engine.h"
 #include "GameObject.h"
 #include "Mesh.h"
+#include <unordered_map>
+
+using namespace std;
 
 class Game: public Engine
 {
@@ -14,6 +17,8 @@ public:
 	void Draw();
 
 private:
-	GameObject *gameObjects;
-	Mesh *meshes;
+	unordered_map<int, GameObject> gameObjects;
+	unordered_map<int, Mesh> meshes;
+	//GameObject *gameObjects;
+	//Mesh *meshes;
 };

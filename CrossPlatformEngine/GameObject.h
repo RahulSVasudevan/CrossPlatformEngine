@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Transform.h"
+#include <unordered_set>
+using namespace std;
 
 class GameObject
 {
@@ -10,6 +12,5 @@ public:
 	~GameObject();
 private:
 	Transform transform;
-	int meshCount;
-	int *meshIDs;
+	unordered_set<int> meshIDs;
 };

@@ -6,8 +6,9 @@ Game::Game()
 }
 
 Game::~Game() {
-	delete[] gameObjects;
-	delete[] meshes;
+	//Necessary?
+	gameObjects.clear();
+	meshes.clear();
 }
 
 void Game::Init()

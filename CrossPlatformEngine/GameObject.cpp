@@ -6,16 +6,14 @@ GameObject::GameObject() {
 	transform.position = Vector3{ 0, 0, 0 };
 	transform.scale = Vector3{ 0, 0, 0 };
 	transform.rotation = Quaternion{ 0, 0, 0, 0 };
-	meshCount = 0;
 }
 
 GameObject::GameObject(Vector3 position, Vector3 scale, Quaternion rotation) {
 	transform.position = position;
 	transform.scale = scale;
 	transform.rotation = rotation;
-	meshCount = 0;
 }
 
 GameObject::~GameObject() {
-	delete[] meshIDs;
+	meshIDs.clear();
 }
