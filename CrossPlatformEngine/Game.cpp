@@ -9,6 +9,8 @@ Game::~Game() {
 	//Necessary?
 	gameObjects.clear();
 	meshes.clear();
+
+	delete renderer;
 }
 
 void Game::Init()

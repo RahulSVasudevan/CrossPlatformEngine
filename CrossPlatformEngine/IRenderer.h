@@ -3,12 +3,11 @@
 class IRenderer
 {
 
-	int x;
 
 public:
 
 	IRenderer();
-	virtual int Test();
+	virtual ~IRenderer();
 	virtual void Init();
 	virtual void MessageLoop();
 	virtual bool MessageExist();

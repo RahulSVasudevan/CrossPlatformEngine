@@ -7,6 +7,11 @@ Engine::Engine()
 	renderer->Init();
 }
 
+Engine::~Engine()
+{
+
+}
+
 void Engine::Init()
 {
 }

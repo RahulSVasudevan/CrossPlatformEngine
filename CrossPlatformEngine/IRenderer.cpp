@@ -1,19 +1,23 @@
 
-
-//#include "stdafx.h"
-//#include "WinRenderer.h"
+#include "stdafx.h"
+#include "WinRenderer.h"
 #include "IRenderer.h"
 
 
 IRenderer::IRenderer()
 {
-	x = 1;
 }
 
-int IRenderer::Test()
+IRenderer::~IRenderer()
 {
-	return x;
+	
+
+//#ifdef _WIN32
+//	WinRenderer* win = reinterpret_cast<WinRenderer*>(this);
+//	//delete win;
+//#endif
 }
+
 
 void IRenderer::Init()
 {
@@ -39,7 +43,7 @@ void IRenderer::DrawQuad()
 
 IRenderer * IRenderer::NewPlatformRenderer()
 {
-
-	//return new WinRenderer();
-
+#ifdef _WIN32
+	return new WinRenderer();
+#endif
 }

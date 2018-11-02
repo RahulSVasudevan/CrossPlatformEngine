@@ -15,9 +15,22 @@
 		height = 720;
 	}
 
-	int WinRenderer::Test()
+	WinRenderer::~WinRenderer()
 	{
-		return x;
+		OutputDebugStringW(L"Destructor\n");
+
+		delete vertexShader;
+		delete pixelShader;
+
+		vertexBufferPointer->Release();
+		indexBufferPointer->Release();
+
+		if (depthStencilView) { depthStencilView->Release(); }
+		if (backBufferRTV) { backBufferRTV->Release(); }
+
+		if (swapChain) { swapChain->Release(); }
+		if (context) { context->Release(); }
+		if (device) { device->Release(); }
 	}
 
 	void WinRenderer::Init()

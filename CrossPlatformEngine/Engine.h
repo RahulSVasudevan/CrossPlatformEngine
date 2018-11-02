@@ -9,6 +9,7 @@ protected:
 
 public:
 	Engine();
+	~Engine();
 	virtual void Init();
 	virtual void Draw();
 	void Run();

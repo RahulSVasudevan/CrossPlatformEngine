@@ -46,7 +46,7 @@ using namespace DirectX;
 	public:
 
 		WinRenderer();
-		int Test();
+		virtual ~WinRenderer();
 		void Init();
 		void MessageLoop();
 		bool MessageExist();
