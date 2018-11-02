@@ -1,7 +1,7 @@
 
 
-#include "stdafx.h"
-#include "WinRenderer.h"
+//#include "stdafx.h"
+//#include "WinRenderer.h"
 #include "IRenderer.h"
 
 
@@ -40,6 +40,6 @@ void IRenderer::DrawQuad()
 IRenderer * IRenderer::NewPlatformRenderer()
 {
 
-	return new WinRenderer();
+	//return new WinRenderer();
 
 }

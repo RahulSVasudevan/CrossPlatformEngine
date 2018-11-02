@@ -7,7 +7,6 @@
 #include <string>
 #include "SimpleShader.h"
 #include <DirectXMath.h>
-#include"Keyboard.h"
 
 #pragma comment(lib, "d3d11.lib")
 
