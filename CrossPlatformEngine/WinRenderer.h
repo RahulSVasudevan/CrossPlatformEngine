@@ -11,8 +11,6 @@
 #pragma comment(lib, "d3d11.lib")
 
 
-#ifdef _WIN32
-
 using namespace DirectX;
 
 	struct Vertex
@@ -71,5 +69,3 @@ using namespace DirectX;
 		ID3D11Buffer * indexBufferPointer;
 		//Vertex* vertices;
 	};
-
-#endif

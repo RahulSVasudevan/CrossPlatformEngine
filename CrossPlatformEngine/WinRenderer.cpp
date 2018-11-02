@@ -1,9 +1,7 @@
 
-
 #include "stdafx.h"
 #include "WinRenderer.h"
 
-#ifdef _WIN32
 
 	WinRenderer::WinRenderer()
 	{
@@ -177,7 +175,7 @@
 		WNDCLASS wndClass = {}; // Zero out the memory
 		wndClass.lpfnWndProc = WinRenderer::WindowProc;
 		wndClass.hInstance = hInstance;						// Our app's handle
-		wndClass.lpszClassName = L"Direct3DWindowClass";
+		wndClass.lpszClassName = (L"window");
 
 		if (!RegisterClass(&wndClass))
 		{
@@ -316,12 +314,11 @@
 	void WinRenderer::LoadShaders()
 	{
 		vertexShader = new SimpleVertexShader(device, context);
-		bool success = vertexShader->LoadShaderFile(L"VertexShader.cso");
+		bool success = vertexShader->LoadShaderFile(L"../CrossPlatformEngine/VertexShader.cso");
 
 		pixelShader = new SimplePixelShader(device, context);
-		success = pixelShader->LoadShaderFile(L"PixelShader.cso");
+		success = pixelShader->LoadShaderFile(L"../CrossPlatformEngine/PixelShader.cso");
 	}
 
 
 
-#endif
