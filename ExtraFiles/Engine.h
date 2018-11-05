@@ -5,7 +5,7 @@
 class Engine 
 {
 protected:
-	IRenderer* renderer;
+	
 
 public:
 	Engine();

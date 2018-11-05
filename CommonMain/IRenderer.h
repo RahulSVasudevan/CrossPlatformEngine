@@ -14,7 +14,6 @@ public:
 	virtual void EndFrame();
 	virtual void DrawQuad();
 
-	IRenderer* NewPlatformRenderer();
-	//void CreateConsoleWindow();
+
 
 };

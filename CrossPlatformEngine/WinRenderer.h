@@ -1,6 +1,6 @@
 #pragma once
 
-#include"IRenderer.h"
+#include "..\CommonMain\IRenderer.h"
 #include <Windows.h>
 #include <d3d11.h>
 #include <sstream>

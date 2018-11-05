@@ -1,7 +1,7 @@
 #pragma once
 
 #include"stdafx.h"
-#include"Game.h"
+#include"../CommonMain/Game.h"
 
 int main()
 {
