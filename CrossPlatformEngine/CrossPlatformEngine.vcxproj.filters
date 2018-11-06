@@ -33,13 +33,19 @@
     <ClInclude Include="SimpleShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\CommonMain\IRenderer.h">
       <Filter>Common Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\CommonMain\Game.h">
+      <Filter>Common Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\um\DirectXMath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WinMesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CommonMain\IMesh.h">
       <Filter>Common Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -61,6 +67,12 @@
     </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WinMesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CommonMain\IMesh.cpp">
+      <Filter>Common Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

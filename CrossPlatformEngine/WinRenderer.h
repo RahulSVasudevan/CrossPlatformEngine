@@ -57,6 +57,7 @@ using namespace DirectX;
 		static LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 		HRESULT InitWindow();
 		HRESULT InitDirectX();
+		ID3D11Device* GetDevice();
 		
 		void LoadShaders();
 

@@ -324,6 +324,11 @@
 
 	}
 
+	ID3D11Device * WinRenderer::GetDevice()
+	{
+		return device;
+	}
+
 	void WinRenderer::LoadShaders()
 	{
 		vertexShader = new SimpleVertexShader(device, context);
