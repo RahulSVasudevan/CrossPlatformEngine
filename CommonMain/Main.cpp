@@ -15,7 +15,10 @@
 #include "..\CrossPlatformEngine\WinRenderer.cpp"
 #include "..\CrossPlatformEngine\SimpleShader.h"
 #include "..\CrossPlatformEngine\SimpleShader.cpp"
-
+#include"..\CrossPlatformEngine\Keyboard.h"
+#include"..\CrossPlatformEngine\Keyboard.cpp"
+#include"..\CrossPlatformEngine\InputEvent.h"
+#include"..\CrossPlatformEngine\InputEvent.cpp"
 #include <Windows.h>
 
 #endif

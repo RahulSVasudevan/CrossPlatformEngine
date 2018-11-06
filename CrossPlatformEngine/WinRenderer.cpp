@@ -177,8 +177,56 @@
 		case WM_DESTROY:
 			PostQuitMessage(0);
 			return 0;
+		case WM_KEYDOWN:
+		{
+			OutputDebugString(L"\ninside keydown switch case");
+			unsigned char keycode = static_cast<unsigned char>(wParam);
+			if (Keyboard::getInstance()->IsKeyAutoRepeat())
+			{
+				Keyboard::getInstance()->OnKeyPressed(keycode);
+
+			}
+			else
+			{
+				const bool wasPressed = lParam & 0x40000000;
+				if (!wasPressed)
+				{
+					Keyboard::getInstance()->OnKeyPressed(keycode);
+				}
+			}
+			return 0;
+
 		}
-		return DefWindowProc(hWnd, uMsg, wParam, lParam);
+		case WM_KEYUP:
+		{
+			OutputDebugString(L"\ninside keyup switch case");
+			unsigned char keycode = static_cast<unsigned char>(wParam);
+			Keyboard::getInstance()->OnKeyReleased(keycode);
+			return 0;
+
+		}
+		case WM_CHAR:
+		{
+
+			unsigned char c = static_cast<unsigned char>(wParam);
+			if (Keyboard::getInstance()->isCharsAutoRepeat())
+			{
+				Keyboard::getInstance()->OnChar(c);
+			}
+			else
+			{
+				const bool wasPressed = lParam & 0x40000000;
+				if (!wasPressed)
+				{
+					Keyboard::getInstance()->OnChar(c);
+				}
+			}
+			return 0;
+
+		}
+		default:
+			return DefWindowProc(hWnd, uMsg, wParam, lParam);
+		}
 	}
 
 

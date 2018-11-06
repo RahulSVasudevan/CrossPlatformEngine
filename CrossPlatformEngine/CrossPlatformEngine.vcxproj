@@ -149,6 +149,8 @@
   <ItemGroup>
     <ClInclude Include="..\CommonMain\Game.h" />
     <ClInclude Include="..\CommonMain\IRenderer.h" />
+    <ClInclude Include="InputEvent.h" />
+    <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="SimpleShader.h" />
     <ClInclude Include="stdafx.h" />
@@ -158,6 +160,8 @@
   <ItemGroup>
     <ClCompile Include="..\CommonMain\Game.cpp" />
     <ClCompile Include="..\CommonMain\IRenderer.cpp" />
+    <ClCompile Include="InputEvent.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="SimpleShader.cpp" />
     <ClCompile Include="stdafx.cpp">

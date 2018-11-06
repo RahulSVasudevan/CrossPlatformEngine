@@ -3,6 +3,7 @@
 
 #ifdef _WIN32
 	#include "../CrossPlatformEngine/WinRenderer.h" 
+    #include"../CrossPlatformEngine/Keyboard.h"
 #endif
 
 Game::Game()
@@ -37,7 +38,10 @@ void Game::Run()
 	while (renderer->MessageExist())
 	{
 		Draw();
-
+		if (Keyboard::getInstance()->KeyIsPressed('W'))
+		{
+			OutputDebugStringW(L"\nW was pressed");
+		}
 		renderer->EndFrame();
 	}
 }
