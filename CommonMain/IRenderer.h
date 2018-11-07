@@ -1,4 +1,5 @@
 #pragma once
+#include "IMesh.h"
 
 class IRenderer
 {
@@ -13,7 +14,6 @@ public:
 	virtual bool MessageExist();
 	virtual void EndFrame();
 	virtual void DrawQuad();
-
-
+	virtual void DrawMesh(IMesh* Mesh);
 
 };

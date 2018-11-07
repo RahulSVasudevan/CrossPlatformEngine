@@ -10,7 +10,6 @@ IRenderer::IRenderer()
 IRenderer::~IRenderer()
 {
 	
-
 }
 
 
@@ -33,6 +32,10 @@ void IRenderer::EndFrame()
 }
 
 void IRenderer::DrawQuad()
+{
+}
+
+void IRenderer::DrawMesh(IMesh* Mesh)
 {
 }
 

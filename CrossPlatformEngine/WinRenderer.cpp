@@ -5,6 +5,8 @@
 
 	WinRenderer::WinRenderer()
 	{
+		OutputDebugStringW(L"\n\nConstructor\n\n");
+
 		device = 0;
 		context = 0;
 		swapChain = 0;
@@ -17,11 +19,8 @@
 
 	WinRenderer::~WinRenderer()
 	{
-		OutputDebugStringW(L"Destructor\n");
 
-		delete vertexShader;
-		delete pixelShader;
-
+	
 		vertexBufferPointer->Release();
 		indexBufferPointer->Release();
 
@@ -31,6 +30,11 @@
 		if (swapChain) { swapChain->Release(); }
 		if (context) { context->Release(); }
 		if (device) { device->Release(); }
+
+		delete vertexShader;
+		delete pixelShader;
+
+
 	}
 
 	void WinRenderer::Init()
@@ -167,6 +171,36 @@
 		context->IASetIndexBuffer(indexBufferPointer, DXGI_FORMAT_R32_UINT, 0);
 		context->DrawIndexed(6,0,0);    
 
+	}
+
+	void WinRenderer::DrawMesh(IMesh* Mesh)
+	{
+		const float color[4] = { 0.4f, 0.6f, 0.75f, 0.0f };
+		context->ClearRenderTargetView(backBufferRTV, color);
+		context->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+		vertexShader->SetMatrix4x4("world", worldMatrix);
+		vertexShader->SetMatrix4x4("view", viewMatrix);
+		vertexShader->SetMatrix4x4("projection", projectionMatrix);
+
+		vertexShader->CopyAllBufferData();
+
+		vertexShader->SetShader();
+		pixelShader->SetShader();
+
+		UINT stride = sizeof(Vertex);
+		UINT offset = 0;
+
+		WinMesh* WMesh = dynamic_cast<WinMesh*>(Mesh);
+
+		ID3D11Buffer * v = WMesh->GetVertexBuffer();
+
+		context->IASetVertexBuffers(0, 1,&v, &stride, &offset);
+		context->IASetIndexBuffer(indexBufferPointer, DXGI_FORMAT_R32_UINT, 0);
+		context->DrawIndexed(3, 0, 0);
+
+		//delete WMesh;
+		//v->Release();
 	}
 
 

@@ -4,6 +4,7 @@
 //#include "GameObject.h"
 //#include "Mesh.h"
 #include "IRenderer.h"
+#include "IMesh.h"
 #include <unordered_map>
 
 
@@ -12,6 +13,11 @@ using namespace std;
 class Game
 {
 	IRenderer* renderer;
+	IMesh * mesh;
+
+	VertexCommon * VertexData;
+	unsigned int * IndexData;
+
 public:
 	Game();
 	~Game();

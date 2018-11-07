@@ -17,6 +17,8 @@ class WinMesh: public IMesh
 public: 
 
 	WinMesh(ID3D11Device* device);
+	WinMesh(VertexCommon* vb, int vbSize, unsigned int* ib, int ibSize, ID3D11Device* device);
+	~WinMesh();
 	ID3D11Buffer *GetVertexBuffer();
 	ID3D11Buffer *GetIndexBuffer();
 

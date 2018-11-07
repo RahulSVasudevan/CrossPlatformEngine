@@ -7,6 +7,7 @@
 #include <string>
 #include "SimpleShader.h"
 #include <DirectXMath.h>
+#include "WinMesh.h"
 
 #pragma comment(lib, "d3d11.lib")
 
@@ -46,12 +47,13 @@ using namespace DirectX;
 	public:
 
 		WinRenderer();
-		virtual ~WinRenderer();
+		~WinRenderer();
 		void Init();
 		void MessageLoop();
 		bool MessageExist();
 		void EndFrame();
 		void DrawQuad();
+		void DrawMesh(IMesh *Mesh);
 
 		static WinRenderer* WinRendererInstance;
 		static LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
