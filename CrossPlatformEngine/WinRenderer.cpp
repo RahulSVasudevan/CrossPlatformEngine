@@ -360,6 +360,10 @@
 		return device;
 	}
 
+	ID3D11DeviceContext * WinRenderer::GetContext() {
+		return context;
+	}
+
 	void WinRenderer::LoadShaders()
 	{
 		vertexShader = new SimpleVertexShader(device, context);

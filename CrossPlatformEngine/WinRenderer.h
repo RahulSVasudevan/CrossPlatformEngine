@@ -60,6 +60,7 @@ using namespace DirectX;
 		HRESULT InitWindow();
 		HRESULT InitDirectX();
 		ID3D11Device* GetDevice();
+		ID3D11DeviceContext* GetContext();
 		
 		void LoadShaders();
 
