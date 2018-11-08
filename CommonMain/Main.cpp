@@ -11,6 +11,8 @@
 #ifdef _WIN32
 
 
+#include "..\CrossPlatformEngine\WinCanvas.h"
+#include "..\CrossPlatformEngine\WinCanvas.cpp"
 #include "..\CrossPlatformEngine\WinRenderer.h"
 #include "..\CrossPlatformEngine\WinRenderer.cpp"
 #include "..\CrossPlatformEngine\SimpleShader.h"

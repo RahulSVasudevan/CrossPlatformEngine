@@ -23,8 +23,24 @@ Game::Game()
 	renderer->Init();
 	mesh = new WinMesh(VertexData, 3, IndexData, 3, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
 #endif
-
+	Init();
 	
+}
+
+void Game::InitializeCanvas() {
+#ifdef _WIN32
+	wr = static_cast<WinRenderer*>(renderer);
+	canvas = new WinCanvas();
+	wc = static_cast<WinCanvas*>(canvas);
+#endif
+}
+
+void Game::PrepareCanvas() {
+#ifdef _WIN32
+	wc->AssignDeviceAndContext(wr->GetDevice(), wr->GetContext());
+	wc->Initialize();
+	wc->CreateTextureFromFile(L"../Assets/Textures/smiley.png", "smiley");
+#endif
 }
 
 Game::~Game() {
@@ -32,17 +48,20 @@ Game::~Game() {
 	//gameObjects.clear();
 	//meshes.clear();
 
+	delete canvas;
 	delete mesh;
 	delete renderer;
 }
 
 void Game::Init()
 {
+	InitializeCanvas();
 }
 
 void Game::Draw()
 {
 	renderer->DrawQuad();
+	canvas->Render();
 	//renderer->DrawMesh(mesh);
 }
 
@@ -50,6 +69,7 @@ void Game::Run()
 {
 	while (renderer->MessageExist())
 	{
+		PrepareCanvas();
 		Draw();
 
 		renderer->EndFrame();

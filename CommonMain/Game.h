@@ -3,6 +3,11 @@
 #include "IRenderer.h"
 #include <unordered_map>
 
+#ifdef _WIN32
+	#include "../CrossPlatformEngine/WinCanvas.h"
+#include "../CrossPlatformEngine/WinRenderer.h"
+#endif
+
 using namespace std;
 
 class Game
@@ -25,4 +30,11 @@ private:
 	//unordered_map<int, Mesh> meshes;
 	//GameObject *gameObjects;
 	//Mesh *meshes;
+	void InitializeCanvas();
+	void PrepareCanvas();
+	ICanvas *canvas;
+#ifdef _WIN32
+	WinRenderer *wr;
+	WinCanvas *wc;
+#endif
 };
