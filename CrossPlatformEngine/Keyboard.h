@@ -1,8 +1,9 @@
 #pragma once
+#include"../CommonMain/Input.h"
 #include"InputEvent.h"
 #include<Windows.h>
 #include<queue>
-class Keyboard
+class Keyboard : public Input
 {
 public:
 	Keyboard();
@@ -15,12 +16,12 @@ public:
 		{
 			instance = new Keyboard;
 		}
-		_ASSERT(instance);
+		//_ASSERT(instance);
 
 		return instance;
 	}
 
-	bool KeyIsPressed(const unsigned char keycode);
+	bool GetKeyDown(const unsigned char keycode);
 	bool KeyBufferIsEmpty();
 	bool CharBufferIsEmpty();
 	InputEvent ReadKey();
@@ -28,17 +29,8 @@ public:
 	void OnKeyPressed(const unsigned char key);
 	void OnKeyReleased(const unsigned char key);
 	void OnChar(const unsigned char key);
-	void EnableAutoRepeatKeys();
-	void DisableAutoRepeatKeys();
-	void EnableAutoRepeatChars();
-	void DisableAutoRepeatChars();
-	bool IsKeyAutoRepeat();
-	bool isCharsAutoRepeat();
-
-private:
-	bool autoRepeatKey = false;
-	bool autoRepeatChar = false;
 	bool keyStates[256];
+private:
 	std::queue<InputEvent> keyBuffer;
 	std::queue<unsigned char> charBuffer;
 };

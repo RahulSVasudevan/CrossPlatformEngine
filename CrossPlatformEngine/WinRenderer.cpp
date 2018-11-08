@@ -178,30 +178,30 @@
 			PostQuitMessage(0);
 			return 0;
 		case WM_KEYDOWN:
-		{
-			OutputDebugString(L"\ninside keydown switch case");
-			unsigned char keycode = static_cast<unsigned char>(wParam);
-			if (Keyboard::getInstance()->IsKeyAutoRepeat())
+		
 			{
-				Keyboard::getInstance()->OnKeyPressed(keycode);
-
-			}
-			else
-			{
-				const bool wasPressed = lParam & 0x40000000;
-				if (!wasPressed)
+				
+				unsigned char keycode = static_cast<unsigned char>(wParam);
+				const bool wasPressed = lParam & 0x40000000;//0x400000000 is binary 0100 0000 0000 0000 0000 0000 0000 0000(31stbit).
+				if (!wasPressed) // value is 0 if the key is being pressed
 				{
+					OutputDebugString(L"\ninside keydown switch case");
 					Keyboard::getInstance()->OnKeyPressed(keycode);
 				}
 			}
 			return 0;
 
-		}
+		
 		case WM_KEYUP:
 		{
-			OutputDebugString(L"\ninside keyup switch case");
+			
 			unsigned char keycode = static_cast<unsigned char>(wParam);
-			Keyboard::getInstance()->OnKeyReleased(keycode);
+			const bool wasPressed = lParam & 0x40000000; //The value is always 1 for a WM_KEYUP message.
+			if (wasPressed)
+			{
+				OutputDebugString(L"\ninside keyup switch case");
+				Keyboard::getInstance()->OnKeyReleased(keycode);
+			}
 			return 0;
 
 		}
@@ -209,24 +209,19 @@
 		{
 
 			unsigned char c = static_cast<unsigned char>(wParam);
-			if (Keyboard::getInstance()->isCharsAutoRepeat())
-			{
-				Keyboard::getInstance()->OnChar(c);
-			}
-			else
-			{
+			
 				const bool wasPressed = lParam & 0x40000000;
-				if (!wasPressed)
+				if (!wasPressed) // value is 0 if the key is being pressed
 				{
 					Keyboard::getInstance()->OnChar(c);
 				}
-			}
+			
 			return 0;
 
 		}
 		default:
 			return DefWindowProc(hWnd, uMsg, wParam, lParam);
-		}
+	    }
 	}
 
 

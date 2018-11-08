@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\CommonMain\Game.h" />
+    <ClInclude Include="..\CommonMain\Input.h" />
     <ClInclude Include="..\CommonMain\IRenderer.h" />
     <ClInclude Include="InputEvent.h" />
     <ClInclude Include="Keyboard.h" />
@@ -159,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CommonMain\Game.cpp" />
+    <ClCompile Include="..\CommonMain\Input.cpp" />
     <ClCompile Include="..\CommonMain\IRenderer.cpp" />
     <ClCompile Include="InputEvent.cpp" />
     <ClCompile Include="Keyboard.cpp" />

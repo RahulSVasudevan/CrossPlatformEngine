@@ -15,7 +15,7 @@ Keyboard::~Keyboard()
 {
 }
 
-bool Keyboard::KeyIsPressed(const unsigned char keycode)
+bool Keyboard::GetKeyDown(const unsigned char keycode)
 {
 	return this->keyStates[keycode];
 }
@@ -81,32 +81,5 @@ void Keyboard::OnChar(const unsigned char key)
 	this->charBuffer.push(key);
 }
 
-void Keyboard::EnableAutoRepeatKeys()
-{
-	this->autoRepeatKey = true;
-}
 
-void Keyboard::DisableAutoRepeatKeys()
-{
-	this->autoRepeatKey = false;
-}
 
-void Keyboard::EnableAutoRepeatChars()
-{
-	this->autoRepeatChar = true;
-}
-
-void Keyboard::DisableAutoRepeatChars()
-{
-	this->autoRepeatChar = false;
-}
-
-bool Keyboard::IsKeyAutoRepeat()
-{
-	return this->autoRepeatKey;
-}
-
-bool Keyboard::isCharsAutoRepeat()
-{
-	return this->autoRepeatChar;
-}

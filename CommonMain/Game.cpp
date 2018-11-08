@@ -3,13 +3,14 @@
 
 #ifdef _WIN32
 	#include "../CrossPlatformEngine/WinRenderer.h" 
-    #include"../CrossPlatformEngine/Keyboard.h"
+    
 #endif
 
 Game::Game()
 {
 #ifdef _WIN32
 	renderer = new WinRenderer();
+	getInput = Keyboard::getInstance();
 #endif
 	
 	renderer->Init();
@@ -21,6 +22,7 @@ Game::~Game() {
 	//meshes.clear();
 
 	delete renderer;
+	delete getInput;
 }
 
 void Game::Init()
@@ -38,12 +40,16 @@ void Game::Run()
 	while (renderer->MessageExist())
 	{
 		Draw();
-		if (Keyboard::getInstance()->KeyIsPressed('W'))
+		if (getInput->GetKeyDown('W'))
 		{
 			OutputDebugStringW(L"\nW was pressed");
 		}
 		renderer->EndFrame();
 	}
 }
+
+
+
+
 
 

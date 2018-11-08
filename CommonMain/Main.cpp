@@ -10,7 +10,7 @@
 
 #ifdef _WIN32
 
-
+#include<Windows.h>
 #include "..\CrossPlatformEngine\WinRenderer.h"
 #include "..\CrossPlatformEngine\WinRenderer.cpp"
 #include "..\CrossPlatformEngine\SimpleShader.h"
@@ -19,7 +19,7 @@
 #include"..\CrossPlatformEngine\Keyboard.cpp"
 #include"..\CrossPlatformEngine\InputEvent.h"
 #include"..\CrossPlatformEngine\InputEvent.cpp"
-#include <Windows.h>
+
 
 #endif
 
