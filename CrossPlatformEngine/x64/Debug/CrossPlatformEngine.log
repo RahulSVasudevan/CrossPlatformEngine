@@ -1,0 +1,10 @@
+﻿  stdafx.cpp
+  Game.cpp
+  IMesh.cpp
+  IRenderer.cpp
+  Main.cpp
+  SimpleShader.cpp
+  WinMesh.cpp
+  WinRenderer.cpp
+  Generating Code...
+  CrossPlatformEngine.vcxproj -> C:\Users\IGMAdmin\Desktop\CrossPlatformEngine\x64\Debug\CrossPlatformEngine.exe
