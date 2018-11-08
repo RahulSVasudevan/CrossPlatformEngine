@@ -1,12 +1,7 @@
 #pragma once
 
-
-//#include "GameObject.h"
-//#include "Mesh.h"
 #include "IRenderer.h"
-#include "IMesh.h"
 #include <unordered_map>
-
 
 using namespace std;
 

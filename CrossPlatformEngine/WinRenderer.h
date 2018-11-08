@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\CommonMain\IRenderer.h"
+#include"..\CommonMain\IRenderer.h"
 #include <Windows.h>
 #include <d3d11.h>
 #include <sstream>
@@ -47,7 +47,7 @@ using namespace DirectX;
 	public:
 
 		WinRenderer();
-		~WinRenderer();
+		virtual ~WinRenderer();
 		void Init();
 		void MessageLoop();
 		bool MessageExist();

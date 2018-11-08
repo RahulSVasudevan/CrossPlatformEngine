@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "WinMesh.h"
 #include "..\CommonMain\IMesh.h"
 
@@ -51,7 +52,7 @@ WinMesh::WinMesh(VertexCommon * vb, int vbSize, unsigned int * ib, int ibSize, I
 	vbd.StructureByteStride = 0;
 
 	D3D11_SUBRESOURCE_DATA initialVertexData;
-	initialVertexData.pSysMem = vertexData;
+	initialVertexData.pSysMem = vb;
 
 	HRESULT hResult = device->CreateBuffer(&vbd, &initialVertexData, &vertexBufferPointer);
 
@@ -68,7 +69,7 @@ WinMesh::WinMesh(VertexCommon * vb, int vbSize, unsigned int * ib, int ibSize, I
 
 
 	D3D11_SUBRESOURCE_DATA initialIndexData;
-	initialIndexData.pSysMem = indexData;
+	initialIndexData.pSysMem = ib;
 
 	hResult = device->CreateBuffer(&ibd, &initialIndexData, &indexBufferPointer);
 }

@@ -1,4 +1,4 @@
-//#include "stdafx.h"
+
 #include "Game.h"
 
 #ifdef _WIN32
@@ -8,17 +8,15 @@
 
 Game::Game()
 {
-
 	VertexData = new VertexCommon[3];
-	*VertexData = VertexCommon(float3(+1.0f, +1.0f, +0.0f), float4(1.0f, 0.0f, 0.0f, 1.0f));
-	*(VertexData + 1) = VertexCommon(float3(-1.0f, +1.0f, +0.0f), float4(1.0f, 0.0f, 0.0f, 1.0f));
-	*(VertexData + 2) = VertexCommon(float3(+1.0f, -1.0f, +0.0f), float4(1.0f, 0.0f, 0.0f, 1.0f));
+	*VertexData = VertexCommon(float3(+1.0f, +1.0f, +0.0f), float4(1.0f, 1.0f, 0.0f, 1.0f));
+	*(VertexData + 1) = VertexCommon(float3(-1.0f, +1.0f, +0.0f), float4(1.0f, 1.0f, 0.0f, 1.0f));
+	*(VertexData + 2) = VertexCommon(float3(+1.0f, -1.0f, +0.0f), float4(1.0f, 1.0f, 0.0f, 1.0f));
 
 	IndexData = new unsigned int[3];
 	*IndexData = 0;
 	*(IndexData + 1) = 2;
 	*(IndexData + 2) = 1;
-
 
 #ifdef _WIN32
 	renderer = new WinRenderer();
@@ -36,18 +34,16 @@ Game::~Game() {
 
 	delete mesh;
 	delete renderer;
-
 }
 
 void Game::Init()
 {
-
 }
 
 void Game::Draw()
 {
-	//renderer->DrawQuad();
-	renderer->DrawMesh(mesh);
+	renderer->DrawQuad();
+	//renderer->DrawMesh(mesh);
 }
 
 void Game::Run()
@@ -58,6 +54,5 @@ void Game::Run()
 
 		renderer->EndFrame();
 	}
+
 }
-
-
