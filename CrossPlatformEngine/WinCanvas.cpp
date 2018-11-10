@@ -12,8 +12,11 @@ WinCanvas::WinCanvas() {
 //This should be the proper way to deallocate a map
 WinCanvas::~WinCanvas() {
 	for (map<string, ID3D11ShaderResourceView*>::iterator itr = shaderResourceViews.begin(); itr != shaderResourceViews.end(); itr++) {
-		delete itr->second;
+		//Causes error
+		//delete itr->second;
+		itr->second->Release();
 	}
+	spriteBatch.reset();
 }
 
 void WinCanvas::Initialize() {
