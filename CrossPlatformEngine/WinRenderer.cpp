@@ -170,6 +170,37 @@
 	}
 
 
+	void WinRenderer::DrawMesh(IMesh* Mesh)
+	{
+		const float color[4] = { 0.4f, 0.6f, 0.75f, 0.0f };
+		context->ClearRenderTargetView(backBufferRTV, color);
+		context->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+		vertexShader->SetMatrix4x4("world", worldMatrix);
+		vertexShader->SetMatrix4x4("view", viewMatrix);
+		vertexShader->SetMatrix4x4("projection", projectionMatrix);
+
+		vertexShader->CopyAllBufferData();
+
+		vertexShader->SetShader();
+		pixelShader->SetShader();
+
+		UINT stride = sizeof(Vertex);
+		UINT offset = 0;
+
+		WinMesh* WMesh = dynamic_cast<WinMesh*>(Mesh);
+
+		ID3D11Buffer * v = WMesh->GetVertexBuffer();
+
+		context->IASetVertexBuffers(0, 1, &v, &stride, &offset);
+		context->IASetIndexBuffer(indexBufferPointer, DXGI_FORMAT_R32_UINT, 0);
+		context->DrawIndexed(3, 0, 0);
+
+		//delete WMesh;
+		//v->Release();
+	}
+
+
 	LRESULT WinRenderer::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		switch (uMsg)
@@ -178,23 +209,24 @@
 			PostQuitMessage(0);
 			return 0;
 		case WM_KEYDOWN:
-		
+
+		{
+
+			unsigned char keycode = static_cast<unsigned char>(wParam);
+			const bool wasPressed = lParam & 0x40000000;//0x400000000 is binary 0100 0000 0000 0000 0000 0000 0000 0000(31stbit).
+			if (!wasPressed) // value is 0 if the key is being pressed
 			{
-				
-				unsigned char keycode = static_cast<unsigned char>(wParam);
-				const bool wasPressed = lParam & 0x40000000;//0x400000000 is binary 0100 0000 0000 0000 0000 0000 0000 0000(31stbit).
-				if (!wasPressed) // value is 0 if the key is being pressed
-				{
-					OutputDebugString(L"\ninside keydown switch case");
-					Keyboard::getInstance()->OnKeyPressed(keycode);
-				}
+				OutputDebugString(L"\ninside keydown switch case");
+				Keyboard::getInstance()->OnKeyPressed(keycode);
 			}
 			return 0;
-
+		}
 		
+
+
 		case WM_KEYUP:
 		{
-			
+
 			unsigned char keycode = static_cast<unsigned char>(wParam);
 			const bool wasPressed = lParam & 0x40000000; //The value is always 1 for a WM_KEYUP message.
 			if (wasPressed)
@@ -209,19 +241,19 @@
 		{
 
 			unsigned char c = static_cast<unsigned char>(wParam);
-			
-				const bool wasPressed = lParam & 0x40000000;
-				if (!wasPressed) // value is 0 if the key is being pressed
-				{
-					Keyboard::getInstance()->OnChar(c);
-				}
-			
+
+			const bool wasPressed = lParam & 0x40000000;
+			if (!wasPressed) // value is 0 if the key is being pressed
+			{
+				Keyboard::getInstance()->OnChar(c);
+			}
+
 			return 0;
 
 		}
 		default:
 			return DefWindowProc(hWnd, uMsg, wParam, lParam);
-	    }
+		}
 	}
 
 
@@ -365,6 +397,11 @@
 		// Return the "everything is ok" HRESULT value
 		return S_OK;
 
+	}
+
+	ID3D11Device * WinRenderer::GetDevice()
+	{
+		return device;
 	}
 
 	void WinRenderer::LoadShaders()

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\CommonMain\IRenderer.h"
+#include"..\CommonMain\IRenderer.h"
 #include <Windows.h>
 #include <d3d11.h>
 #include <sstream>
@@ -8,6 +8,9 @@
 #include "SimpleShader.h"
 #include <DirectXMath.h>
 #include"Keyboard.h"
+#include "WinMesh.h"
+
+
 #pragma comment(lib, "d3d11.lib")
 
 
@@ -52,11 +55,13 @@ using namespace DirectX;
 		bool MessageExist();
 		void EndFrame();
 		void DrawQuad();
+		void DrawMesh(IMesh *Mesh);
 
 		static WinRenderer* WinRendererInstance;
 		static LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 		HRESULT InitWindow();
 		HRESULT InitDirectX();
+		ID3D11Device* GetDevice();
 		
 		void LoadShaders();
 

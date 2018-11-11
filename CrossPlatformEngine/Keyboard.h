@@ -16,8 +16,6 @@ public:
 		{
 			instance = new Keyboard;
 		}
-		//_ASSERT(instance);
-
 		return instance;
 	}
 

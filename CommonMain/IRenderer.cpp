@@ -1,6 +1,5 @@
-//#include "stdafx.h"
-#include "IRenderer.h"
 
+#include "IRenderer.h"
 
 
 IRenderer::IRenderer()
@@ -9,7 +8,6 @@ IRenderer::IRenderer()
 
 IRenderer::~IRenderer()
 {
-	
 
 }
 
@@ -36,3 +34,6 @@ void IRenderer::DrawQuad()
 {
 }
 
+void IRenderer::DrawMesh(IMesh* Mesh)
+{
+}
