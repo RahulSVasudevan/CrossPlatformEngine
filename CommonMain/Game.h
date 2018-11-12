@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ICanvas.h"
 #include "IRenderer.h"
 #include <unordered_map>
 
