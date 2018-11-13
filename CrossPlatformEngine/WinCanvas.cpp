@@ -17,10 +17,12 @@ WinCanvas::~WinCanvas() {
 		itr->second->Release();
 	}
 	spriteBatch.reset();
+	spriteFont.reset();
 }
 
 void WinCanvas::Initialize() {
 	spriteBatch.reset(new SpriteBatch(context));
+	spriteFont.reset(new SpriteFont(device, L"../Assets/Fonts/calibri.spritefont", false));
 }
 
 void WinCanvas::DeInitialize() {
@@ -32,6 +34,9 @@ void WinCanvas::Render() {
 	if (device == nullptr || context == nullptr) return;
 	CommonStates states(device);
 	spriteBatch->Begin(SpriteSortMode_Deferred, states.NonPremultiplied());
+
+	SimpleMath::Vector2 pos = SimpleMath::Vector2(80.0f, 80.0f);
+	spriteFont->DrawString(spriteBatch.get(), L"Hello", pos);
 
 	RECT tempRect;
 	tempRect.bottom = 50;

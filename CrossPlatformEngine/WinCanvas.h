@@ -6,7 +6,9 @@
 #include <iostream>
 #include <functional>
 #include <map>
+#include "SimpleMath.h"
 #include "SpriteBatch.h"
+#include "SpriteFont.h"
 #include <string>
 #include "WICTextureLoader.h"
 
@@ -31,6 +33,7 @@ private:
 	ID3D11Device * device;
 	ID3D11DeviceContext *context;
 	unique_ptr<SpriteBatch> spriteBatch;
+	unique_ptr<SpriteFont> spriteFont;
 
 	map<string, ID3D11ShaderResourceView*> shaderResourceViews;
 };
