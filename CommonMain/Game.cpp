@@ -22,6 +22,8 @@ Game::Game()
 	renderer = new WinRenderer();
 	renderer->Init();
 	mesh = new WinMesh(VertexData, 3, IndexData, 3, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
+	wr = static_cast<WinRenderer*>(renderer);
+	windowHandle = wr->GetWindowHandle();
 #endif
 	Init();
 	
@@ -29,7 +31,6 @@ Game::Game()
 
 void Game::InitializeCanvas() {
 #ifdef _WIN32
-	wr = static_cast<WinRenderer*>(renderer);
 	canvas = new WinCanvas();
 	wc = static_cast<WinCanvas*>(canvas);
 #endif
@@ -58,6 +59,13 @@ void Game::Init()
 	InitializeCanvas();
 }
 
+POINT GetMousePosition(HWND *hWnd) {
+	POINT pos;
+	GetCursorPos(&pos);
+	ScreenToClient(*hWnd, &pos);
+	return pos;
+}
+
 void Game::Draw()
 {
 	renderer->DrawQuad();
@@ -69,6 +77,8 @@ void Game::Run()
 {
 	while (renderer->MessageExist())
 	{
+		POINT mousePosition = GetMousePosition(windowHandle);
+		canvas->Update(mousePosition.x, mousePosition.y);
 		PrepareCanvas();
 		Draw();
 

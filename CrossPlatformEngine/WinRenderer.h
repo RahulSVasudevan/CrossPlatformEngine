@@ -54,6 +54,7 @@ using namespace DirectX;
 		void EndFrame();
 		void DrawQuad();
 		void DrawMesh(IMesh *Mesh);
+		HWND *GetWindowHandle();
 
 		static WinRenderer* WinRendererInstance;
 		static LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);

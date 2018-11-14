@@ -25,6 +25,11 @@ void WinCanvas::Initialize() {
 	spriteFont.reset(new SpriteFont(device, L"../Assets/Fonts/calibri.spritefont", false));
 }
 
+void WinCanvas::Update(int mousex, int mousey) {
+	this->mousex = mousex;
+	this->mousey = mousey;
+}
+
 void WinCanvas::DeInitialize() {
 
 }
@@ -44,6 +49,7 @@ void WinCanvas::Render() {
 	tempRect.left = 0;
 	tempRect.right = 50;
 	for (map<string, ID3D11ShaderResourceView*>::iterator itr = shaderResourceViews.begin(); itr != shaderResourceViews.end(); itr++) {
+		//TODO: make conditions for buttons
 		spriteBatch->Draw(itr->second, tempRect);
 	}
 

@@ -22,6 +22,7 @@ public:
 	~WinCanvas();
 	void Initialize();
 	void DeInitialize();
+	void Update(int mousex, int mousey);
 	void Render();
 
 	void AssignDeviceAndContext(ID3D11Device *device, ID3D11DeviceContext *context);
@@ -34,6 +35,8 @@ private:
 	ID3D11DeviceContext *context;
 	unique_ptr<SpriteBatch> spriteBatch;
 	unique_ptr<SpriteFont> spriteFont;
+	int mousex;
+	int mousey;
 
 	map<string, ID3D11ShaderResourceView*> shaderResourceViews;
 };

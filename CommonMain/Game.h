@@ -37,5 +37,6 @@ private:
 #ifdef _WIN32
 	WinRenderer *wr;
 	WinCanvas *wc;
+	HWND *windowHandle;
 #endif
 };

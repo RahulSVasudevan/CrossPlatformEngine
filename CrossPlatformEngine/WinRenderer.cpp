@@ -200,6 +200,10 @@
 		//v->Release();
 	}
 
+	HWND *WinRenderer::GetWindowHandle() {
+		return &hWnd;
+	}
+
 
 	LRESULT WinRenderer::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
