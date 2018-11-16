@@ -1,5 +1,13 @@
-﻿  Game.cpp
+﻿  compilation object save succeeded; see C:\Users\IGMAdmin\Desktop\CrossPlatformEngineGit\x64\Debug\PixelShader.cso
+  compilation object save succeeded; see C:\Users\IGMAdmin\Desktop\CrossPlatformEngineGit\x64\Debug\VertexShader.cso
+  stdafx.cpp
+  Game.cpp
+  IMesh.cpp
+  IRenderer.cpp
   Main.cpp
+  SimpleShader.cpp
   WinCanvas.cpp
+  WinMesh.cpp
+  WinRenderer.cpp
   Generating Code...
-  CrossPlatformEngine.vcxproj -> D:\Grad School\Second Year\IGME 753 - Console Development\CrossPlatformEngine\x64\Debug\CrossPlatformEngine.exe
+  CrossPlatformEngine.vcxproj -> C:\Users\IGMAdmin\Desktop\CrossPlatformEngineGit\x64\Debug\CrossPlatformEngine.exe

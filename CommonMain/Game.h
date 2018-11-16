@@ -24,6 +24,7 @@ public:
 	~Game();
 	void Init();
 	void Draw();
+	void UpdateCanvas();
 	void Run();
 
 private:

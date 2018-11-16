@@ -59,12 +59,14 @@ void Game::Init()
 	InitializeCanvas();
 }
 
+#ifdef _WIN32
 POINT GetMousePosition(HWND *hWnd) {
 	POINT pos;
 	GetCursorPos(&pos);
 	ScreenToClient(*hWnd, &pos);
 	return pos;
 }
+#endif
 
 void Game::Draw()
 {
@@ -73,13 +75,23 @@ void Game::Draw()
 	//renderer->DrawMesh(mesh);
 }
 
+void Game::UpdateCanvas() {
+	int x = 0;
+	int y = 0;
+#ifdef _WIN32
+	POINT mousePosition = GetMousePosition(windowHandle);
+	x = mousePosition.x;
+	y = mousePosition.y;
+#endif
+	canvas->Update(x, y);
+	PrepareCanvas();
+}
+
 void Game::Run()
 {
 	while (renderer->MessageExist())
 	{
-		POINT mousePosition = GetMousePosition(windowHandle);
-		canvas->Update(mousePosition.x, mousePosition.y);
-		PrepareCanvas();
+		UpdateCanvas();
 		Draw();
 
 		renderer->EndFrame();
