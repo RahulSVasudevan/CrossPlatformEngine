@@ -1,5 +1,6 @@
 #pragma once
 
+#include "UIElementInfo.h"
 #include "CommonStates.h"
 #include <d3d11.h>
 #include "../CommonMain/ICanvas.h"
@@ -39,4 +40,6 @@ private:
 	int mousey;
 
 	map<string, ID3D11ShaderResourceView*> shaderResourceViews;
+	map<string, UIElementInfo> uiElementInfo;
+	map<string, std::function<void()>> uiButtonFunctions;
 };

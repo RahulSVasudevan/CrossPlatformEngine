@@ -20,14 +20,28 @@ WinCanvas::~WinCanvas() {
 	spriteFont.reset();
 }
 
+bool MouseIsOnButton(UIElementInfo &info, int mousex, int mousey) {
+	return (mousex > info.x - (info.width / 2) && mousex < info.x + (info.width / 2) &&
+		mousey > info.y - (info.height / 2) && mousey < info.y + (info.height / 2));
+}
+
 void WinCanvas::Initialize() {
 	spriteBatch.reset(new SpriteBatch(context));
 	spriteFont.reset(new SpriteFont(device, L"../Assets/Fonts/calibri.spritefont", false));
 }
 
+void FunctionTest() {
+	std::cout << "Hi";
+}
+
 void WinCanvas::Update(int mousex, int mousey) {
 	this->mousex = mousex;
 	this->mousey = mousey;
+
+	for (map<string, UIElementInfo>::iterator itr = uiElementInfo.begin(); itr != uiElementInfo.end(); itr++) {
+		itr->second.toggled = MouseIsOnButton(itr->second, mousex, mousey);
+		//TODO: Make function calls for button presses
+	}
 }
 
 void WinCanvas::DeInitialize() {
@@ -43,14 +57,15 @@ void WinCanvas::Render() {
 	SimpleMath::Vector2 pos = SimpleMath::Vector2(80.0f, 80.0f);
 	spriteFont->DrawString(spriteBatch.get(), L"Hello", pos);
 
-	RECT tempRect;
-	tempRect.bottom = 50;
-	tempRect.top = 0;
-	tempRect.left = 0;
-	tempRect.right = 50;
 	for (map<string, ID3D11ShaderResourceView*>::iterator itr = shaderResourceViews.begin(); itr != shaderResourceViews.end(); itr++) {
 		//TODO: make conditions for buttons
-		spriteBatch->Draw(itr->second, tempRect);
+		RECT tempRect;
+		UIElementInfo *info = &uiElementInfo[itr->first];
+		tempRect.bottom = info->y + (info->width / 2);
+		tempRect.top = info->y - (info->width / 2);
+		tempRect.left = info->x - (info->width / 2);
+		tempRect.right = info->x + (info->width / 2);
+		spriteBatch->Draw(itr->second, tempRect, info->toggled ? Colors::Gray : Colors::White);
 	}
 
 
@@ -72,4 +87,13 @@ void WinCanvas::CreateTextureFromFile(wstring filename, string textureName) {
 	ID3D11ShaderResourceView *ptr;
 	shaderResourceViews.insert(std::pair<string, ID3D11ShaderResourceView*>(textureName, ptr));
 	CreateWICTextureFromFile(device, filename.c_str(), nullptr, &shaderResourceViews[textureName]);
+
+	UIElementInfo info;
+	info.x = 50;
+	info.y = 50;
+	info.width = 25;
+	info.height = 25;
+	info.toggled = false;
+	uiElementInfo.insert(std::pair<string, UIElementInfo>(textureName, info));
+	uiButtonFunctions.insert(std::pair<string, std::function<void()>>(textureName, FunctionTest));
 }

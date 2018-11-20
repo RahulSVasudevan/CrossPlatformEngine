@@ -10,8 +10,9 @@ public:
 	virtual void Initialize() = 0;
 	virtual void DeInitialize() = 0;
 	//If on PS4, mousex and mousey can both be 0
-	virtual void Update(int mousex, int mousey) {}	//Not sure if = 0 would cause an error on PS4 side
+	virtual void Update(int mousex, int mousey) {}
 	virtual void Render() = 0;
 
 	virtual void CreateTextureFromFile(wstring filename, string textureName) = 0;
+	virtual void CreateButtonFromFile(wstring filename, string textureName) {}	//Shouldn't cause an error on the PS4 side
 };
