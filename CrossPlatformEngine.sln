@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CrossPlatformEngine", "CrossPlatformEngine\CrossPlatformEngine.vcxproj", "{802ECDCD-07B8-4CD2-AAFD-A296305422BC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CrossPlatformPS4", "PS4_Project2\PS4_Project2.vcxproj", "{9D73B3C8-7A0C-4050-A886-B1DE46E0D6F3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CommonMain", "CommonMain\CommonMain.vcxproj", "{AE18C356-7DE3-4179-B04F-CF48273C1E10}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ORBIS = Debug|ORBIS
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ORBIS = Release|ORBIS
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{802ECDCD-07B8-4CD2-AAFD-A296305422BC}.Debug|ORBIS.ActiveCfg = Debug|Win32
+		{802ECDCD-07B8-4CD2-AAFD-A296305422BC}.Debug|x64.ActiveCfg = Debug|x64
+		{802ECDCD-07B8-4CD2-AAFD-A296305422BC}.Debug|x64.Build.0 = Debug|x64
+		{802ECDCD-07B8-4CD2-AAFD-A296305422BC}.Debug|x86.ActiveCfg = Debug|Win32
+		{802ECDCD-07B8-4CD2-AAFD-A296305422BC}.Debug|x86.Build.0 = Debug|Win32
+		{802ECDCD-07B8-4CD2-AAFD-A296305422BC}.Release|ORBIS.ActiveCfg = Release|Win32
+		{802ECDCD-07B8-4CD2-AAFD-A296305422BC}.Release|x64.ActiveCfg = Release|x64
+		{802ECDCD-07B8-4CD2-AAFD-A296305422BC}.Release|x64.Build.0 = Release|x64
+		{802ECDCD-07B8-4CD2-AAFD-A296305422BC}.Release|x86.ActiveCfg = Debug|Win32
+		{802ECDCD-07B8-4CD2-AAFD-A296305422BC}.Release|x86.Build.0 = Debug|Win32
+		{9D73B3C8-7A0C-4050-A886-B1DE46E0D6F3}.Debug|ORBIS.ActiveCfg = Debug|ORBIS
+		{9D73B3C8-7A0C-4050-A886-B1DE46E0D6F3}.Debug|ORBIS.Build.0 = Debug|ORBIS
+		{9D73B3C8-7A0C-4050-A886-B1DE46E0D6F3}.Debug|x64.ActiveCfg = Debug|ORBIS
+		{9D73B3C8-7A0C-4050-A886-B1DE46E0D6F3}.Debug|x86.ActiveCfg = Debug|ORBIS
+		{9D73B3C8-7A0C-4050-A886-B1DE46E0D6F3}.Release|ORBIS.ActiveCfg = Release|ORBIS
+		{9D73B3C8-7A0C-4050-A886-B1DE46E0D6F3}.Release|ORBIS.Build.0 = Release|ORBIS
+		{9D73B3C8-7A0C-4050-A886-B1DE46E0D6F3}.Release|x64.ActiveCfg = Release|ORBIS
+		{9D73B3C8-7A0C-4050-A886-B1DE46E0D6F3}.Release|x86.ActiveCfg = Release|ORBIS
+		{AE18C356-7DE3-4179-B04F-CF48273C1E10}.Debug|ORBIS.ActiveCfg = Debug|ORBIS
+		{AE18C356-7DE3-4179-B04F-CF48273C1E10}.Debug|ORBIS.Build.0 = Debug|ORBIS
+		{AE18C356-7DE3-4179-B04F-CF48273C1E10}.Debug|x64.ActiveCfg = Debug|x64
+		{AE18C356-7DE3-4179-B04F-CF48273C1E10}.Debug|x64.Build.0 = Debug|x64
+		{AE18C356-7DE3-4179-B04F-CF48273C1E10}.Debug|x86.ActiveCfg = Debug|Win32
+		{AE18C356-7DE3-4179-B04F-CF48273C1E10}.Debug|x86.Build.0 = Debug|Win32
+		{AE18C356-7DE3-4179-B04F-CF48273C1E10}.Release|ORBIS.ActiveCfg = Release|ORBIS
+		{AE18C356-7DE3-4179-B04F-CF48273C1E10}.Release|ORBIS.Build.0 = Release|ORBIS
+		{AE18C356-7DE3-4179-B04F-CF48273C1E10}.Release|x64.ActiveCfg = Release|x64
+		{AE18C356-7DE3-4179-B04F-CF48273C1E10}.Release|x64.Build.0 = Release|x64
+		{AE18C356-7DE3-4179-B04F-CF48273C1E10}.Release|x86.ActiveCfg = Release|Win32
+		{AE18C356-7DE3-4179-B04F-CF48273C1E10}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {334B7493-4389-4D3A-A3FD-738DEBEF1045}
+	EndGlobalSection
+EndGlobal
