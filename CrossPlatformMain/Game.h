@@ -1,6 +1,7 @@
 #pragma once
 
 #include "..\CommonFiles\IRenderer.h"
+#include "..\CommonFiles\Lights.h"
 //#include <unordered_map>
 
 
@@ -18,6 +19,8 @@ class Game
 	VertexCommon * VertexData2;
 	uint16_t * IndexData;
 	uint16_t * IndexData2;
+
+	DirectionalLight light1;
 
 public:
 	Game();

@@ -50,6 +50,11 @@ Game::Game()
 	mesh2 = new WinMesh(VertexData2, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
 #endif 
 		
+
+	light1.AmbientColor = float4(0.1f, 0.1f, 0.1f, 0.1f);
+	light1.DiffuseColor = float4(0, 0, 1, 1);
+	light1.Direction = float3(1, -1, 0);
+
 }
 
 
