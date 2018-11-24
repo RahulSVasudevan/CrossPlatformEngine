@@ -38,11 +38,34 @@ WinMesh::WinMesh(ID3D11Device* device) :IMesh()
 	hResult = device->CreateBuffer(&ibd, &initialIndexData, &indexBufferPointer);
 }
 
-WinMesh::WinMesh(VertexCommon * vb, int vbSize, uint16_t * ib, int ibSize, ID3D11Device * device) :IMesh(vb,ib)
+WinMesh::WinMesh(VertexCommon * vb, int vbSize, uint16_t * ib, int ibSize, ID3D11Device * device) :IMesh(vb,vbSize,ib,ibSize)
 {
-	vertexSize = vbSize;
-	indexSize = ibSize;
-	
+	InitializeBuffers(device);
+}
+
+WinMesh::WinMesh(const char * objFile, ID3D11Device * device):IMesh(objFile)
+{
+	InitializeBuffers(device);
+}
+
+WinMesh::~WinMesh()
+{
+	vertexBufferPointer->Release();
+	indexBufferPointer->Release();
+}
+
+ID3D11Buffer * WinMesh::GetVertexBuffer()
+{
+	return vertexBufferPointer;
+}
+
+ID3D11Buffer * WinMesh::GetIndexBuffer()
+{
+	return indexBufferPointer;
+}
+
+void WinMesh::InitializeBuffers( ID3D11Device * device)
+{
 	vertexBufferPointer = 0;
 	indexBufferPointer = 0;
 
@@ -75,20 +98,6 @@ WinMesh::WinMesh(VertexCommon * vb, int vbSize, uint16_t * ib, int ibSize, ID3D1
 	initialIndexData.pSysMem = indexData;
 
 	hResult = device->CreateBuffer(&ibd, &initialIndexData, &indexBufferPointer);
-}
 
-WinMesh::~WinMesh()
-{
-	vertexBufferPointer->Release();
-	indexBufferPointer->Release();
-}
-
-ID3D11Buffer * WinMesh::GetVertexBuffer()
-{
-	return vertexBufferPointer;
-}
-
-ID3D11Buffer * WinMesh::GetIndexBuffer()
-{
-	return indexBufferPointer;
+	int a = 0;
 }

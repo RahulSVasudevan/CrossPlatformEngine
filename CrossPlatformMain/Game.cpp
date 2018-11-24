@@ -46,8 +46,10 @@ Game::Game()
 #ifdef _WIN32
 	renderer = new WinRenderer();
 	renderer->Init();
-	mesh = new WinMesh(VertexData, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
-	mesh2 = new WinMesh(VertexData2, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
+	//mesh = new WinMesh(VertexData, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
+	//mesh2 = new WinMesh(VertexData2, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
+	
+	mesh2 = new WinMesh("../CommonFiles/cube.obj", dynamic_cast<WinRenderer*>(renderer)->GetDevice());
 #endif 
 		
 
@@ -61,7 +63,7 @@ Game::Game()
 
 Game::~Game() {
 
-	delete mesh;
+	//delete mesh;
 	delete mesh2;
 
 	delete[] VertexData;
@@ -81,7 +83,7 @@ void Game::Draw()
 {
 	//renderer->DrawQuad();
 
-	renderer->DrawMesh(mesh);
+	//renderer->DrawMesh(mesh);
 
 	renderer->DrawMesh(mesh2);
 }

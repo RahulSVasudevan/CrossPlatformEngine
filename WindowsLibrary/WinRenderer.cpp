@@ -194,9 +194,10 @@
 		ID3D11Buffer * v = WMesh->GetVertexBuffer();
 
 		context->IASetVertexBuffers(0, 1, &v, &stride, &offset);
-		context->IASetIndexBuffer(indexBufferPointer, DXGI_FORMAT_R32_UINT, 0);
+		context->IASetIndexBuffer(WMesh->GetIndexBuffer(), DXGI_FORMAT_R16_UINT, 0);
 		context->DrawIndexed(WMesh->indexSize, 0, 0);
 
+		int a = 0;
 	}
 
 
