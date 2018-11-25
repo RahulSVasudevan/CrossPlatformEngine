@@ -26,8 +26,7 @@ IMesh::IMesh(const char * objFile)
 
 	// Variables used while reading the file
 	std::vector<vec3> positions;     // Positions from the file
-	std::vector<vec3> normals;       // Normals from the file
-	std::vector<vec2> uvs;           // UVs from the file
+	      // Normals from the file
 	uint16_t vertCounter = 0;        // Count of vertices/indices
 	char chars[100];                     // String for line reading
 

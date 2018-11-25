@@ -30,6 +30,9 @@ protected:
 	
 	std::vector<VertexCommon> verts;           // Verts we're assembling
 	std::vector<uint16_t> indices;           // Indices of these verts
+	std::vector<vec3> normals;
+	std::vector<vec2> uvs;           // UVs from the file
+
 
 public:
 
