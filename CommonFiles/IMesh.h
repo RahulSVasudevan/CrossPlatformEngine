@@ -5,7 +5,7 @@
 #include <string>
 #include <stdint.h>
 #include "Maths.h"
-
+#include "Lights.h"
 
 using namespace glm;
 
@@ -17,7 +17,7 @@ struct VertexCommon
 	vec2 UV;
 
 	VertexCommon() { Color = vec4(1, 1, 1, 1); };
-	VertexCommon(vec3 a, vec4 b) { Position = a; Color = b;}
+	VertexCommon(vec3 a, vec4 b, vec3 c) { Position = a; Color = b; Normal = c; }
 };
 
 

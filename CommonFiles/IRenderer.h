@@ -16,5 +16,5 @@ public:
 	virtual void EndFrame();
 	virtual void DrawQuad();
 	virtual void DrawMesh(IMesh* Mesh);
-
+	virtual void LightingInfo(DirectionalLight light);
 };

@@ -7,6 +7,12 @@ using namespace glm;
 struct DirectionalLight
 {
 	vec4 AmbientColor;
-	vec4 DiffuseColor;
-	vec3 Direction;
+	vec4 DirLightColor;
+	vec3 DirLightDirection;
+};
+
+struct PointLight
+{
+	vec4 PointLightColor;
+	vec3 PointLightPosition;
 };

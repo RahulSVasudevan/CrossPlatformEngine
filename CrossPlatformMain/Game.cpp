@@ -13,18 +13,19 @@
 
 Game::Game()
 {
+	vec3 normal = vec3(0, 0, -1);
 	// Temp Mesh Data
 	VertexData = new VertexCommon[4];
-	*VertexData = VertexCommon(vec3(+0.0f, +1.0f, +0.0f), vec4(1.0f, 1.0f, 0.0f, 1.0f));
-	*(VertexData + 1) = VertexCommon(vec3(-1.0f, +1.0f, +0.0f), vec4(1.0f, 1.0f, 0.0f, 1.0f));
-	*(VertexData + 2) = VertexCommon(vec3(+0.0f, -1.0f, +0.0f), vec4(1.0f, 1.0f, 0.0f, 1.0f));
-	*(VertexData + 3) = VertexCommon(vec3(-1.0f, -1.0f, +0.0f), vec4(1.0f, 1.0f, 0.0f, 1.0f));
+	*VertexData = VertexCommon(vec3(+0.0f, +1.0f, +0.0f), vec4(1.0f, 1.0f, 0.0f, 1.0f), normal);
+	*(VertexData + 1) = VertexCommon(vec3(-1.0f, +1.0f, +0.0f), vec4(1.0f, 1.0f, 0.0f, 1.0f), normal);
+	*(VertexData + 2) = VertexCommon(vec3(+0.0f, -1.0f, +0.0f), vec4(1.0f, 1.0f, 0.0f, 1.0f), normal);
+	*(VertexData + 3) = VertexCommon(vec3(-1.0f, -1.0f, +0.0f), vec4(1.0f, 1.0f, 0.0f, 1.0f), normal);
 
 	VertexData2 = new VertexCommon[4];
-	*VertexData2 = VertexCommon(vec3(+1.0f, +1.0f, +0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f));
-	*(VertexData2 + 1) = VertexCommon(vec3(0.0f, +1.0f, +0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f));
-	*(VertexData2 + 2) = VertexCommon(vec3(+1.0f, -1.0f, +0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f));
-	*(VertexData2 + 3) = VertexCommon(vec3(0.0f, -1.0f, +0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	*VertexData2 = VertexCommon(vec3(+1.0f, +1.0f, +0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f), normal);
+	*(VertexData2 + 1) = VertexCommon(vec3(0.0f, +1.0f, +0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f), normal);
+	*(VertexData2 + 2) = VertexCommon(vec3(+1.0f, -1.0f, +0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f), normal);
+	*(VertexData2 + 3) = VertexCommon(vec3(0.0f, -1.0f, +0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f), normal);
 
 	IndexData = new uint16_t[6];
 	*IndexData = 0;
@@ -42,6 +43,9 @@ Game::Game()
 	*(IndexData2 + 4) = 2;
 	*(IndexData2 + 5) = 3;
 
+	light.DirLightColor = vec4(1, 1, 1, 1.0f);
+	light.AmbientColor = vec4(0.5, 0.5, 0, 1.0f);
+	light.DirLightDirection = vec3(0, -10,-5);
 
 #ifdef _WIN32
 	renderer = new WinRenderer();
@@ -50,12 +54,10 @@ Game::Game()
 	//mesh2 = new WinMesh(VertexData2, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
 	
 	mesh2 = new WinMesh("../CommonFiles/sphere.obj", dynamic_cast<WinRenderer*>(renderer)->GetDevice());
+	renderer->LightingInfo(light);
 #endif 
 		
 
-	light1.AmbientColor = vec4(0.1f, 0.1f, 0.1f, 0.1f);
-	light1.DiffuseColor = vec4(0, 0, 1, 1);
-	light1.Direction = vec3(1, -1, 0);
 
 }
 

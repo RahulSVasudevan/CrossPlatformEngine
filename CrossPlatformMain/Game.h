@@ -20,7 +20,7 @@ class Game
 	uint16_t * IndexData;
 	uint16_t * IndexData2;
 
-	DirectionalLight light1;
+	DirectionalLight light;
 
 public:
 	Game();

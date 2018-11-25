@@ -43,6 +43,7 @@ using namespace DirectX;
 
 		SimpleVertexShader* vertexShader;
 		SimplePixelShader* pixelShader;
+		DirectionalLight Light;
 	
 	public:
 
@@ -54,6 +55,7 @@ using namespace DirectX;
 		void EndFrame();
 		void DrawQuad();
 		void DrawMesh(IMesh *Mesh);
+		void  LightingInfo(DirectionalLight light);
 
 		static WinRenderer* WinRendererInstance;
 		static LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);

@@ -37,3 +37,6 @@ void IRenderer::DrawQuad()
 void IRenderer::DrawMesh(IMesh* Mesh)
 {
 }
+void IRenderer::LightingInfo(DirectionalLight  light)
+{
+}

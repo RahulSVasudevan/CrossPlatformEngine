@@ -184,6 +184,9 @@
 		vertexShader->CopyAllBufferData();
 
 		vertexShader->SetShader();
+
+		pixelShader->SetData("light", &Light, sizeof(DirectionalLight));
+		pixelShader->CopyAllBufferData();
 		pixelShader->SetShader();
 
 		UINT stride = sizeof(VertexCommon);
@@ -251,6 +254,11 @@
 		ShowWindow(hWnd, SW_SHOW);		
 
 		return S_OK;
+	}
+
+	void WinRenderer::LightingInfo(DirectionalLight  light)
+	{
+		Light = light;
 	}
 
 	HRESULT WinRenderer::InitDirectX()
