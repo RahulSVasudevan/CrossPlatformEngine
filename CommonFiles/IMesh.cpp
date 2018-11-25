@@ -25,9 +25,9 @@ IMesh::IMesh(const char * objFile)
 		return;
 
 	// Variables used while reading the file
-	std::vector<float3> positions;     // Positions from the file
-	std::vector<float3> normals;       // Normals from the file
-	std::vector<float2> uvs;           // UVs from the file
+	std::vector<vec3> positions;     // Positions from the file
+	std::vector<vec3> normals;       // Normals from the file
+	std::vector<vec2> uvs;           // UVs from the file
 	uint16_t vertCounter = 0;        // Count of vertices/indices
 	char chars[100];                     // String for line reading
 
@@ -41,7 +41,7 @@ IMesh::IMesh(const char * objFile)
 		if (chars[0] == 'v' && chars[1] == 'n')
 		{
 			// Read the 3 numbers directly into an XMFLOAT3
-			float3 norm;
+			vec3 norm;
 			sscanf_s(
 				chars,
 				"vn %f %f %f",
@@ -53,7 +53,7 @@ IMesh::IMesh(const char * objFile)
 		else if (chars[0] == 'v' && chars[1] == 't')
 		{
 			// Read the 2 numbers directly into an XMFLOAT2
-			float2 uv;
+			vec2 uv;
 			sscanf_s(
 				chars,
 				"vt %f %f",
@@ -65,7 +65,7 @@ IMesh::IMesh(const char * objFile)
 		else if (chars[0] == 'v')
 		{
 			// Read the 3 numbers directly into an XMFLOAT3
-			float3 pos;
+			vec3 pos;
 			sscanf_s(
 				chars,
 				"v %f %f %f",

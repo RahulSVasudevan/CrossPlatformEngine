@@ -15,16 +15,16 @@ Game::Game()
 {
 	// Temp Mesh Data
 	VertexData = new VertexCommon[4];
-	*VertexData = VertexCommon(float3(+0.0f, +1.0f, +0.0f), float4(1.0f, 1.0f, 0.0f, 1.0f));
-	*(VertexData + 1) = VertexCommon(float3(-1.0f, +1.0f, +0.0f), float4(1.0f, 1.0f, 0.0f, 1.0f));
-	*(VertexData + 2) = VertexCommon(float3(+0.0f, -1.0f, +0.0f), float4(1.0f, 1.0f, 0.0f, 1.0f));
-	*(VertexData + 3) = VertexCommon(float3(-1.0f, -1.0f, +0.0f), float4(1.0f, 1.0f, 0.0f, 1.0f));
+	*VertexData = VertexCommon(vec3(+0.0f, +1.0f, +0.0f), vec4(1.0f, 1.0f, 0.0f, 1.0f));
+	*(VertexData + 1) = VertexCommon(vec3(-1.0f, +1.0f, +0.0f), vec4(1.0f, 1.0f, 0.0f, 1.0f));
+	*(VertexData + 2) = VertexCommon(vec3(+0.0f, -1.0f, +0.0f), vec4(1.0f, 1.0f, 0.0f, 1.0f));
+	*(VertexData + 3) = VertexCommon(vec3(-1.0f, -1.0f, +0.0f), vec4(1.0f, 1.0f, 0.0f, 1.0f));
 
 	VertexData2 = new VertexCommon[4];
-	*VertexData2 = VertexCommon(float3(+1.0f, +1.0f, +0.0f), float4(1.0f, 0.0f, 0.0f, 1.0f));
-	*(VertexData2 + 1) = VertexCommon(float3(0.0f, +1.0f, +0.0f), float4(1.0f, 0.0f, 0.0f, 1.0f));
-	*(VertexData2 + 2) = VertexCommon(float3(+1.0f, -1.0f, +0.0f), float4(1.0f, 0.0f, 0.0f, 1.0f));
-	*(VertexData2 + 3) = VertexCommon(float3(0.0f, -1.0f, +0.0f), float4(1.0f, 0.0f, 0.0f, 1.0f));
+	*VertexData2 = VertexCommon(vec3(+1.0f, +1.0f, +0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	*(VertexData2 + 1) = VertexCommon(vec3(0.0f, +1.0f, +0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	*(VertexData2 + 2) = VertexCommon(vec3(+1.0f, -1.0f, +0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	*(VertexData2 + 3) = VertexCommon(vec3(0.0f, -1.0f, +0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f));
 
 	IndexData = new uint16_t[6];
 	*IndexData = 0;
@@ -49,13 +49,13 @@ Game::Game()
 	//mesh = new WinMesh(VertexData, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
 	//mesh2 = new WinMesh(VertexData2, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
 	
-	mesh2 = new WinMesh("../CommonFiles/cube.obj", dynamic_cast<WinRenderer*>(renderer)->GetDevice());
+	mesh2 = new WinMesh("../CommonFiles/sphere.obj", dynamic_cast<WinRenderer*>(renderer)->GetDevice());
 #endif 
 		
 
-	light1.AmbientColor = float4(0.1f, 0.1f, 0.1f, 0.1f);
-	light1.DiffuseColor = float4(0, 0, 1, 1);
-	light1.Direction = float3(1, -1, 0);
+	light1.AmbientColor = vec4(0.1f, 0.1f, 0.1f, 0.1f);
+	light1.DiffuseColor = vec4(0, 0, 1, 1);
+	light1.Direction = vec3(1, -1, 0);
 
 }
 

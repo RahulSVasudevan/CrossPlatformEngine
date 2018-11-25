@@ -41,5 +41,8 @@
     <ClInclude Include="..\CommonFiles\Maths.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\CommonFiles\Lights.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

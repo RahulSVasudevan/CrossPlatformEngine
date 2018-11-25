@@ -2,9 +2,11 @@
 
 #include "Maths.h"
 
+using namespace glm;
+
 struct DirectionalLight
 {
-	float4 AmbientColor;
-	float4 DiffuseColor;
-	float3 Direction;
+	vec4 AmbientColor;
+	vec4 DiffuseColor;
+	vec3 Direction;
 };

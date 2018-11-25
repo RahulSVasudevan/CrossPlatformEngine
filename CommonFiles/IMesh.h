@@ -7,15 +7,17 @@
 #include "Maths.h"
 
 
+using namespace glm;
+
 struct VertexCommon
 {
-	float3 Position;	    // The position of the vertex
-	float4 Color;        // The color of the vertex
-	float3 Normal;
-	float2 UV;
+	vec3 Position;	    // The position of the vertex
+	vec4 Color;        // The color of the vertex
+	vec3 Normal;
+	vec2 UV;
 
-	VertexCommon() { Color = float4(1, 1, 1, 1); };
-	VertexCommon(float3 a, float4 b) { Position = a; Color = b;}
+	VertexCommon() { Color = vec4(1, 1, 1, 1); };
+	VertexCommon(vec3 a, vec4 b) { Position = a; Color = b;}
 };
 
 
