@@ -138,13 +138,17 @@
 		return false;
 	}
 
+	void WinRenderer::BeginFrame()
+	{
+		const float color[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+		context->ClearRenderTargetView(backBufferRTV, color);
+		context->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	}
+
 	void WinRenderer::EndFrame()
 	{
 		swapChain->Present(0, 0);
 
-		const float color[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
-		context->ClearRenderTargetView(backBufferRTV, color);
-		context->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	}
 
 	void WinRenderer::DrawQuad()

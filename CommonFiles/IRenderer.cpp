@@ -26,6 +26,10 @@ bool IRenderer::MessageExist()
 	return true;
 }
 
+void IRenderer::BeginFrame()
+{
+}
+
 void IRenderer::EndFrame()
 {
 }

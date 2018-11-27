@@ -26,6 +26,8 @@ struct VertexShaderInput
 	//  v    v                v
 	float3 position		: POSITION;     // XYZ position
 	float4 color		: COLOR;        // RGBA color
+	float3 normal		: NORMAL; 
+	float2 uv		: TEXCOORD; 
 };
 
 // Struct representing the data we're sending down the pipeline
@@ -42,6 +44,8 @@ struct VertexToPixel
 	//  v    v                v
 	float4 position		: SV_POSITION;	// XYZW position (System Value Position)
 	float4 color		: COLOR;        // RGBA color
+	float3 normal		: NORMAL; 
+	float2 uv		: TEXCOORD; 
 };
 
 // --------------------------------------------------------

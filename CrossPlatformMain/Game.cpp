@@ -92,7 +92,8 @@ void Game::Run()
 {
 	while (renderer->MessageExist())
 	{
-		
+		renderer->BeginFrame();
+
 		Draw();
 
 		renderer->EndFrame();

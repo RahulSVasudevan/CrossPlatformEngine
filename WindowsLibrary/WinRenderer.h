@@ -51,6 +51,7 @@ using namespace DirectX;
 		void Init();
 		void MessageLoop();
 		bool MessageExist();
+		void BeginFrame();
 		void EndFrame();
 		void DrawQuad();
 		void DrawMesh(IMesh *Mesh);
