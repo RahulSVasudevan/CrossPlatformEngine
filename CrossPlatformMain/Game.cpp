@@ -4,7 +4,7 @@
 
 
 #ifdef _WIN32
-	#include "..\WindowsLibrary\WinRenderer.h"
+#include "..\WindowsLibrary\WinRenderer.h"
 #include "..\WindowsLibrary\WinMesh.h"
 #endif
 
@@ -54,6 +54,7 @@ Game::Game()
 	//mesh2 = new WinMesh(VertexData2, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
 	
 	mesh2 = new WinMesh("../CommonFiles/sphere.obj", dynamic_cast<WinRenderer*>(renderer)->GetDevice());
+	Entity = new  GameEntity(mesh2, renderer->getMaterial());
 	renderer->LightingInfo(light);
 #endif 
 		
@@ -67,7 +68,7 @@ Game::~Game() {
 
 	//delete mesh;
 	delete mesh2;
-
+	delete Entity;
 	delete[] VertexData;
 	delete[] VertexData2;
 	delete[] IndexData;
@@ -87,7 +88,8 @@ void Game::Draw()
 
 	//renderer->DrawMesh(mesh);
 
-	renderer->DrawMesh(mesh2);
+	renderer->DrawMesh(mesh2,Entity);
+	
 }
 
 void Game::Run()
@@ -96,7 +98,6 @@ void Game::Run()
 	{
 		
 		Draw();
-
 		renderer->EndFrame();
 	}
 

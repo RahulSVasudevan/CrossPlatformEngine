@@ -31,6 +31,9 @@
 		if (swapChain) { swapChain->Release(); }
 		if (context) { context->Release(); }
 		if (device) { device->Release(); }
+		delete testMaterial;
+		sampler->Release();
+		TestSRV->Release();
 	}
 
 	void WinRenderer::Init()
@@ -39,16 +42,19 @@
 		HRESULT status = InitWindow();
 		status = InitDirectX();
 
-		LoadShaders();
 
+		LoadTextures();
+		LoadShaders();
+		InitializeMaterial();
 		context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		
 
 
 		// Temp Code
+		
 
-		XMMATRIX W = XMMatrixIdentity();
-		XMStoreFloat4x4(&worldMatrix, XMMatrixTranspose(W));
+		/*XMMATRIX W = XMMatrixIdentity();
+		XMStoreFloat4x4(&worldMatrix, XMMatrixTranspose(W));*/
 
 		XMVECTOR pos = XMVectorSet(0, 0, -5, 0);
 		XMVECTOR dir = XMVectorSet(0, 0, 1, 0);
@@ -147,47 +153,39 @@
 		context->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	}
 
-	void WinRenderer::DrawQuad()
+	//void WinRenderer::DrawQuad()
+	//{
+	//	const float color[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	//	context->ClearRenderTargetView(backBufferRTV, color);
+	//	context->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+	//	vertexShader->SetMatrix4x4("world", worldMatrix);
+	//	vertexShader->SetMatrix4x4("view", viewMatrix);
+	//	vertexShader->SetMatrix4x4("projection", projectionMatrix);
+
+	//	vertexShader->CopyAllBufferData();
+
+	//	vertexShader->SetShader();
+	//	pixelShader->SetShader();
+
+	//	UINT stride = sizeof(Vertex);
+	//	UINT offset = 0;
+
+	//	//ID3D11Buffer * v = vertexBufferPointer;
+
+	//	context->IASetVertexBuffers(0, 1, &vertexBufferPointer, &stride, &offset);
+	//	context->IASetIndexBuffer(indexBufferPointer, DXGI_FORMAT_R32_UINT, 0);
+	//	context->DrawIndexed(6,0,0);    
+
+	//}
+
+
+	void WinRenderer::DrawMesh(IMesh* Mesh, GameEntity* Entity)
 	{
-		const float color[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
-		context->ClearRenderTargetView(backBufferRTV, color);
-		context->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-
-		vertexShader->SetMatrix4x4("world", worldMatrix);
-		vertexShader->SetMatrix4x4("view", viewMatrix);
-		vertexShader->SetMatrix4x4("projection", projectionMatrix);
-
-		vertexShader->CopyAllBufferData();
-
-		vertexShader->SetShader();
-		pixelShader->SetShader();
-
-		UINT stride = sizeof(Vertex);
-		UINT offset = 0;
-
-		//ID3D11Buffer * v = vertexBufferPointer;
-
-		context->IASetVertexBuffers(0, 1, &vertexBufferPointer, &stride, &offset);
-		context->IASetIndexBuffer(indexBufferPointer, DXGI_FORMAT_R32_UINT, 0);
-		context->DrawIndexed(6,0,0);    
-
-	}
-
-
-	void WinRenderer::DrawMesh(IMesh* Mesh)
-	{
-
-		vertexShader->SetMatrix4x4("world", worldMatrix);
-		vertexShader->SetMatrix4x4("view", viewMatrix);
-		vertexShader->SetMatrix4x4("projection", projectionMatrix);
-
-		vertexShader->CopyAllBufferData();
-
-		vertexShader->SetShader();
-
+		EntityStored = Entity;
 		pixelShader->SetData("light", &Light, sizeof(DirectionalLight));
-		pixelShader->CopyAllBufferData();
-		pixelShader->SetShader();
+		EntityStored->prepareMaterial(worldMatrix, viewMatrix, projectionMatrix);
+		
 
 		UINT stride = sizeof(VertexCommon);
 		UINT offset = 0;
@@ -380,6 +378,28 @@
 		pixelShader = new SimplePixelShader(device, context);
 		success = pixelShader->LoadShaderFile(L"../CrossPlatformMain/PixelShader.cso");
 	}
+	void WinRenderer::LoadTextures()
+	{
+		CreateWICTextureFromFile(device, context, L"Wall4.JPG", 0, &TestSRV);
+		D3D11_SAMPLER_DESC sd = {}; // Zeros it out
+		sd.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+		sd.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+		sd.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+		sd.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR; // Tri-linear filtering
+													 //sd.Filter = D3D11_FILTER_ANISOTROPIC;
+													 //sd.MaxAnisotropy = 16;
+		sd.MaxLOD = D3D11_FLOAT32_MAX;
 
+		device->CreateSamplerState(&sd, &sampler);
+	}
+	void WinRenderer::InitializeMaterial()
+	{
+		testMaterial = new Material(vertexShader, pixelShader, TestSRV, sampler);
+		
+	}
 
+	Material* WinRenderer::getMaterial()
+	{
+		return testMaterial;
+	}
 

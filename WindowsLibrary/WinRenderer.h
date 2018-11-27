@@ -7,8 +7,11 @@
 #include <string>
 #include "SimpleShader.h"
 #include <DirectXMath.h>
+#include "WICTextureLoader.h"
 #include "WinMesh.h"
-
+#include "Material.h"
+#include"GameEntity.h"
+#include"..\CommonFiles\Maths.h"
 #pragma comment(lib, "d3d11.lib")
 
 
@@ -44,6 +47,10 @@ using namespace DirectX;
 		SimpleVertexShader* vertexShader;
 		SimplePixelShader* pixelShader;
 		DirectionalLight Light;
+		GameEntity* EntityStored;
+		ID3D11ShaderResourceView* TestSRV;
+		ID3D11SamplerState* sampler;
+		Material* testMaterial;
 	
 	public:
 
@@ -53,8 +60,8 @@ using namespace DirectX;
 		void MessageLoop();
 		bool MessageExist();
 		void EndFrame();
-		void DrawQuad();
-		void DrawMesh(IMesh *Mesh);
+		//void DrawQuad();
+		void DrawMesh(IMesh *Mesh, GameEntity *Entity);
 		void  LightingInfo(DirectionalLight light);
 
 		static WinRenderer* WinRendererInstance;
@@ -65,11 +72,16 @@ using namespace DirectX;
 		ID3D11DeviceContext* GetContext();
 		
 		void LoadShaders();
-
+		void LoadTextures();
+		void InitializeMaterial();
+		Material* getMaterial();
 		//Temp Variables
-		DirectX::XMFLOAT4X4 worldMatrix;
+		/*DirectX::XMFLOAT4X4 worldMatrix;
 		DirectX::XMFLOAT4X4 viewMatrix;
-		DirectX::XMFLOAT4X4 projectionMatrix;
+		DirectX::XMFLOAT4X4 projectionMatrix;*/
+		glm::mat4x4 worldMatrix;
+		glm::mat4x4 viewMatrix;
+		glm::mat4x4 projectionMatrix;
 
 		ID3D11Buffer * vertexBufferPointer;
 		ID3D11Buffer * indexBufferPointer;

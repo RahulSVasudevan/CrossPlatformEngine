@@ -34,9 +34,14 @@ void IRenderer::DrawQuad()
 {
 }
 
-void IRenderer::DrawMesh(IMesh* Mesh)
+void IRenderer::DrawMesh(IMesh* Mesh, GameEntity* Entity)
 {
 }
 void IRenderer::LightingInfo(DirectionalLight  light)
 {
+}
+
+Material* IRenderer::getMaterial()
+{
+	return x;
 }

@@ -11,6 +11,9 @@ cbuffer externalData : register(b0)
 	DirectionalLight light;
 
 };
+
+Texture2D wallTexture  : register(t0);
+SamplerState basicSampler : register(s0);
 // Struct representing the data we expect to receive from earlier pipeline stages
 // - Should match the output of our corresponding vertex shader
 // - The name of the struct itself is unimportant
@@ -43,13 +46,14 @@ float4 main(VertexToPixel input) : SV_TARGET
 
 	input.normal = normalize(input.normal);
 
+	float4 surfaceColor = wallTexture.Sample(basicSampler, input.UVS);
 	// DIFFUSE (Lambert) DIRECTIONAL LIGHT
 
 
 	float3 lightDirection = -normalize(light.Direction);
 	float lightAmount = dot(input.normal, lightDirection);
 	lightAmount = saturate(lightAmount);
-	float3 finalColor = (light.DiffuseColor * lightAmount + light.AmbientColor);
+	float3 finalColor = surfaceColor * (light.DiffuseColor * lightAmount + light.AmbientColor);
 	// Just return the input color
 	// - This color (like most values passing through the rasterizer) is 
 	//   interpolated for each pixel between the corresponding vertices 

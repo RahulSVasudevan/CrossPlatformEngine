@@ -2,6 +2,8 @@
 
 #include "..\CommonFiles\IRenderer.h"
 #include "..\CommonFiles\Lights.h"
+#include"..\WindowsLibrary\GameEntity.h"
+#include"..\WindowsLibrary\Material.h"
 //#include <unordered_map>
 
 
@@ -14,7 +16,8 @@ class Game
 
 	IMesh * mesh;
 	IMesh * mesh2;
-
+	GameEntity* Entity;
+	Material* TestMaterial;
 	VertexCommon * VertexData;
 	VertexCommon * VertexData2;
 	uint16_t * IndexData;
