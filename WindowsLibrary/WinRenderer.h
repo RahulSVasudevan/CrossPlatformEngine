@@ -48,8 +48,8 @@ using namespace DirectX;
 		SimplePixelShader* pixelShader;
 		DirectionalLight Light;
 		GameEntity* EntityStored;
-		ID3D11ShaderResourceView* TestSRV;
-		ID3D11SamplerState* sampler;
+		/*ID3D11ShaderResourceView* TestSRV;
+		ID3D11SamplerState* sampler;*/
 		Material* testMaterial;
 	
 	public:
@@ -61,7 +61,7 @@ using namespace DirectX;
 		bool MessageExist();
 		void EndFrame();
 		//void DrawQuad();
-		void DrawMesh(IMesh *Mesh, GameEntity *Entity);
+		void DrawMesh(IMesh *Mesh);
 		void  LightingInfo(DirectionalLight light);
 
 		static WinRenderer* WinRendererInstance;
@@ -70,11 +70,15 @@ using namespace DirectX;
 		HRESULT InitDirectX();
 		ID3D11Device* GetDevice();
 		ID3D11DeviceContext* GetContext();
-		
+		SimpleVertexShader* getVertexShader();
+		SimplePixelShader* getPixelShader();
 		void LoadShaders();
-		void LoadTextures();
-		void InitializeMaterial();
+		/*void LoadTextures();
+		void InitializeMaterial();*/
 		Material* getMaterial();
+		glm::mat4x4 getworldMatrix();
+		glm::mat4x4 getviewMatrix();
+		glm::mat4x4 getprojectionMatrix();
 		//Temp Variables
 		/*DirectX::XMFLOAT4X4 worldMatrix;
 		DirectX::XMFLOAT4X4 viewMatrix;

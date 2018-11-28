@@ -1,0 +1,9 @@
+﻿C:\Users\IGMAdmin\Documents\GitHub\CrossPlatformEngine\WindowsLibrary\PixelShader.hlsl(49,57-65): error X3018: invalid subscript 'UVS'
+C:\Users\IGMAdmin\Documents\GitHub\CrossPlatformEngine\WindowsLibrary\PixelShader.hlsl(49,24-66): error X3013: 'Sample': no matching 2 parameter intrinsic method
+C:\Users\IGMAdmin\Documents\GitHub\CrossPlatformEngine\WindowsLibrary\PixelShader.hlsl(49,24-66): error X3013: Possible intrinsic methods are:
+C:\Users\IGMAdmin\Documents\GitHub\CrossPlatformEngine\WindowsLibrary\PixelShader.hlsl(49,24-66): error X3013: Texture2D<float4>.Sample(SamplerState, float2|half2|min10float2|min16float2)
+C:\Users\IGMAdmin\Documents\GitHub\CrossPlatformEngine\WindowsLibrary\PixelShader.hlsl(49,24-66): error X3013: Texture2D<float4>.Sample(SamplerState, float2|half2|min10float2|min16float2, int2)
+C:\Users\IGMAdmin\Documents\GitHub\CrossPlatformEngine\WindowsLibrary\PixelShader.hlsl(49,24-66): error X3013: Texture2D<float4>.Sample(SamplerState, float2|half2|min10float2|min16float2, int2, float1|half1|min10float1|min16float1)
+C:\Users\IGMAdmin\Documents\GitHub\CrossPlatformEngine\WindowsLibrary\PixelShader.hlsl(49,24-66): error X3013: Texture2D<float4>.Sample(SamplerState, float2|half2|min10float2|min16float2, int2, float1|half1|min10float1|min16float1, out uint status)
+  
+  compilation failed; no code produced

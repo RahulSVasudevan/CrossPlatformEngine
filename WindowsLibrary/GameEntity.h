@@ -25,11 +25,12 @@ public:
 	mat4x4 wmTrans;
 	mat4x4 wmScale;
 	mat4x4 wmRot;
-	GameEntity(SimpleVertexShader* vShader, SimplePixelShader* pShader, ID3D11ShaderResourceView* srv, ID3D11SamplerState* sampler);
 	mat4x4 setTranslation(float, float, float);
 	mat4x4 setScale(float, float, float);
 	mat4x4 setRotation(float, float, float);
 	void updateWorld();
+	void LoadTextures();
+	void InitializeMaterial();
 	GameEntity(IMesh* m, Material* m1);
 	IMesh* getMesh();
 	Material* getMaterial();

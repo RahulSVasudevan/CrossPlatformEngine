@@ -1,12 +1,6 @@
 #include "GameEntity.h"
 
-GameEntity::GameEntity(SimpleVertexShader* vShader, SimplePixelShader* pShader, ID3D11ShaderResourceView* srv, ID3D11SamplerState* sampler)
-{
-	vertexShader = vShader;
-	pixelShader = pShader;
-	SRV = srv;
-	Sampler = sampler;
-}
+
 
 mat4x4 GameEntity::setTranslation(float x, float y, float z)
 {
@@ -69,15 +63,36 @@ void GameEntity::prepareMaterial(mat4x4 w, mat4x4 v, mat4x4 p)
 	localvertexShader->SetMatrix4x4("view", convertedView);
 	localvertexShader->SetMatrix4x4("projection", convertedProjection);
 	localvertexShader->CopyAllBufferData();
-	localpixelShader->CopyAllBufferData();
+	
 	localvertexShader->SetShader();
 
 	localpixelShader->SetShaderResourceView("wallTexture", this->getMaterial()->getSRV());
 	localpixelShader->SetSamplerState("basicSampler", this->getMaterial()->getsamplerState());
+	
+	localpixelShader->CopyAllBufferData();
 	localpixelShader->SetShader();
 
 }
 
+void GameEntity::LoadTextures()
+{
+	CreateWICTextureFromFile(device, context, L"Wall4.JPG", 0, &SRV);
+	D3D11_SAMPLER_DESC sd = {}; // Zeros it out
+	sd.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	sd.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	sd.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	sd.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR; // Tri-linear filtering
+												 //sd.Filter = D3D11_FILTER_ANISOTROPIC;
+												 //sd.MaxAnisotropy = 16;
+	sd.MaxLOD = D3D11_FLOAT32_MAX;
+
+	device->CreateSamplerState(&sd, &Sampler);
+}
+void GameEntity::InitializeMaterial()
+{
+	material = new Material(vertexShader, pixelShader, SRV, Sampler);
+
+}
 GameEntity::~GameEntity()
 {
 }

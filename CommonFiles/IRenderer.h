@@ -16,7 +16,7 @@ public:
 	virtual bool MessageExist();
 	virtual void EndFrame();
 	virtual void DrawQuad();
-	virtual void DrawMesh(IMesh* Mesh,GameEntity *Entity);
+	virtual void DrawMesh(IMesh* Mesh);
 	virtual void LightingInfo(DirectionalLight light);
-	virtual Material* getMaterial();
+	//virtual Material* getMaterial();
 };

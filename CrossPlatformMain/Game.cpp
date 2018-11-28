@@ -6,8 +6,9 @@
 #ifdef _WIN32
 #include "..\WindowsLibrary\WinRenderer.h"
 #include "..\WindowsLibrary\WinMesh.h"
+#elif __clang__
+#include "..\PS4Library\PS4Renderer.h"
 #endif
-
 
 
 
@@ -43,21 +44,34 @@ Game::Game()
 	*(IndexData2 + 4) = 2;
 	*(IndexData2 + 5) = 3;
 
-	light.DirLightColor = vec4(1, 1, 1, 1.0f);
-	light.AmbientColor = vec4(0.5, 0.5, 0, 1.0f);
-	light.DirLightDirection = vec3(0, -10,-5);
+	//light.DirLightColor = vec4(1, 1, 1, 1.0f);
+	//light.AmbientColor = vec4(0.5, 0.5, 0, 1.0f);
+	//light.DirLightDirection = vec3(0, -10,-5);
 
 #ifdef _WIN32
 	renderer = new WinRenderer();
+	
 	renderer->Init();
+	
+	
 	//mesh = new WinMesh(VertexData, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
 	//mesh2 = new WinMesh(VertexData2, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
 	
+
 	mesh2 = new WinMesh("../CommonFiles/sphere.obj", dynamic_cast<WinRenderer*>(renderer)->GetDevice());
-	Entity = new  GameEntity(mesh2, renderer->getMaterial());
+	Entity = new  GameEntity(mesh2, Entity->getMaterial());
+	Entity->LoadTextures();
+	Entity->InitializeMaterial();
 	renderer->LightingInfo(light);
+	Entity->prepareMaterial(dynamic_cast<WinRenderer*>(renderer)->getworldMatrix(), dynamic_cast<WinRenderer*>(renderer)->getviewMatrix(), dynamic_cast<WinRenderer*>(renderer)->getprojectionMatrix());
+
+
+#elif __clang__
+renderer = new PS4Renderer();
+renderer->Init();
+mesh = new PS4Mesh(VertexData, 4, IndexData, 6, dynamic_cast<PS4Renderer*>(renderer)->GetStackAllocater());
+mesh2 = new PS4Mesh(VertexData2, 4, IndexData2, 6, dynamic_cast<PS4Renderer*>(renderer)->GetStackAllocater());
 #endif 
-		
 
 
 }
@@ -88,7 +102,9 @@ void Game::Draw()
 
 	//renderer->DrawMesh(mesh);
 
-	renderer->DrawMesh(mesh2,Entity);
+	//renderer->DrawMesh(mesh2,Entity);
+
+	renderer->DrawMesh(mesh2);
 	
 }
 

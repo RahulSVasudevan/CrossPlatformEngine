@@ -32,8 +32,8 @@
 		if (context) { context->Release(); }
 		if (device) { device->Release(); }
 		delete testMaterial;
-		sampler->Release();
-		TestSRV->Release();
+		/*sampler->Release();
+		TestSRV->Release();*/
 	}
 
 	void WinRenderer::Init()
@@ -43,9 +43,9 @@
 		status = InitDirectX();
 
 
-		LoadTextures();
+		//LoadTextures();
 		LoadShaders();
-		InitializeMaterial();
+		//InitializeMaterial();
 		context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		
 
@@ -116,7 +116,7 @@
 		initialIndexData.pSysMem = indices;
 
 		hResult = device->CreateBuffer(&ibd, &initialIndexData, &indexBufferPointer);
-
+		
 		
 	}
 
@@ -180,11 +180,11 @@
 	//}
 
 
-	void WinRenderer::DrawMesh(IMesh* Mesh, GameEntity* Entity)
+	void WinRenderer::DrawMesh(IMesh* Mesh)
 	{
-		EntityStored = Entity;
+		//EntityStored = Entity;
 		pixelShader->SetData("light", &Light, sizeof(DirectionalLight));
-		EntityStored->prepareMaterial(worldMatrix, viewMatrix, projectionMatrix);
+		//EntityStored->prepareMaterial(worldMatrix, viewMatrix, projectionMatrix);
 		
 
 		UINT stride = sizeof(VertexCommon);
@@ -370,6 +370,16 @@
 		return context;
 	}
 
+	SimpleVertexShader * WinRenderer::getVertexShader()
+	{
+		return vertexShader;
+	}
+
+	SimplePixelShader * WinRenderer::getPixelShader()
+	{
+		return pixelShader;
+	}
+
 	void WinRenderer::LoadShaders()
 	{
 		vertexShader = new SimpleVertexShader(device, context);
@@ -378,28 +388,43 @@
 		pixelShader = new SimplePixelShader(device, context);
 		success = pixelShader->LoadShaderFile(L"../CrossPlatformMain/PixelShader.cso");
 	}
-	void WinRenderer::LoadTextures()
-	{
-		CreateWICTextureFromFile(device, context, L"Wall4.JPG", 0, &TestSRV);
-		D3D11_SAMPLER_DESC sd = {}; // Zeros it out
-		sd.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-		sd.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-		sd.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-		sd.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR; // Tri-linear filtering
-													 //sd.Filter = D3D11_FILTER_ANISOTROPIC;
-													 //sd.MaxAnisotropy = 16;
-		sd.MaxLOD = D3D11_FLOAT32_MAX;
+	//void WinRenderer::LoadTextures()
+	//{
+	//	CreateWICTextureFromFile(device, context, L"Wall4.JPG", 0, &TestSRV);
+	//	D3D11_SAMPLER_DESC sd = {}; // Zeros it out
+	//	sd.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	//	sd.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	//	sd.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	//	sd.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR; // Tri-linear filtering
+	//												 //sd.Filter = D3D11_FILTER_ANISOTROPIC;
+	//												 //sd.MaxAnisotropy = 16;
+	//	sd.MaxLOD = D3D11_FLOAT32_MAX;
 
-		device->CreateSamplerState(&sd, &sampler);
-	}
-	void WinRenderer::InitializeMaterial()
-	{
-		testMaterial = new Material(vertexShader, pixelShader, TestSRV, sampler);
-		
-	}
+	//	device->CreateSamplerState(&sd, &sampler);
+	//}
+	//void WinRenderer::InitializeMaterial()
+	//{
+	//	testMaterial = new Material(vertexShader, pixelShader, TestSRV, sampler);
+	//	
+	//}
 
 	Material* WinRenderer::getMaterial()
 	{
 		return testMaterial;
+	}
+
+	glm::mat4x4 WinRenderer::getworldMatrix()
+	{
+		return worldMatrix;
+	}
+
+	glm::mat4x4 WinRenderer::getviewMatrix()
+	{
+		return viewMatrix;
+	}
+
+	glm::mat4x4 WinRenderer::getprojectionMatrix()
+	{
+		return projectionMatrix;
 	}
 
