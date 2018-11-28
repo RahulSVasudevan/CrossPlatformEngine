@@ -25,6 +25,10 @@ bool MouseIsOnButton(UIElementInfo &info, int mousex, int mousey) {
 		mousey > info.y - (info.height / 2) && mousey < info.y + (info.height / 2));
 }
 
+bool MouseButtonDown() {
+	return (GetKeyState(VK_LBUTTON) & 0x8000);
+}
+
 void WinCanvas::Initialize() {
 	spriteBatch.reset(new SpriteBatch(context));
 	spriteFont.reset(new SpriteFont(device, L"../Assets/Fonts/calibri.spritefont", false));
@@ -38,10 +42,37 @@ void WinCanvas::Update(int mousex, int mousey) {
 	this->mousex = mousex;
 	this->mousey = mousey;
 
+	if (MouseButtonDown()) {
+		if (!mouseButtonDown) {
+			mouseButtonDown = true;
+			mouseButtonUp = false;
+			mouseButtonPressed = true;
+		}
+	}
+	else {
+		if (mouseButtonDown) {
+			mouseButtonDown = false;
+			mouseButtonUp = true;
+			mouseButtonReleased = true;
+		}
+	}
+
 	for (map<string, UIElementInfo>::iterator itr = uiElementInfo.begin(); itr != uiElementInfo.end(); itr++) {
-		itr->second.toggled = MouseIsOnButton(itr->second, mousex, mousey);
+		itr->second.hovered = MouseIsOnButton(itr->second, mousex, mousey);
+		if (itr->second.hovered && mouseButtonPressed) {
+			itr->second.pressed = true;
+		}
+		if (mouseButtonReleased) {
+			if (itr->second.hovered && itr->second.pressed) {
+				FunctionTest();
+			}
+			itr->second.pressed = false;
+		}
 		//TODO: Make function calls for button presses
 	}
+
+	mouseButtonPressed = false;
+	mouseButtonReleased = false;
 }
 
 void WinCanvas::DeInitialize() {
@@ -57,15 +88,25 @@ void WinCanvas::Render() {
 	SimpleMath::Vector2 pos = SimpleMath::Vector2(80.0f, 80.0f);
 	spriteFont->DrawString(spriteBatch.get(), L"Hello", pos);
 
+	XMVECTOR color;
+
 	for (map<string, ID3D11ShaderResourceView*>::iterator itr = shaderResourceViews.begin(); itr != shaderResourceViews.end(); itr++) {
 		//TODO: make conditions for buttons
 		RECT tempRect;
 		UIElementInfo *info = &uiElementInfo[itr->first];
+
+		if (!info->hovered) {
+			color = Colors::White;
+		}
+		else {
+			color = (info->pressed) ? Colors::Gray : Colors::LightGray;
+		}
+
 		tempRect.bottom = info->y + (info->width / 2);
 		tempRect.top = info->y - (info->width / 2);
 		tempRect.left = info->x - (info->width / 2);
 		tempRect.right = info->x + (info->width / 2);
-		spriteBatch->Draw(itr->second, tempRect, info->toggled ? Colors::Gray : Colors::White);
+		spriteBatch->Draw(itr->second, tempRect, color);
 	}
 
 
@@ -93,7 +134,8 @@ void WinCanvas::CreateTextureFromFile(wstring filename, string textureName) {
 	info.y = 50;
 	info.width = 25;
 	info.height = 25;
-	info.toggled = false;
+	info.hovered = false;
+	info.pressed = false;
 	uiElementInfo.insert(std::pair<string, UIElementInfo>(textureName, info));
 	uiButtonFunctions.insert(std::pair<string, std::function<void()>>(textureName, FunctionTest));
 }

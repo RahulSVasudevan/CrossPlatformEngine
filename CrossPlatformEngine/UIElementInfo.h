@@ -5,5 +5,6 @@ struct UIElementInfo {
 	int y;
 	int width;
 	int height;
-	bool toggled;	//Only used by buttons
+	bool hovered;	//Only used by buttons
+	bool pressed;
 };

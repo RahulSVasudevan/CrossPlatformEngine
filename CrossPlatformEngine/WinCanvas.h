@@ -38,6 +38,10 @@ private:
 	unique_ptr<SpriteFont> spriteFont;
 	int mousex;
 	int mousey;
+	bool mouseButtonPressed;
+	bool mouseButtonReleased;
+	bool mouseButtonDown;
+	bool mouseButtonUp;
 
 	map<string, ID3D11ShaderResourceView*> shaderResourceViews;
 	map<string, UIElementInfo> uiElementInfo;
