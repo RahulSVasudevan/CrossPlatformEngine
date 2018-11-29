@@ -408,11 +408,7 @@
 	//	
 	//}
 
-	Material* WinRenderer::getMaterial()
-	{
-		return testMaterial;
-	}
-
+	
 	glm::mat4x4 WinRenderer::getworldMatrix()
 	{
 		return worldMatrix;

@@ -2,6 +2,7 @@
 #include "../CommonFiles/Maths.h"
 #include "Material.h"
 #include"WinMesh.h"
+#include"WinRenderer.h"
 #include "SimpleShader.h"
 #include <DirectXMath.h>
 
@@ -14,9 +15,10 @@ class GameEntity
 	vec3 scaleValue;
 	IMesh* mesh;
 	Material* material;
-	SimpleVertexShader* vertexShader;
-	SimplePixelShader* pixelShader;
-
+	WinRenderer* Renderer;
+	SimpleVertexShader* localvertexShader;
+	SimplePixelShader* localpixelShader;
+	DirectionalLight Light;
 	ID3D11ShaderResourceView* SRV;
 	ID3D11SamplerState* Sampler;
 
@@ -31,9 +33,10 @@ public:
 	void updateWorld();
 	void LoadTextures();
 	void InitializeMaterial();
-	GameEntity(IMesh* m, Material* m1);
+	GameEntity(IMesh* m, Material* m1, WinRenderer* renderer);
 	IMesh* getMesh();
 	Material* getMaterial();
-	void prepareMaterial(mat4x4, mat4x4, mat4x4 );
+	void prepareMaterial();
+	void  LightingInfo(DirectionalLight light);
 	~GameEntity();
 };

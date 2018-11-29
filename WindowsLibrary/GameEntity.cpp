@@ -29,8 +29,9 @@ void GameEntity::updateWorld()
 	worldMatrix = wmTrans * wmRot * wmScale;
 }
 
-GameEntity::GameEntity(IMesh* m, Material* m1)
+GameEntity::GameEntity(IMesh* m, Material* m1, WinRenderer* renderer)
 {
+	Renderer = renderer;
 	mesh = m;
 	material = m1;
 	this->setTranslation(0.0f, 0.0f, 0.0f);
@@ -50,11 +51,14 @@ Material * GameEntity::getMaterial()
 	return material;
 }
 
-void GameEntity::prepareMaterial(mat4x4 w, mat4x4 v, mat4x4 p)
+void GameEntity::prepareMaterial()
 {
-
-	SimpleVertexShader* localvertexShader = this->getMaterial()->getvertexShader();
-	SimplePixelShader* localpixelShader = this->getMaterial()->getpixelShader();
+	mat4x4 w, v, p;
+	//w = Renderer->getworldMatrix();
+	v = Renderer->getviewMatrix();
+	p = Renderer->getprojectionMatrix();
+	localvertexShader = Renderer->getVertexShader();
+	localpixelShader = Renderer->getPixelShader();
 	
 	const float* world = (const float*)value_ptr(worldMatrix);
 	const float* convertedView = (const float*)value_ptr(v);
@@ -76,7 +80,7 @@ void GameEntity::prepareMaterial(mat4x4 w, mat4x4 v, mat4x4 p)
 
 void GameEntity::LoadTextures()
 {
-	CreateWICTextureFromFile(device, context, L"Wall4.JPG", 0, &SRV);
+	CreateWICTextureFromFile(Renderer->GetDevice(), Renderer->GetContext(), L"Wall4.JPG", 0, &SRV);
 	D3D11_SAMPLER_DESC sd = {}; // Zeros it out
 	sd.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
 	sd.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
@@ -86,11 +90,15 @@ void GameEntity::LoadTextures()
 												 //sd.MaxAnisotropy = 16;
 	sd.MaxLOD = D3D11_FLOAT32_MAX;
 
-	device->CreateSamplerState(&sd, &Sampler);
+	Renderer->GetDevice()->CreateSamplerState(&sd, &Sampler);
 }
 void GameEntity::InitializeMaterial()
 {
-	material = new Material(vertexShader, pixelShader, SRV, Sampler);
+	material = new Material(localvertexShader, localpixelShader, SRV, Sampler);
+
+}
+void  LightingInfo(DirectionalLight light)
+{
 
 }
 GameEntity::~GameEntity()

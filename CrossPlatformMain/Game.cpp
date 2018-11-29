@@ -57,14 +57,14 @@ Game::Game()
 	//mesh = new WinMesh(VertexData, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
 	//mesh2 = new WinMesh(VertexData2, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
 	
-
+	
 	mesh2 = new WinMesh("../CommonFiles/sphere.obj", dynamic_cast<WinRenderer*>(renderer)->GetDevice());
-	Entity = new  GameEntity(mesh2, Entity->getMaterial());
+	Entity = new  GameEntity(mesh2, Entity->getMaterial(), dynamic_cast<WinRenderer*>(renderer));
 	Entity->LoadTextures();
 	Entity->InitializeMaterial();
 	renderer->LightingInfo(light);
-	Entity->prepareMaterial(dynamic_cast<WinRenderer*>(renderer)->getworldMatrix(), dynamic_cast<WinRenderer*>(renderer)->getviewMatrix(), dynamic_cast<WinRenderer*>(renderer)->getprojectionMatrix());
-
+	//Entity->prepareMaterial(dynamic_cast<WinRenderer*>(renderer)->getworldMatrix(), dynamic_cast<WinRenderer*>(renderer)->getviewMatrix(), dynamic_cast<WinRenderer*>(renderer)->getprojectionMatrix());
+	//Entity->prepareMaterial();
 
 #elif __clang__
 renderer = new PS4Renderer();
@@ -103,7 +103,7 @@ void Game::Draw()
 	//renderer->DrawMesh(mesh);
 
 	//renderer->DrawMesh(mesh2,Entity);
-
+	Entity->prepareMaterial();
 	renderer->DrawMesh(mesh2);
 	
 }

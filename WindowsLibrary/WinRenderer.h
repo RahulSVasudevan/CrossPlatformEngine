@@ -47,7 +47,6 @@ using namespace DirectX;
 		SimpleVertexShader* vertexShader;
 		SimplePixelShader* pixelShader;
 		DirectionalLight Light;
-		GameEntity* EntityStored;
 		/*ID3D11ShaderResourceView* TestSRV;
 		ID3D11SamplerState* sampler;*/
 		Material* testMaterial;
@@ -75,7 +74,6 @@ using namespace DirectX;
 		void LoadShaders();
 		/*void LoadTextures();
 		void InitializeMaterial();*/
-		Material* getMaterial();
 		glm::mat4x4 getworldMatrix();
 		glm::mat4x4 getviewMatrix();
 		glm::mat4x4 getprojectionMatrix();

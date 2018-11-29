@@ -29,7 +29,7 @@ struct VertexToPixel
 	float4 position		: SV_POSITION;
 	float4 color		: COLOR;
 	float3 normal		: NORMAL;
-	float2 uv			: UVS;
+	float2 uv			: TEXCOORD;
 };
 
 // --------------------------------------------------------
@@ -46,7 +46,7 @@ float4 main(VertexToPixel input) : SV_TARGET
 
 	input.normal = normalize(input.normal);
 
-	float4 surfaceColor = wallTexture.Sample(basicSampler, input.UVS);
+	float4 surfaceColor = wallTexture.Sample(basicSampler, input.uv);
 	// DIFFUSE (Lambert) DIRECTIONAL LIGHT
 
 
