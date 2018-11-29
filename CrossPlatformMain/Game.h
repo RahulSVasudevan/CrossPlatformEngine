@@ -3,7 +3,7 @@
 #include "..\CommonFiles\IRenderer.h"
 #include "..\CommonFiles\Lights.h"
 #include"..\WindowsLibrary\GameEntity.h"
-#include"..\WindowsLibrary\Material.h"
+
 //#include <unordered_map>
 
 

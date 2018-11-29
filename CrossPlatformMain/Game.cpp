@@ -44,9 +44,9 @@ Game::Game()
 	*(IndexData2 + 4) = 2;
 	*(IndexData2 + 5) = 3;
 
-	//light.DirLightColor = vec4(1, 1, 1, 1.0f);
-	//light.AmbientColor = vec4(0.5, 0.5, 0, 1.0f);
-	//light.DirLightDirection = vec3(0, -10,-5);
+	light.DirLightColor = vec4(1, 1, 1, 1.0f);
+	light.AmbientColor = vec4(0.5, 0.5, 0, 1.0f);
+	light.DirLightDirection = vec3(0, -10,-5);
 
 #ifdef _WIN32
 	renderer = new WinRenderer();
@@ -59,7 +59,7 @@ Game::Game()
 	
 	
 	mesh2 = new WinMesh("../CommonFiles/sphere.obj", dynamic_cast<WinRenderer*>(renderer)->GetDevice());
-	Entity = new  GameEntity(mesh2, Entity->getMaterial(), dynamic_cast<WinRenderer*>(renderer));
+	Entity = new  GameEntity(mesh2,renderer);
 	Entity->LoadTextures();
 	Entity->InitializeMaterial();
 	renderer->LightingInfo(light);

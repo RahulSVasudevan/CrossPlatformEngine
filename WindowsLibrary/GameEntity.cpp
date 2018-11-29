@@ -1,3 +1,4 @@
+
 #include "GameEntity.h"
 
 
@@ -29,11 +30,12 @@ void GameEntity::updateWorld()
 	worldMatrix = wmTrans * wmRot * wmScale;
 }
 
-GameEntity::GameEntity(IMesh* m, Material* m1, WinRenderer* renderer)
+GameEntity::GameEntity(IMesh* m, IRenderer* renderer)
 {
-	Renderer = renderer;
 	mesh = m;
-	material = m1;
+	Renderer = renderer;
+	localvertexShader = dynamic_cast<WinRenderer*>(Renderer)->getVertexShader();
+	localpixelShader = dynamic_cast<WinRenderer*>(Renderer)->getPixelShader();
 	this->setTranslation(0.0f, 0.0f, 0.0f);
 	this->setScale(1.0f, 1.0f, 1.0f);
 	this->setRotation(0.0f,0.0f,0.0f);
@@ -55,10 +57,9 @@ void GameEntity::prepareMaterial()
 {
 	mat4x4 w, v, p;
 	//w = Renderer->getworldMatrix();
-	v = Renderer->getviewMatrix();
-	p = Renderer->getprojectionMatrix();
-	localvertexShader = Renderer->getVertexShader();
-	localpixelShader = Renderer->getPixelShader();
+	v = dynamic_cast<WinRenderer*>(Renderer)->getviewMatrix();
+	p = dynamic_cast<WinRenderer*>(Renderer)->getprojectionMatrix();
+	
 	
 	const float* world = (const float*)value_ptr(worldMatrix);
 	const float* convertedView = (const float*)value_ptr(v);
@@ -80,7 +81,7 @@ void GameEntity::prepareMaterial()
 
 void GameEntity::LoadTextures()
 {
-	CreateWICTextureFromFile(Renderer->GetDevice(), Renderer->GetContext(), L"Wall4.JPG", 0, &SRV);
+	CreateWICTextureFromFile(dynamic_cast<WinRenderer*>(Renderer)->GetDevice(), dynamic_cast<WinRenderer*>(Renderer)->GetContext(), L"Knockdown_texture.JPG", 0, &SRV);
 	D3D11_SAMPLER_DESC sd = {}; // Zeros it out
 	sd.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
 	sd.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
@@ -90,7 +91,7 @@ void GameEntity::LoadTextures()
 												 //sd.MaxAnisotropy = 16;
 	sd.MaxLOD = D3D11_FLOAT32_MAX;
 
-	Renderer->GetDevice()->CreateSamplerState(&sd, &Sampler);
+	dynamic_cast<WinRenderer*>(Renderer)->GetDevice()->CreateSamplerState(&sd, &Sampler);
 }
 void GameEntity::InitializeMaterial()
 {

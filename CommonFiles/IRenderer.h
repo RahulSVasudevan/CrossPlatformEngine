@@ -1,12 +1,12 @@
 #pragma once
 
 #include "IMesh.h"
-#include"../WindowsLibrary/Material.h"
-#include"../WindowsLibrary/GameEntity.h"
+//#include"../WindowsLibrary/Material.h"
+//#include"../WindowsLibrary/GameEntity.h"
 class IRenderer
 {
 
-	Material* x;
+	//Material* x;
 public:
 
 	IRenderer();

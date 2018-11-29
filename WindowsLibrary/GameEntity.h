@@ -2,27 +2,27 @@
 #include "../CommonFiles/Maths.h"
 #include "Material.h"
 #include"WinMesh.h"
-#include"WinRenderer.h"
+#include"../WindowsLibrary/WinRenderer.h"
+#include"../CommonFiles/IRenderer.h"
 #include "SimpleShader.h"
 #include <DirectXMath.h>
 
 using namespace glm;
 class GameEntity
-{
-
-	vec3 position;
+{	vec3 position;
 	vec3 rotation;
 	vec3 scaleValue;
 	IMesh* mesh;
 	Material* material;
-	WinRenderer* Renderer;
+	IRenderer* Renderer;
 	SimpleVertexShader* localvertexShader;
 	SimplePixelShader* localpixelShader;
-	DirectionalLight Light;
+	/*DirectionalLight Light;*/
 	ID3D11ShaderResourceView* SRV;
 	ID3D11SamplerState* Sampler;
 
 public:
+	GameEntity(IMesh* m, IRenderer* renderer);
 	mat4x4 worldMatrix;
 	mat4x4 wmTrans;
 	mat4x4 wmScale;
@@ -33,10 +33,9 @@ public:
 	void updateWorld();
 	void LoadTextures();
 	void InitializeMaterial();
-	GameEntity(IMesh* m, Material* m1, WinRenderer* renderer);
 	IMesh* getMesh();
 	Material* getMaterial();
 	void prepareMaterial();
-	void  LightingInfo(DirectionalLight light);
+	//void  LightingInfo(DirectionalLight light);
 	~GameEntity();
 };

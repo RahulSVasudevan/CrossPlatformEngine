@@ -9,7 +9,7 @@
 #include <DirectXMath.h>
 #include "WICTextureLoader.h"
 #include "WinMesh.h"
-#include "Material.h"
+//#include "Material.h"
 #include"GameEntity.h"
 #include"..\CommonFiles\Maths.h"
 #pragma comment(lib, "d3d11.lib")
@@ -49,7 +49,7 @@ using namespace DirectX;
 		DirectionalLight Light;
 		/*ID3D11ShaderResourceView* TestSRV;
 		ID3D11SamplerState* sampler;*/
-		Material* testMaterial;
+		//Material* testMaterial;
 	
 	public:
 

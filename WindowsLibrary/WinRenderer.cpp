@@ -31,7 +31,7 @@
 		if (swapChain) { swapChain->Release(); }
 		if (context) { context->Release(); }
 		if (device) { device->Release(); }
-		delete testMaterial;
+		
 		/*sampler->Release();
 		TestSRV->Release();*/
 	}
@@ -51,26 +51,33 @@
 
 
 		// Temp Code
+		vec3 cameraPos = vec3(0.0f, 0.0f, 3.0f);
+		vec3 cameraTarget = vec3(0.0f, 0.0f, 0.0f);
+		vec3 cameraDirection = normalize(cameraPos - cameraTarget);
+		vec3 up = vec3(0.0f, 1.0f, 0.0f);
+		vec3 cameraRight = normalize(cross(up, cameraDirection));
 		
-
+		viewMatrix = lookAt(cameraPos, cameraTarget, up);	
+		worldMatrix = mat4(1.0);
 		/*XMMATRIX W = XMMatrixIdentity();
 		XMStoreFloat4x4(&worldMatrix, XMMatrixTranspose(W));*/
 
-		XMVECTOR pos = XMVectorSet(0, 0, -5, 0);
-		XMVECTOR dir = XMVectorSet(0, 0, 1, 0);
-		XMVECTOR up = XMVectorSet(0, 1, 0, 0);
-		XMMATRIX V = XMMatrixLookToLH(
-			pos,     // The position of the "camera"
-			dir,     // Direction the camera is looking
-			up);     // "Up" direction in 3D space (prevents roll)
-		XMStoreFloat4x4(&viewMatrix, XMMatrixTranspose(V)); // Transpose for HLSL!
-
-		XMMATRIX P = XMMatrixPerspectiveFovLH(
-			0.25f * 3.1415926535f,		// Field of View Angle
-			(float)width / height,		// Aspect ratio
-			0.1f,						// Near clip plane distance
-			100.0f);					// Far clip plane distance
-		XMStoreFloat4x4(&projectionMatrix, XMMatrixTranspose(P)); // Transpose for HLSL!
+		//XMVECTOR pos = XMVectorSet(0, 0, -5, 0);
+		//XMVECTOR dir = XMVectorSet(0, 0, 1, 0);
+		//XMVECTOR up = XMVectorSet(0, 1, 0, 0);
+		//XMMATRIX V = XMMatrixLookToLH(
+		//	pos,     // The position of the "camera"
+		//	dir,     // Direction the camera is looking
+		//	up);     // "Up" direction in 3D space (prevents roll)
+		//XMStoreFloat4x4(&viewMatrix, XMMatrixTranspose(V)); // Transpose for HLSL!
+		projectionMatrix = perspective(0.25f * 3.1415926535f, (float)width / height, 0.1f, 100.0f);
+		projectionMatrix = transpose(projectionMatrix);
+		//XMMATRIX P = XMMatrixPerspectiveFovLH(
+		//	0.25f * 3.1415926535f,		// Field of View Angle
+		//	(float)width / height,		// Aspect ratio
+		//	0.1f,						// Near clip plane distance
+		//	100.0f);					// Far clip plane distance
+		//XMStoreFloat4x4(&projectionMatrix, XMMatrixTranspose(P)); // Transpose for HLSL!
 
 
 		Vertex vertices[]
