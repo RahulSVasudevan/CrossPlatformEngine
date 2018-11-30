@@ -57,8 +57,9 @@
 		vec3 up = vec3(0.0f, 1.0f, 0.0f);
 		vec3 cameraRight = normalize(cross(up, cameraDirection));
 		
-		viewMatrix = lookAt(cameraPos, cameraTarget, up);	
-		worldMatrix = mat4(1.0);
+		viewMatrix = lookAt(cameraPos, cameraTarget, up);
+		viewMatrix = transpose(viewMatrix);
+		worldMatrix = mat4(1.0f);
 		/*XMMATRIX W = XMMatrixIdentity();
 		XMStoreFloat4x4(&worldMatrix, XMMatrixTranspose(W));*/
 
@@ -123,8 +124,6 @@
 		initialIndexData.pSysMem = indices;
 
 		hResult = device->CreateBuffer(&ibd, &initialIndexData, &indexBufferPointer);
-		
-		
 	}
 
 	void WinRenderer::MessageLoop()

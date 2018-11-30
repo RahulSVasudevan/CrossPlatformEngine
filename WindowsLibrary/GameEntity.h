@@ -24,12 +24,12 @@ class GameEntity
 public:
 	GameEntity(IMesh* m, IRenderer* renderer);
 	mat4x4 worldMatrix;
-	mat4x4 wmTrans;
-	mat4x4 wmScale;
-	mat4x4 wmRot;
-	mat4x4 setTranslation(float, float, float);
-	mat4x4 setScale(float, float, float);
-	mat4x4 setRotation(float, float, float);
+	vec3 wmTrans;
+	vec3 wmScale;
+	vec3 wmRot;
+	void setTranslation(float, float, float);
+	void setScale(float, float, float);
+	void setRotation(float, float, float);
 	void updateWorld();
 	void LoadTextures();
 	void InitializeMaterial();

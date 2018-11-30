@@ -27,7 +27,7 @@ struct VertexShaderInput
 	float3 position		: POSITION;     // XYZ position
 	float4 color		: COLOR;        // RGBA color
 	float3 normal		: NORMAL;
-	float2 uv			: UVs;
+	float2 uv			: TEXCOORD;
 };
 
 // Struct representing the data we're sending down the pipeline
@@ -58,7 +58,7 @@ struct VertexToPixel
 VertexToPixel main( VertexShaderInput input )
 {
 	// Set up output struct
-	VertexToPixel output;
+	VertexToPixel output = (VertexToPixel)0;
 
 	// The vertex's position (input.position) must be converted to world space,
 	// then camera space (relative to our 3D camera), then to proper homogenous 
@@ -75,7 +75,7 @@ VertexToPixel main( VertexShaderInput input )
 	// The result is essentially the position (XY) of the vertex on our 2D 
 	// screen and the distance (Z) from the camera (the "depth" of the pixel)
 	output.position = mul(float4(input.position, 1.0f), worldViewProj);
-
+	output.uv = input.uv;
 	// Pass the color through 
 	// - The values will be interpolated per-pixel by the rasterizer
 	// - We don't need to alter it here, but we do need to send it to the pixel shader
