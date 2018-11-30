@@ -6,7 +6,10 @@
 #include "../CommonMain/ICanvas.h"
 #include <iostream>
 #include <functional>
+#include <fstream>
 #include <map>
+#include "../CommonMain/SceneObjectData.h"
+#include "../CommonMain/Parser.h"
 #include "SimpleMath.h"
 #include "SpriteBatch.h"
 #include "SpriteFont.h"
@@ -29,7 +32,10 @@ public:
 	void AssignDeviceAndContext(ID3D11Device *device, ID3D11DeviceContext *context);
 
 	//textureName, to be looked up in map
+	void LoadScene(string filename);
 	void CreateTextureFromFile(wstring filename, string textureName);
+	void CreateTextureFromFile(wstring filename, string textureName, int x, int y, int width, int height);
+	bool IsReady();
 
 private:
 	ID3D11Device * device;

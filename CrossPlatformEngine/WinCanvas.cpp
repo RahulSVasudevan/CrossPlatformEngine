@@ -21,6 +21,7 @@ WinCanvas::~WinCanvas() {
 }
 
 bool MouseIsOnButton(UIElementInfo &info, int mousex, int mousey) {
+	//TODO: Hover detection seems a little off
 	return (mousex > info.x - (info.width / 2) && mousex < info.x + (info.width / 2) &&
 		mousey > info.y - (info.height / 2) && mousey < info.y + (info.height / 2));
 }
@@ -102,8 +103,8 @@ void WinCanvas::Render() {
 			color = (info->pressed) ? Colors::Gray : Colors::LightGray;
 		}
 
-		tempRect.bottom = info->y + (info->width / 2);
-		tempRect.top = info->y - (info->width / 2);
+		tempRect.bottom = info->y + (info->height / 2);
+		tempRect.top = info->y - (info->height / 2);
 		tempRect.left = info->x - (info->width / 2);
 		tempRect.right = info->x + (info->width / 2);
 		spriteBatch->Draw(itr->second, tempRect, color);
@@ -118,6 +119,18 @@ void WinCanvas::Render() {
 void WinCanvas::AssignDeviceAndContext(ID3D11Device *device, ID3D11DeviceContext *context) {
 	this->device = device;
 	this->context = context;
+}
+
+void WinCanvas::LoadScene(string filename) {
+	ifstream file(filename);
+	string str;
+	if (file) {
+		while (getline(file, str)) {
+			SceneObjectData data = Parser::GetSceneObjectData(str);
+			//TODO: Implement error handling
+			CreateTextureFromFile(data.path, data.name, data.x, data.y, data.width, data.height);
+		}
+	}
 }
 
 //Not sure if proper way to add pointers into maps
@@ -138,4 +151,27 @@ void WinCanvas::CreateTextureFromFile(wstring filename, string textureName) {
 	info.pressed = false;
 	uiElementInfo.insert(std::pair<string, UIElementInfo>(textureName, info));
 	uiButtonFunctions.insert(std::pair<string, std::function<void()>>(textureName, FunctionTest));
+}
+
+void WinCanvas::CreateTextureFromFile(wstring filename, string textureName, int x, int y, int width, int height) {
+	if (device == nullptr || context == nullptr) return;
+	if (shaderResourceViews[textureName] != nullptr) return;
+
+	ID3D11ShaderResourceView *ptr;
+	shaderResourceViews.insert(std::pair<string, ID3D11ShaderResourceView*>(textureName, ptr));
+	CreateWICTextureFromFile(device, filename.c_str(), nullptr, &shaderResourceViews[textureName]);
+
+	UIElementInfo info;
+	info.x = x;
+	info.y = y;
+	info.width = width;
+	info.height = height;
+	info.hovered = false;
+	info.pressed = false;
+	uiElementInfo.insert(std::pair<string, UIElementInfo>(textureName, info));
+	uiButtonFunctions.insert(std::pair<string, std::function<void()>>(textureName, FunctionTest));
+}
+
+bool WinCanvas::IsReady() {
+	return (this->device != nullptr && this->context != nullptr);
 }

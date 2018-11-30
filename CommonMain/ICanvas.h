@@ -13,6 +13,12 @@ public:
 	virtual void Update(int mousex, int mousey) {}
 	virtual void Render() = 0;
 
+	virtual void LoadScene(string filename) {}
+	
+	//Probably more efficient to use optional parameters (x = 0), if possible in C++
 	virtual void CreateTextureFromFile(wstring filename, string textureName) = 0;
+	virtual void CreateTextureFromFile(wstring filename, string textureName, int x, int y, int width, int height) {};
 	virtual void CreateButtonFromFile(wstring filename, string textureName) {}	//Shouldn't cause an error on the PS4 side
+
+	virtual bool IsReady() { return false; }
 };

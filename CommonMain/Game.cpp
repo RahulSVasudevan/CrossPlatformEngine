@@ -29,19 +29,21 @@ Game::Game()
 	
 }
 
-void Game::InitializeCanvas() {
+void Game::CreateCanvas() {
 #ifdef _WIN32
 	canvas = new WinCanvas();
 	wc = static_cast<WinCanvas*>(canvas);
 #endif
 }
 
-void Game::PrepareCanvas() {
+void Game::InitializeCanvas() {
 #ifdef _WIN32
 	wc->AssignDeviceAndContext(wr->GetDevice(), wr->GetContext());
 	wc->Initialize();
-	wc->CreateTextureFromFile(L"../Assets/Textures/smiley.png", "smiley");
+	//wc->CreateTextureFromFile(L"../Assets/Textures/smiley.png", "smiley");
 #endif
+	//canvas->CreateTextureFromFile(L"../Assets/Textures/smiley.png", "smiley");
+	canvas->LoadScene("../Assets/Scenes/Scene.txt");
 }
 
 Game::~Game() {
@@ -56,7 +58,7 @@ Game::~Game() {
 
 void Game::Init()
 {
-	InitializeCanvas();
+	CreateCanvas();
 }
 
 #ifdef _WIN32
@@ -84,11 +86,15 @@ void Game::UpdateCanvas() {
 	y = mousePosition.y;
 #endif
 	canvas->Update(x, y);
-	PrepareCanvas();
+	//PrepareCanvas();
 }
 
 void Game::Run()
 {
+	//Wait for the device and context to be created, then prepare the canvas
+	while (!canvas->IsReady()) {
+		InitializeCanvas();
+	}
 	while (renderer->MessageExist())
 	{
 		UpdateCanvas();

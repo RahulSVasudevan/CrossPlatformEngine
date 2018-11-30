@@ -32,8 +32,8 @@ private:
 	//unordered_map<int, Mesh> meshes;
 	//GameObject *gameObjects;
 	//Mesh *meshes;
+	void CreateCanvas();
 	void InitializeCanvas();
-	void PrepareCanvas();
 	ICanvas *canvas;
 #ifdef _WIN32
 	WinRenderer *wr;
