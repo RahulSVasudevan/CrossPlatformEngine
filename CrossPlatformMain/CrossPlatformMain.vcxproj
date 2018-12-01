@@ -179,12 +179,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\CommonFiles\IMesh.cpp" />
+    <ClCompile Include="..\CommonFiles\Input.cpp" />
     <ClCompile Include="..\CommonFiles\IRenderer.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CommonFiles\IMesh.h" />
+    <ClInclude Include="..\CommonFiles\Input.h" />
     <ClInclude Include="..\CommonFiles\IRenderer.h" />
     <ClInclude Include="..\CommonFiles\Lights.h" />
     <ClInclude Include="..\CommonFiles\Maths.h" />

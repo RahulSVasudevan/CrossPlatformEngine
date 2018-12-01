@@ -1,7 +1,8 @@
 
 #include "GameEntity.h"
+//#include <WICTextureLoader.h>
 
-
+using namespace DirectX;
 
 void GameEntity::setTranslation(float x, float y, float z)
 {
@@ -102,4 +103,6 @@ void  LightingInfo(DirectionalLight light)
 }
 GameEntity::~GameEntity()
 {
+	SRV->Release();
+	Sampler->Release();
 }

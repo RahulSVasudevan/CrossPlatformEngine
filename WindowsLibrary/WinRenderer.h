@@ -6,11 +6,11 @@
 #include <sstream>
 #include <string>
 #include "SimpleShader.h"
+#include"Keyboard.h"
 #include <DirectXMath.h>
-#include "WICTextureLoader.h"
 #include "WinMesh.h"
-//#include "Material.h"
-#include"GameEntity.h"
+
+//#include"GameEntity.h"
 #include"..\CommonFiles\Maths.h"
 #pragma comment(lib, "d3d11.lib")
 
@@ -47,9 +47,6 @@ using namespace DirectX;
 		SimpleVertexShader* vertexShader;
 		SimplePixelShader* pixelShader;
 		DirectionalLight Light;
-		/*ID3D11ShaderResourceView* TestSRV;
-		ID3D11SamplerState* sampler;*/
-		//Material* testMaterial;
 	
 	public:
 
@@ -58,6 +55,7 @@ using namespace DirectX;
 		void Init();
 		void MessageLoop();
 		bool MessageExist();
+		void BeginFrame();
 		void EndFrame();
 		//void DrawQuad();
 		void DrawMesh(IMesh *Mesh);
@@ -72,8 +70,6 @@ using namespace DirectX;
 		SimpleVertexShader* getVertexShader();
 		SimplePixelShader* getPixelShader();
 		void LoadShaders();
-		/*void LoadTextures();
-		void InitializeMaterial();*/
 		glm::mat4x4 getworldMatrix();
 		glm::mat4x4 getviewMatrix();
 		glm::mat4x4 getprojectionMatrix();
@@ -84,7 +80,6 @@ using namespace DirectX;
 		glm::mat4x4 worldMatrix;
 		glm::mat4x4 viewMatrix;
 		glm::mat4x4 projectionMatrix;
-
 		ID3D11Buffer * vertexBufferPointer;
 		ID3D11Buffer * indexBufferPointer;
 		//Vertex* vertices;

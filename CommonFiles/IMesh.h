@@ -5,19 +5,26 @@
 #include <string>
 #include <stdint.h>
 #include "Maths.h"
-#include "Lights.h"
+#include"Lights.h"
+
 
 using namespace glm;
 
 struct VertexCommon
 {
-	vec3 Position;	    // The position of the vertex
-	vec4 Color;        // The color of the vertex
+	vec3 Position;
+	float pad1;
+	
+	vec4 Color;        
+	
 	vec3 Normal;
-	vec2 UV;
+	float pad2;
+	
+	vec2 UV; 
+	vec2 pad3;
 
-	VertexCommon() { Color = vec4(1, 1, 1, 1); };
-	VertexCommon(vec3 a, vec4 b, vec3 c) { Position = a; Color = b; Normal = c; }
+	VertexCommon() { Position = vec3(0, 0, 0); Color = vec4(1, 1, 1, 1); Normal = vec3(0, 0, 0); UV = vec2(0, 0); pad1 = 0; pad2 = 0; pad3 = vec2(0, 0); };
+	VertexCommon(vec3 a, vec4 b) { Position = a; Color = b; Normal = vec3(0, 0, -1); UV = vec2(0, 0); pad1 = 0; pad2 = 0; pad3 = vec2(0, 0);}
 };
 
 
@@ -43,8 +50,12 @@ public:
 	
 	int vertexSize;
 	int indexSize;
-	
+
+	glm::mat4 world;
 	VertexCommon * GetVertexData();
 	uint16_t* GetIndexData();
+	glm::mat4 GetWorldMatrix();
+
+	void CheckInput(float x);
 };
 

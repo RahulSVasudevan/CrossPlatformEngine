@@ -26,22 +26,22 @@ bool IRenderer::MessageExist()
 	return true;
 }
 
+void IRenderer::BeginFrame()
+{
+}
+
 void IRenderer::EndFrame()
 {
 }
 
-void IRenderer::DrawQuad()
-{
-}
+//void IRenderer::DrawQuad()
+//{
+//}
 
 void IRenderer::DrawMesh(IMesh* Mesh)
 {
 }
-void IRenderer::LightingInfo(DirectionalLight  light)
+
+void IRenderer::LightingInfo(DirectionalLight light)
 {
 }
-
-//Material* IRenderer::getMaterial()
-//{
-//	return x;
-//}

@@ -6,6 +6,7 @@
 #include"../CommonFiles/IRenderer.h"
 #include "SimpleShader.h"
 #include <DirectXMath.h>
+#include "WICTextureLoader.h"
 
 using namespace glm;
 class GameEntity

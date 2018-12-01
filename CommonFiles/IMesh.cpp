@@ -3,6 +3,7 @@
 
 IMesh::IMesh()
 {
+	world = glm::mat4(1.0f);
 	vertexSize = 0;
 	indexSize = 0;
 }
@@ -192,6 +193,16 @@ VertexCommon * IMesh::GetVertexData()
 uint16_t * IMesh::GetIndexData()
 {
 	return indexData;
+}
+
+glm::mat4 IMesh::GetWorldMatrix()
+{
+	return world;
+}
+
+void IMesh::CheckInput(float x)
+{
+	world = glm::translate(world, glm::vec3(x, x, x));
 }
 
 

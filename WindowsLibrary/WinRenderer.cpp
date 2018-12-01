@@ -31,9 +31,6 @@
 		if (swapChain) { swapChain->Release(); }
 		if (context) { context->Release(); }
 		if (device) { device->Release(); }
-		
-		/*sampler->Release();
-		TestSRV->Release();*/
 	}
 
 	void WinRenderer::Init()
@@ -42,10 +39,8 @@
 		HRESULT status = InitWindow();
 		status = InitDirectX();
 
-
-		//LoadTextures();
 		LoadShaders();
-		//InitializeMaterial();
+
 		context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		
 
@@ -56,12 +51,15 @@
 		vec3 cameraDirection = normalize(cameraPos - cameraTarget);
 		vec3 up = vec3(0.0f, 1.0f, 0.0f);
 		vec3 cameraRight = normalize(cross(up, cameraDirection));
-		
+
 		viewMatrix = lookAt(cameraPos, cameraTarget, up);
 		viewMatrix = transpose(viewMatrix);
 		worldMatrix = mat4(1.0f);
-		/*XMMATRIX W = XMMatrixIdentity();
-		XMStoreFloat4x4(&worldMatrix, XMMatrixTranspose(W));*/
+
+		projectionMatrix = perspective(0.25f * 3.1415926535f, (float)width / height, 0.1f, 100.0f);
+		projectionMatrix = transpose(projectionMatrix);
+		//XMMATRIX W = XMMatrixIdentity();
+		//XMStoreFloat4x4(&worldMatrix, XMMatrixTranspose(W));
 
 		//XMVECTOR pos = XMVectorSet(0, 0, -5, 0);
 		//XMVECTOR dir = XMVectorSet(0, 0, 1, 0);
@@ -71,8 +69,7 @@
 		//	dir,     // Direction the camera is looking
 		//	up);     // "Up" direction in 3D space (prevents roll)
 		//XMStoreFloat4x4(&viewMatrix, XMMatrixTranspose(V)); // Transpose for HLSL!
-		projectionMatrix = perspective(0.25f * 3.1415926535f, (float)width / height, 0.1f, 100.0f);
-		projectionMatrix = transpose(projectionMatrix);
+
 		//XMMATRIX P = XMMatrixPerspectiveFovLH(
 		//	0.25f * 3.1415926535f,		// Field of View Angle
 		//	(float)width / height,		// Aspect ratio
@@ -124,6 +121,8 @@
 		initialIndexData.pSysMem = indices;
 
 		hResult = device->CreateBuffer(&ibd, &initialIndexData, &indexBufferPointer);
+
+		
 	}
 
 	void WinRenderer::MessageLoop()
@@ -150,13 +149,17 @@
 		return false;
 	}
 
+	void WinRenderer::BeginFrame()
+	{
+		const float color[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+		context->ClearRenderTargetView(backBufferRTV, color);
+		context->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	}
+
 	void WinRenderer::EndFrame()
 	{
 		swapChain->Present(0, 0);
 
-		const float color[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
-		context->ClearRenderTargetView(backBufferRTV, color);
-		context->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	}
 
 	//void WinRenderer::DrawQuad()
@@ -188,10 +191,8 @@
 
 	void WinRenderer::DrawMesh(IMesh* Mesh)
 	{
-		//EntityStored = Entity;
 		pixelShader->SetData("light", &Light, sizeof(DirectionalLight));
-		//EntityStored->prepareMaterial(worldMatrix, viewMatrix, projectionMatrix);
-		
+	
 
 		UINT stride = sizeof(VertexCommon);
 		UINT offset = 0;
@@ -207,6 +208,11 @@
 		int a = 0;
 	}
 
+	void WinRenderer::LightingInfo(DirectionalLight light)
+	{
+		Light = light;
+	}
+
 
 	LRESULT WinRenderer::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
@@ -215,8 +221,52 @@
 		case WM_DESTROY:
 			PostQuitMessage(0);
 			return 0;
+		case WM_KEYDOWN:
+
+		{
+
+			unsigned char keycode = static_cast<unsigned char>(wParam);
+			const bool wasPressed = lParam & 0x40000000;//0x400000000 is binary 0100 0000 0000 0000 0000 0000 0000 0000(31stbit).
+			if (!wasPressed) // value is 0 if the key is being pressed
+			{
+				OutputDebugString(L"\ninside keydown switch case");
+				Keyboard::getInstance()->OnKeyPressed(keycode);
+			}
+			return 0;
 		}
-		return DefWindowProc(hWnd, uMsg, wParam, lParam);
+
+
+
+		case WM_KEYUP:
+		{
+
+			unsigned char keycode = static_cast<unsigned char>(wParam);
+			const bool wasPressed = lParam & 0x40000000; //The value is always 1 for a WM_KEYUP message.
+			if (wasPressed)
+			{
+				OutputDebugString(L"\ninside keyup switch case");
+				Keyboard::getInstance()->OnKeyReleased(keycode);
+			}
+			return 0;
+
+		}
+		case WM_CHAR:
+		{
+
+			unsigned char c = static_cast<unsigned char>(wParam);
+
+			const bool wasPressed = lParam & 0x40000000;
+			if (!wasPressed) // value is 0 if the key is being pressed
+			{
+				Keyboard::getInstance()->OnChar(c);
+			}
+
+			return 0;
+
+		}
+		default:
+			return DefWindowProc(hWnd, uMsg, wParam, lParam);
+		}
 	}
 
 
@@ -258,11 +308,6 @@
 		ShowWindow(hWnd, SW_SHOW);		
 
 		return S_OK;
-	}
-
-	void WinRenderer::LightingInfo(DirectionalLight  light)
-	{
-		Light = light;
 	}
 
 	HRESULT WinRenderer::InitDirectX()
@@ -394,27 +439,8 @@
 		pixelShader = new SimplePixelShader(device, context);
 		success = pixelShader->LoadShaderFile(L"../CrossPlatformMain/PixelShader.cso");
 	}
-	//void WinRenderer::LoadTextures()
-	//{
-	//	CreateWICTextureFromFile(device, context, L"Wall4.JPG", 0, &TestSRV);
-	//	D3D11_SAMPLER_DESC sd = {}; // Zeros it out
-	//	sd.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-	//	sd.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-	//	sd.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-	//	sd.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR; // Tri-linear filtering
-	//												 //sd.Filter = D3D11_FILTER_ANISOTROPIC;
-	//												 //sd.MaxAnisotropy = 16;
-	//	sd.MaxLOD = D3D11_FLOAT32_MAX;
 
-	//	device->CreateSamplerState(&sd, &sampler);
-	//}
-	//void WinRenderer::InitializeMaterial()
-	//{
-	//	testMaterial = new Material(vertexShader, pixelShader, TestSRV, sampler);
-	//	
-	//}
 
-	
 	glm::mat4x4 WinRenderer::getworldMatrix()
 	{
 		return worldMatrix;
@@ -429,4 +455,5 @@
 	{
 		return projectionMatrix;
 	}
+
 
