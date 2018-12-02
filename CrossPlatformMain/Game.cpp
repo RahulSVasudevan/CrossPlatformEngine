@@ -44,6 +44,10 @@ Game::Game()
 	*(IndexData2 + 4) = 2;
 	*(IndexData2 + 5) = 3;
 
+
+	light.DirLightColor = vec4(1, 0, 0, 1.0f);
+	light.AmbientColor = vec4(0.9, 0.9, 0, 1.0f);
+	light.DirLightDirection = vec3(0, 10, 0);
 	
 
 #ifdef _WIN32
@@ -71,9 +75,7 @@ Game::Game()
 
 
 #endif 
-	light.DirLightColor = vec4(1, 0, 0, 1.0f);
-	light.AmbientColor = vec4(0.9, 0.9, 0, 1.0f);
-	light.DirLightDirection = vec3(0, 10, 0);
+
 
 	
 

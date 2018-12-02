@@ -25,9 +25,12 @@ struct VertexShaderInput
 	//  |    |                |
 	//  v    v                v
 	float3 position		: POSITION;     // XYZ position
+	float pad1			: PAD1;
 	float4 color		: COLOR;        // RGBA color
 	float3 normal		: NORMAL; 
+	float pad2			: PAD2;
 	float2 uv			: TEXCOORD; 
+	float2 pad3			: PAD3;
 };
 
 // Struct representing the data we're sending down the pipeline
@@ -45,7 +48,9 @@ struct VertexToPixel
 	float4 position		: SV_POSITION;	// XYZW position (System Value Position)
 	float4 color		: COLOR;        // RGBA color
 	float3 normal		: NORMAL; 
-	float2 uv			: TEXCOORD; 
+	float  pad2			: PAD2;
+	float2 uv			: TEXCOORD;
+	float2 pad3			: PAD3;
 };
 
 // --------------------------------------------------------
@@ -78,6 +83,10 @@ VertexToPixel main( VertexShaderInput input )
 	output.uv = input.uv;
 	output.normal = mul(input.normal, (float3x3)world);
 	output.normal = normalize(output.normal);
+	
+
+	output.pad2 = input.pad2;
+	output.pad3 = input.pad3;
 	// Pass the color through 
 	// - The values will be interpolated per-pixel by the rasterizer
 	// - We don't need to alter it here, but we do need to send it to the pixel shader
