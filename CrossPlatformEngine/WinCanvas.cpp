@@ -1,7 +1,6 @@
 #include "WinCanvas.h"
 
 WinCanvas::WinCanvas() {
-
 }
 
 //WinCanvas::WinCanvas(ID3D11Device *device, ID3D11DeviceContext *context) {
@@ -12,12 +11,13 @@ WinCanvas::WinCanvas() {
 //This should be the proper way to deallocate a map
 WinCanvas::~WinCanvas() {
 	for (map<string, ID3D11ShaderResourceView*>::iterator itr = shaderResourceViews.begin(); itr != shaderResourceViews.end(); itr++) {
-		//Causes error
 		//delete itr->second;
+		//Release SRVs pointers
 		itr->second->Release();
 	}
 	spriteBatch.reset();
 	spriteFont.reset();
+	//Function maps should be released automatically
 }
 
 bool MouseIsOnButton(UIElementInfo &info, int mousex, int mousey) {
@@ -58,22 +58,34 @@ void WinCanvas::Update(int mousex, int mousey) {
 		}
 	}
 
+	m.lock();
 	for (map<string, UIElementInfo>::iterator itr = uiElementInfo.begin(); itr != uiElementInfo.end(); itr++) {
+		if (uiElementInfo.size() == 0) { cout << "Empty"; }
 		itr->second.hovered = MouseIsOnButton(itr->second, mousex, mousey);
 		if (itr->second.hovered && mouseButtonPressed) {
 			itr->second.pressed = true;
 		}
+
+		//When the mouse is released
 		if (mouseButtonReleased) {
+
+			//If the button is actually pressed
 			if (itr->second.hovered && itr->second.pressed) {
-				FunctionTest();
+				//FunctionTest();
+
+				//Execute a function if one has been assigned to the button
+				if (uiButtonFunctions.count(itr->second.key)) {
+					uiButtonFunctions[itr->second.key]();
+				}
 			}
 			itr->second.pressed = false;
 		}
-		//TODO: Make function calls for button presses
 	}
+	m.unlock();
 
 	mouseButtonPressed = false;
 	mouseButtonReleased = false;
+
 }
 
 void WinCanvas::DeInitialize() {
@@ -92,21 +104,29 @@ void WinCanvas::Render() {
 	XMVECTOR color;
 
 	for (map<string, ID3D11ShaderResourceView*>::iterator itr = shaderResourceViews.begin(); itr != shaderResourceViews.end(); itr++) {
+		if (uiElementInfo.size() == 0) { cout << "Empty"; }
 		//TODO: make conditions for buttons
 		RECT tempRect;
-		UIElementInfo *info = &uiElementInfo[itr->first];
+		UIElementInfo info = uiElementInfo[itr->first];
+		//info->height = 30;
+		//info->width = 30;
+		//info->x = 50;
+		//info->y = 50;
+		//info->hovered = false;
+		//info->key = itr->first;
+		//info->pressed = false;
 
-		if (!info->hovered) {
+		if (!info.hovered) {
 			color = Colors::White;
 		}
 		else {
-			color = (info->pressed) ? Colors::Gray : Colors::LightGray;
+			color = (info.pressed) ? Colors::Gray : Colors::LightGray;
 		}
 
-		tempRect.bottom = info->y + (info->height / 2);
-		tempRect.top = info->y - (info->height / 2);
-		tempRect.left = info->x - (info->width / 2);
-		tempRect.right = info->x + (info->width / 2);
+		tempRect.bottom = info.y + (info.height / 2);
+		tempRect.top = info.y - (info.height / 2);
+		tempRect.left = info.x - (info.width / 2);
+		tempRect.right = info.x + (info.width / 2);
 		spriteBatch->Draw(itr->second, tempRect, color);
 	}
 
@@ -122,9 +142,12 @@ void WinCanvas::AssignDeviceAndContext(ID3D11Device *device, ID3D11DeviceContext
 }
 
 void WinCanvas::LoadScene(string filename) {
+	UnloadScene();
+
 	ifstream file(filename);
 	string str;
 	if (file) {
+		cout << "Loading file";
 		while (getline(file, str)) {
 			SceneObjectData data = Parser::GetSceneObjectData(str);
 			//TODO: Implement error handling
@@ -133,7 +156,19 @@ void WinCanvas::LoadScene(string filename) {
 	}
 }
 
+void WinCanvas::UnloadScene() {
+	//Release SRVs pointers
+	for (map<string, ID3D11ShaderResourceView*>::iterator itr = shaderResourceViews.begin(); itr != shaderResourceViews.end(); itr++) {
+		itr->second->Release();
+	}
+	shaderResourceViews.clear();
+	//TODO: Clearing UI Element info causes an error. Fix.
+	//uiElementInfo.clear();
+	uiButtonFunctions.clear();
+}
+
 //Not sure if proper way to add pointers into maps
+//For testing purposes
 void WinCanvas::CreateTextureFromFile(wstring filename, string textureName) {
 	if (device == nullptr || context == nullptr) return;
 	if (shaderResourceViews[textureName] != nullptr) return;
@@ -141,8 +176,10 @@ void WinCanvas::CreateTextureFromFile(wstring filename, string textureName) {
 	ID3D11ShaderResourceView *ptr;
 	shaderResourceViews.insert(std::pair<string, ID3D11ShaderResourceView*>(textureName, ptr));
 	CreateWICTextureFromFile(device, filename.c_str(), nullptr, &shaderResourceViews[textureName]);
+	string str = string(filename.begin(), filename.end());
 
 	UIElementInfo info;
+	info.key = str;
 	info.x = 50;
 	info.y = 50;
 	info.width = 25;
@@ -150,9 +187,10 @@ void WinCanvas::CreateTextureFromFile(wstring filename, string textureName) {
 	info.hovered = false;
 	info.pressed = false;
 	uiElementInfo.insert(std::pair<string, UIElementInfo>(textureName, info));
-	uiButtonFunctions.insert(std::pair<string, std::function<void()>>(textureName, FunctionTest));
+	//uiButtonFunctions.insert(std::pair<string, std::function<void()>>(textureName, FunctionTest));
 }
 
+//Called by the scene loader
 void WinCanvas::CreateTextureFromFile(wstring filename, string textureName, int x, int y, int width, int height) {
 	if (device == nullptr || context == nullptr) return;
 	if (shaderResourceViews[textureName] != nullptr) return;
@@ -160,8 +198,10 @@ void WinCanvas::CreateTextureFromFile(wstring filename, string textureName, int 
 	ID3D11ShaderResourceView *ptr;
 	shaderResourceViews.insert(std::pair<string, ID3D11ShaderResourceView*>(textureName, ptr));
 	CreateWICTextureFromFile(device, filename.c_str(), nullptr, &shaderResourceViews[textureName]);
+	string str = string(filename.begin(), filename.end());
 
 	UIElementInfo info;
+	info.key = str;
 	info.x = x;
 	info.y = y;
 	info.width = width;
@@ -169,7 +209,13 @@ void WinCanvas::CreateTextureFromFile(wstring filename, string textureName, int 
 	info.hovered = false;
 	info.pressed = false;
 	uiElementInfo.insert(std::pair<string, UIElementInfo>(textureName, info));
-	uiButtonFunctions.insert(std::pair<string, std::function<void()>>(textureName, FunctionTest));
+	//TODO: Let the Game assign individual functions to buttons
+	AssignButtonFunction(str, [&]() {LoadScene("../Assets/Scenes/Scene2.txt") ;});
+	//uiButtonFunctions.insert(std::pair<string, std::function<void()>>(textureName, FunctionTest));
+}
+
+void WinCanvas::AssignButtonFunction(string buttonName, function<void()> func) {
+	uiButtonFunctions.insert(std::pair<string, std::function<void()>>(buttonName, func));
 }
 
 bool WinCanvas::IsReady() {

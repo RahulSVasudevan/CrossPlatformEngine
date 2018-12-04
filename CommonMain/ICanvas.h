@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <functional>
 using namespace std;
 
 class ICanvas {
@@ -14,11 +15,14 @@ public:
 	virtual void Render() = 0;
 
 	virtual void LoadScene(string filename) {}
+	virtual void UnloadScene() {}
 	
 	//Probably more efficient to use optional parameters (x = 0), if possible in C++
 	virtual void CreateTextureFromFile(wstring filename, string textureName) = 0;
 	virtual void CreateTextureFromFile(wstring filename, string textureName, int x, int y, int width, int height) {};
 	virtual void CreateButtonFromFile(wstring filename, string textureName) {}	//Shouldn't cause an error on the PS4 side
+
+	virtual void AssignButtonFunction(string buttonName, function<void()> func) {}
 
 	virtual bool IsReady() { return false; }
 };

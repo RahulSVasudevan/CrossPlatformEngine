@@ -157,7 +157,6 @@
     <ClCompile Include="Main.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Parser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CrossPlatformEngine\CrossPlatformEngine.vcxproj">

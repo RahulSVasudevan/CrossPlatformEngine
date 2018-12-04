@@ -15,6 +15,7 @@
 #include "SpriteFont.h"
 #include <string>
 #include "WICTextureLoader.h"
+#include <mutex>
 
 using namespace DirectX;
 using namespace std;
@@ -33,8 +34,10 @@ public:
 
 	//textureName, to be looked up in map
 	void LoadScene(string filename);
+	void UnloadScene();
 	void CreateTextureFromFile(wstring filename, string textureName);
 	void CreateTextureFromFile(wstring filename, string textureName, int x, int y, int width, int height);
+	void AssignButtonFunction(string buttonName, function<void()> func);
 	bool IsReady();
 
 private:
@@ -52,4 +55,6 @@ private:
 	map<string, ID3D11ShaderResourceView*> shaderResourceViews;
 	map<string, UIElementInfo> uiElementInfo;
 	map<string, std::function<void()>> uiButtonFunctions;
+
+	mutex m;
 };

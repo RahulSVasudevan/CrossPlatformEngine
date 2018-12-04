@@ -89,6 +89,10 @@ void Game::UpdateCanvas() {
 	//PrepareCanvas();
 }
 
+void UnloadCanvas(ICanvas &canvas) {
+	canvas.UnloadScene();
+}
+
 void Game::Run()
 {
 	//Wait for the device and context to be created, then prepare the canvas
