@@ -43,6 +43,7 @@ using namespace DirectX;
 
 		ID3D11RenderTargetView* backBufferRTV;
 		ID3D11DepthStencilView* depthStencilView;
+		ID3D11RasterizerState*  rasterizer;
 
 		SimpleVertexShader* vertexShader;
 		SimplePixelShader* pixelShader;

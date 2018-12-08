@@ -46,9 +46,10 @@
 
 
 		// Temp Code
-		vec3 cameraPos = vec3(0.0f, 0.0f, 3.0f);
+		vec3 cameraPos = vec3(0.0f, 160.0f, 400.0f);
 		vec3 cameraTarget = vec3(0.0f, 0.0f, 0.0f);
-		vec3 cameraDirection = normalize(cameraPos - cameraTarget);
+		//vec3 cameraDirection = normalize(cameraPos - cameraTarget);
+		vec3 cameraDirection = vec3(0.0f,-0.5f,-1.0f);
 		vec3 up = vec3(0.0f, 1.0f, 0.0f);
 		vec3 cameraRight = normalize(cross(up, cameraDirection));
 
@@ -56,7 +57,7 @@
 		viewMatrix = transpose(viewMatrix);
 		worldMatrix = mat4(1.0f);
 
-		projectionMatrix = perspective(0.25f * 3.1415926535f, (float)width / height, 0.1f, 100.0f);
+		projectionMatrix = perspective(0.25f * 3.1415926535f, (float)width / height, 0.1f, 1000.0f);
 		projectionMatrix = transpose(projectionMatrix);
 		//XMMATRIX W = XMMatrixIdentity();
 		//XMStoreFloat4x4(&worldMatrix, XMMatrixTranspose(W));
@@ -151,9 +152,10 @@
 
 	void WinRenderer::BeginFrame()
 	{
-		const float color[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+		const float color[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		context->ClearRenderTargetView(backBufferRTV, color);
 		context->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+		context->RSSetState(rasterizer);
 	}
 
 	void WinRenderer::EndFrame()
@@ -370,6 +372,18 @@
 			0,
 			&backBufferRTV);
 		backBufferTexture->Release();
+
+
+		// Create a rasterizer state
+		D3D11_RASTERIZER_DESC rasterizerDesc = {};
+		rasterizerDesc.FillMode = D3D11_FILL_SOLID;
+		rasterizerDesc.CullMode = D3D11_CULL_FRONT;
+		rasterizerDesc.DepthClipEnable = true;
+		rasterizerDesc.DepthBias = 1000; // Multiplied by (smallest possible value > 0 in depth buffer)
+		rasterizerDesc.DepthBiasClamp = 0.0f;
+		rasterizerDesc.SlopeScaledDepthBias = 1.0f;
+		device->CreateRasterizerState(&rasterizerDesc, &rasterizer);
+
 
 		// Set up the description of the texture to use for the depth buffer
 		D3D11_TEXTURE2D_DESC depthStencilDesc = {};
