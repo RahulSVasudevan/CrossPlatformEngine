@@ -4,11 +4,12 @@
 
 IRenderer::IRenderer()
 {
+	camera = new ICamera();
 }
 
 IRenderer::~IRenderer()
 {
-
+	delete camera;
 }
 
 
@@ -43,5 +44,10 @@ void IRenderer::DrawMesh(IMesh* Mesh)
 }
 
 void IRenderer::LightingInfo(DirectionalLight light)
+{
+}
+
+
+void IRenderer::checkInput(char)
 {
 }

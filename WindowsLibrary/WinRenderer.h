@@ -9,6 +9,7 @@
 #include"Keyboard.h"
 #include <DirectXMath.h>
 #include "WinMesh.h"
+#include "WinCamera.h"
 
 //#include"GameEntity.h"
 #include"..\CommonFiles\Maths.h"
@@ -59,8 +60,10 @@ using namespace DirectX;
 		void BeginFrame();
 		void EndFrame();
 		//void DrawQuad();
+		ICamera* camera;
 		void DrawMesh(IMesh *Mesh);
 		void  LightingInfo(DirectionalLight light);
+		void checkInput(char);
 
 		static WinRenderer* WinRendererInstance;
 		static LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);

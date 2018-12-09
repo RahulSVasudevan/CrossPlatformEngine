@@ -152,6 +152,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\CommonFiles\IAudio.h" />
+    <ClInclude Include="..\CommonFiles\ICamera.h" />
     <ClInclude Include="..\CommonFiles\IMesh.h" />
     <ClInclude Include="..\CommonFiles\IRenderer.h" />
     <ClInclude Include="GameEntity.h" />
@@ -161,10 +163,14 @@
     <ClInclude Include="SimpleShader.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="WinAudio.h" />
+    <ClInclude Include="WinCamera.h" />
     <ClInclude Include="WinMesh.h" />
     <ClInclude Include="WinRenderer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\CommonFiles\IAudio.cpp" />
+    <ClCompile Include="..\CommonFiles\ICamera.cpp" />
     <ClCompile Include="..\CommonFiles\IMesh.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -182,6 +188,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="WinAudio.cpp" />
+    <ClCompile Include="WinCamera.cpp" />
     <ClCompile Include="WinMesh.cpp" />
     <ClCompile Include="WinRenderer.cpp" />
   </ItemGroup>

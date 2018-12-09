@@ -178,6 +178,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\CommonFiles\IAudio.cpp" />
+    <ClCompile Include="..\CommonFiles\ICamera.cpp" />
     <ClCompile Include="..\CommonFiles\IMesh.cpp" />
     <ClCompile Include="..\CommonFiles\Input.cpp" />
     <ClCompile Include="..\CommonFiles\IRenderer.cpp" />
@@ -185,6 +187,8 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\CommonFiles\IAudio.h" />
+    <ClInclude Include="..\CommonFiles\ICamera.h" />
     <ClInclude Include="..\CommonFiles\IMesh.h" />
     <ClInclude Include="..\CommonFiles\Input.h" />
     <ClInclude Include="..\CommonFiles\IRenderer.h" />

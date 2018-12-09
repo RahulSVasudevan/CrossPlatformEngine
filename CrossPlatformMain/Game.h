@@ -4,6 +4,7 @@
 #include "..\CommonFiles\Lights.h"
 #include"..\CommonFiles\Input.h"
 #include"..\WindowsLibrary\GameEntity.h"
+#include "..\CommonFiles\IAudio.h"
 //#include <unordered_map>
 
 
@@ -16,6 +17,7 @@ class Game
 
 	IMesh * mesh;
 	IMesh * mesh2;
+	IAudio * audioRenderer;
 	Input* getInput;
 	GameEntity* Entity;
 	VertexCommon * VertexData;

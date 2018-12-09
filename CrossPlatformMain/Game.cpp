@@ -6,11 +6,12 @@
 #ifdef _WIN32
 	#include "..\WindowsLibrary\WinRenderer.h"
 	#include "..\WindowsLibrary\WinMesh.h"
+#include "..\WindowsLibrary\WinAudio.h"
 #elif __clang__
 	#include "..\PS4Library\PS4Renderer.h"
 #endif
 
-
+#define audioSound				((char*)"../Assets/Sounds/RollingSpace.wav")
 
 
 Game::Game()
@@ -52,6 +53,7 @@ Game::Game()
 
 #ifdef _WIN32
 	renderer = new WinRenderer();
+	audioRenderer = new WinAudio();
 	getInput = Keyboard::getInstance();
 	renderer->Init();
 	//mesh = new WinMesh(VertexData, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
@@ -113,6 +115,7 @@ void Game::Draw()
 
 void Game::Run()
 {
+	audioRenderer->Play(audioSound);
 	while (renderer->MessageExist())
 	{
 		renderer->BeginFrame();
@@ -124,6 +127,7 @@ void Game::Run()
 		if (getInput->GetKeyDown('W') || getInput->isButtonDown(Button::BUTTON_SQUARE))
 		{
 			printf("## square\n");
+			renderer->checkInput('w');
 			//mesh2->CheckInput(1.0f);
 		}
 		if (getInput->isButtonDown(Button::BUTTON_CIRCLE) || getInput->GetKeyDown('V'))
