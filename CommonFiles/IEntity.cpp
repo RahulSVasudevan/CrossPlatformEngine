@@ -4,7 +4,7 @@ IEntity::IEntity()
 {
 }
 
-IEntity::IEntity(IMesh* m, IRenderer* renderer)
+IEntity::IEntity(IMesh* m, IMaterial* mat)  
 {
 }
 
@@ -12,11 +12,11 @@ IEntity::~IEntity()
 {
 }
 
-void IEntity::InitializeMaterial()
-{
-}
-
-Material * IEntity::getMaterial()
-{
-	return 0;
-}
+//void IEntity::InitializeMaterial()
+//{
+//}
+//
+//Material * IEntity::getMaterial()
+//{
+//	return 0;
+//}

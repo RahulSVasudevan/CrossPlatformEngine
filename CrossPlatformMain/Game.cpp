@@ -59,12 +59,11 @@ Game::Game()
 	//mesh2 = new WinMesh(VertexData2, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
 	
 	mesh2 = new WinMesh("../CommonFiles/Lamborghini_Aventador.obj", dynamic_cast<WinRenderer*>(renderer)->GetDevice());
-	Entity = new GameEntity(mesh2, renderer);
+	Mat = new Material(renderer, L"../CommonFiles/Lamborginhi_Aventador_diffuse.jpeg");
+	Entity = new GameEntity(mesh2,Mat);
 	//Entity->LoadTextures();
 	
-	Entity->InitializeMaterial();
-	Entity->getMaterial()->LoadTextures();
-	
+	//Mat->LoadTextures("../CommonFiles/Lamborginhi_Aventador_diffuse.jpeg");
 	renderer->LightingInfo(light);
 #elif __clang__
 	renderer = new PS4Renderer();
@@ -91,14 +90,17 @@ Game::~Game() {
 
 	//delete mesh;
 	delete mesh2;
-	delete Entity->getMaterial();
+	//delete Entity->getMaterial();
 	delete Entity;
+	
+	
 	delete[] VertexData;
 	delete[] VertexData2;
 	delete[] IndexData;
 	delete[] IndexData2;
 
 	delete renderer;
+	delete Mat;
 	
 }
 
@@ -114,7 +116,8 @@ void Game::Draw()
 	//renderer->DrawMesh(mesh);
 	getInput->update();
 	//Entity->prepareMaterial();
-	Entity->getMaterial()->DatatoShader();
+	//Entity->getMaterial()->DatatoShader();
+	Mat->DatatoShader();
 	renderer->DrawMesh(mesh2);
 }
 

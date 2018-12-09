@@ -26,6 +26,7 @@ void GameEntity::setRotation(float x, float y, float z)
 
 void GameEntity::updateWorld()
 {
+	worldMatrix = mesh->GetWorldMatrix();
 	//worldMatrix = glm::mat4(1.0f);
 	worldMatrix = glm::translate(mat4(1.0f), wmTrans);
 
@@ -33,12 +34,13 @@ void GameEntity::updateWorld()
 	//worldMatrix = glm::rotate(worldMatrix, 0.0f, wmRot);
 }
 
-GameEntity::GameEntity(IMesh* m, IRenderer* renderer)
+GameEntity::GameEntity(IMesh* m, IMaterial* mat)
 {
 	mesh = m;
-	Renderer = renderer;
-	localvertexShader = dynamic_cast<WinRenderer*>(Renderer)->getVertexShader();
-	localpixelShader = dynamic_cast<WinRenderer*>(Renderer)->getPixelShader();
+	material = mat;
+	//Renderer = renderer;
+	/*localvertexShader = dynamic_cast<WinRenderer*>(Renderer)->getVertexShader();
+	localpixelShader = dynamic_cast<WinRenderer*>(Renderer)->getPixelShader();*/
 	wmTrans = glm::vec3(0.0f, 0.0f, 0.0f);
 	wmScale = glm::vec3(1.0f, 1.0f, 1.0f);
 	wmRot = glm::vec3(0.0f,0.0f,0.0f);
@@ -46,15 +48,15 @@ GameEntity::GameEntity(IMesh* m, IRenderer* renderer)
 	updateWorld();
 }
 
-IMesh* GameEntity::getMesh()
-{
-	return mesh;
-}
-
-Material * GameEntity::getMaterial()
-{
-	return material;
-}
+//IMesh* GameEntity::getMesh()
+//{
+//	return mesh;
+//}
+//
+//Material * GameEntity::getMaterial()
+//{
+//	return material;
+//}
 
 //void GameEntity::prepareMaterial()
 //{
@@ -94,11 +96,11 @@ Material * GameEntity::getMaterial()
 //
 //	dynamic_cast<WinRenderer*>(Renderer)->GetDevice()->CreateSamplerState(&sd, &Sampler);
 //}
-void GameEntity::InitializeMaterial()
-{
-	material = new Material(localvertexShader, localpixelShader,Renderer);
-
-}
+//void GameEntity::InitializeMaterial()
+//{
+//	material = new Material(localvertexShader, localpixelShader,Renderer);
+//
+//}
 void  LightingInfo(DirectionalLight light)
 {
 

@@ -1,12 +1,14 @@
 #include "Material.h"
 //#include"WICTextureLoader.h"
 
-Material::Material(SimpleVertexShader* vShader, SimplePixelShader* pShader, IRenderer* renderer)
+Material::Material(IRenderer* renderer, const wchar_t * obj)
 {
-	vertexShader = vShader;
-	pixelShader = pShader;
 	Renderer = renderer;
-
+	
+	vertexShader = dynamic_cast<WinRenderer*>(Renderer)->getVertexShader();
+	pixelShader = dynamic_cast<WinRenderer*>(Renderer)->getPixelShader();
+	filename = obj;
+	LoadTextures();
 }
 
 SimpleVertexShader* Material::getvertexShader()
@@ -21,7 +23,7 @@ SimplePixelShader* Material::getpixelShader()
 
 void Material::LoadTextures()
 {
-	CreateWICTextureFromFile(dynamic_cast<WinRenderer*>(Renderer)->GetDevice(), dynamic_cast<WinRenderer*>(Renderer)->GetContext(), L"../CommonFiles/Lamborginhi_Aventador_diffuse.jpeg", 0, &SRV);
+	CreateWICTextureFromFile(dynamic_cast<WinRenderer*>(Renderer)->GetDevice(), dynamic_cast<WinRenderer*>(Renderer)->GetContext(), filename, 0, &SRV);
 	D3D11_SAMPLER_DESC sd = {}; // Zeros it out
 	sd.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
 	sd.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
@@ -56,4 +58,6 @@ Material::~Material()
 {
 	SRV->Release();
 	Sampler->Release();
+	/*this->getSRV()->Release();
+	this->getsamplerState()->Release();*/
 }

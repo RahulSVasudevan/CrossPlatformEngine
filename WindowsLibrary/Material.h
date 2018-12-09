@@ -6,7 +6,7 @@
 #include"WinMesh.h"
 #include <DirectXMath.h>
 #include"WICTextureLoader.h"
-//#pragma comment(lib,"../packages/directxtk_desktop_2015.2018.11.20.1/lib/x64/Debug/DirectXTK.lib")
+#pragma comment(lib,"../packages/directxtk_desktop_2015.2018.11.20.1/lib/x64/Debug/DirectXTK.lib")
 
 
 
@@ -14,12 +14,12 @@ class Material : public IMaterial
 {
 	SimpleVertexShader* vertexShader;
 	SimplePixelShader* pixelShader;
-
+	const wchar_t * filename;
 	ID3D11ShaderResourceView* SRV;
 	ID3D11SamplerState* Sampler;
 	IRenderer* Renderer;
 public:
-	Material(SimpleVertexShader*, SimplePixelShader*, IRenderer*);
+	Material(IRenderer* renderer, const wchar_t * obj);
 	SimpleVertexShader* getvertexShader();
 	SimplePixelShader* getpixelShader();
 	ID3D11ShaderResourceView* getSRV();

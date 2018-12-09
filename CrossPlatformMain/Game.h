@@ -4,6 +4,7 @@
 #include "..\CommonFiles\Lights.h"
 #include"..\CommonFiles\Input.h"
 #include"..\CommonFiles\IEntity.h"
+#include"..\CommonFiles\IMaterial.h"
 //#include <unordered_map>
 
 
@@ -18,6 +19,7 @@ class Game
 	IMesh * mesh2;
 	Input* getInput;
 	IEntity* Entity;
+	IMaterial* Mat;
 	VertexCommon * VertexData;
 	VertexCommon * VertexData2;
 	uint16_t * IndexData;
