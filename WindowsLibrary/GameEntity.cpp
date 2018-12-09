@@ -7,7 +7,6 @@ using namespace DirectX;
 void GameEntity::setTranslation(float x, float y, float z)
 {
 	wmTrans = vec3(x, y, z);
-	
 	this->updateWorld();
 	
 }
@@ -103,6 +102,7 @@ void  LightingInfo(DirectionalLight light)
 }
 GameEntity::~GameEntity()
 {
+	delete material;
 	SRV->Release();
 	Sampler->Release();
 }

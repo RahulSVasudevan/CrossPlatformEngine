@@ -57,11 +57,14 @@ Game::Game()
 	//mesh = new WinMesh(VertexData, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
 	//mesh2 = new WinMesh(VertexData2, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
 	
-	mesh2 = new WinMesh("../CommonFiles/Lamborghini_Aventador.obj", dynamic_cast<WinRenderer*>(renderer)->GetDevice());
-	Entity = new  GameEntity(mesh2, renderer);
-	Entity->LoadTextures();
-	Entity->InitializeMaterial();
+	//mesh2 = new WinMesh("../CommonFiles/Lamborghini_Aventador.obj", dynamic_cast<WinRenderer*>(renderer)->GetDevice());
+	//Entity = new  GameEntity(mesh2, renderer);
+	//Entity->LoadTextures();
+	//Entity->InitializeMaterial();
 	renderer->LightingInfo(light);
+
+	CreateMeshFromFile("../CommonFiles/Lamborghini_Aventador.obj", "carMesh");
+	CreateEntityFromFile("carMesh", "carEntity");
 #elif __clang__
 	renderer = new PS4Renderer();
 	getInput = ControllerInput::getInstance();
@@ -94,11 +97,18 @@ Game::~Game() {
 	delete[] IndexData2;
 
 	delete renderer;
+
+	for (auto m : meshes) {
+		delete m.second;
+	}
+	for (auto e : entities) {
+		delete e.second;
+	}
 }
 
 void Game::Init()
 {
-	
+
 }
 
 void Game::Draw()
@@ -106,9 +116,15 @@ void Game::Draw()
 	//renderer->DrawQuad();
 
 	//renderer->DrawMesh(mesh);
+
 	getInput->update();
-	Entity->prepareMaterial();
-	renderer->DrawMesh(mesh2);
+	//Entity->prepareMaterial();
+	//renderer->DrawMesh(mesh2);
+
+	for (auto e : entities) {
+		e.second->prepareMaterial();
+		renderer->DrawMesh(e.second->getMesh());
+	}
 }
 
 void Game::Run()
@@ -134,4 +150,18 @@ void Game::Run()
 		renderer->EndFrame();
 	}
 
+}
+
+void Game::CreateEntityFromFile(string meshName, string entityName) {
+	GameEntity *ptr;
+	entities.insert(std::pair<string, GameEntity*>(entityName, ptr));
+	entities[entityName] = new GameEntity(meshes[meshName], renderer);
+	entities[entityName]->LoadTextures();
+	entities[entityName]->InitializeMaterial();
+}
+
+void Game::CreateMeshFromFile(string fileName, string meshName) {
+	IMesh *ptr;
+	meshes.insert(std::pair<string, IMesh*>(meshName, ptr));
+	meshes[meshName] = new WinMesh(fileName.c_str(), dynamic_cast<WinRenderer*>(renderer)->GetDevice());
 }

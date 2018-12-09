@@ -27,7 +27,7 @@
 
 		if (depthStencilView) { depthStencilView->Release(); }
 		if (backBufferRTV) { backBufferRTV->Release(); }
-
+		if (rasterizer) { rasterizer->Release(); }
 		if (swapChain) { swapChain->Release(); }
 		if (context) { context->Release(); }
 		if (device) { device->Release(); }

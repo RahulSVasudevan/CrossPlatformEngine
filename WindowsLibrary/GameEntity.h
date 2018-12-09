@@ -10,9 +10,9 @@
 
 using namespace glm;
 class GameEntity
-{	vec3 position;
+{	/*vec3 position;
 	vec3 rotation;
-	vec3 scaleValue;
+	vec3 scaleValue;*/
 	IMesh* mesh;
 	Material* material;
 	IRenderer* Renderer;
