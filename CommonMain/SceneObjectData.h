@@ -5,7 +5,8 @@
 
 enum SceneObjectType {
 	sprite = 0,
-	button
+	button,
+	listbutton
 };
 
 struct SceneObjectData {

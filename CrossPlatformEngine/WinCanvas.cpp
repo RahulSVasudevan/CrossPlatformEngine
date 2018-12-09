@@ -58,30 +58,29 @@ void WinCanvas::Update(int mousex, int mousey) {
 		}
 	}
 
-	m.lock();
 	for (map<string, UIElementInfo>::iterator itr = uiElementInfo.begin(); itr != uiElementInfo.end(); itr++) {
-		if (uiElementInfo.size() == 0) { cout << "Empty"; }
-		itr->second.hovered = MouseIsOnButton(itr->second, mousex, mousey);
-		if (itr->second.hovered && mouseButtonPressed) {
-			itr->second.pressed = true;
-		}
-
-		//When the mouse is released
-		if (mouseButtonReleased) {
-
-			//If the button is actually pressed
-			if (itr->second.hovered && itr->second.pressed) {
-				//FunctionTest();
-
-				//Execute a function if one has been assigned to the button
-				if (uiButtonFunctions.count(itr->second.key)) {
-					uiButtonFunctions[itr->second.key]();
-				}
+		{
+			itr->second.hovered = MouseIsOnButton(itr->second, mousex, mousey);
+			if (itr->second.hovered && mouseButtonPressed) {
+				itr->second.pressed = true;
 			}
-			itr->second.pressed = false;
+
+			//When the mouse is released
+			if (mouseButtonReleased) {
+
+				//If the button is actually pressed
+				if (itr->second.hovered && itr->second.pressed) {
+					//FunctionTest();
+
+					//Execute a function if one has been assigned to the button
+					if (uiButtonFunctions.count(itr->second.key)) {
+						uiButtonFunctions[itr->second.key]();
+					}
+				}
+				itr->second.pressed = false;
+			}
 		}
 	}
-	m.unlock();
 
 	mouseButtonPressed = false;
 	mouseButtonReleased = false;
@@ -210,7 +209,7 @@ void WinCanvas::CreateTextureFromFile(wstring filename, string textureName, int 
 	info.pressed = false;
 	uiElementInfo.insert(std::pair<string, UIElementInfo>(textureName, info));
 	//TODO: Let the Game assign individual functions to buttons
-	AssignButtonFunction(str, [&]() {LoadScene("../Assets/Scenes/Scene2.txt") ;});
+	//AssignButtonFunction(str, [&]() {LoadScene("../Assets/Scenes/Scene2.txt") ;});
 	//uiButtonFunctions.insert(std::pair<string, std::function<void()>>(textureName, FunctionTest));
 }
 

@@ -43,7 +43,7 @@ void Game::InitializeCanvas() {
 	//wc->CreateTextureFromFile(L"../Assets/Textures/smiley.png", "smiley");
 #endif
 	//canvas->CreateTextureFromFile(L"../Assets/Textures/smiley.png", "smiley");
-	canvas->LoadScene("../Assets/Scenes/Scene.txt");
+	canvas->LoadScene("../Assets/Scenes/MenuTest.txt");
 }
 
 Game::~Game() {

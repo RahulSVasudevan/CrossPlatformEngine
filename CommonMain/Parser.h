@@ -28,6 +28,8 @@ public:
 				string test = s.substr(5);
 				if (test == "button")
 					data.type = SceneObjectType::button;
+				else if (test == "listbutton")
+					data.type = SceneObjectType::listbutton;
 				else if (test == "sprite")
 					data.type = SceneObjectType::sprite;
 			}
