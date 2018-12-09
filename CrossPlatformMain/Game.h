@@ -43,7 +43,7 @@ class Game
 		BUTTON_TOUCH_PAD = 0x00100000,
 		BUTTON_INTERCEPTED = 0x80000000,
 	};
-	DirectionalLight light1;
+	//DirectionalLight light1;
 
 public:
 	Game();

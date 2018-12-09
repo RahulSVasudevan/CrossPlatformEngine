@@ -1,15 +1,16 @@
 #pragma once
 #include"../CommonFiles/IRenderer.h"
+#include"../CommonFiles/IMaterial.h"
 #include"../WindowsLibrary/WinRenderer.h"
 #include"SimpleShader.h"
 #include"WinMesh.h"
 #include <DirectXMath.h>
 #include"WICTextureLoader.h"
+//#pragma comment(lib,"../packages/directxtk_desktop_2015.2018.11.20.1/lib/x64/Debug/DirectXTK.lib")
 
 
 
-
-class Material
+class Material : public IMaterial
 {
 	SimpleVertexShader* vertexShader;
 	SimplePixelShader* pixelShader;

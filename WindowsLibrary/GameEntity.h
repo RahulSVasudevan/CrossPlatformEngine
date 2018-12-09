@@ -11,7 +11,7 @@
 
 using namespace glm;
 class GameEntity	: public IEntity
-{	vec3 position;
+{	vec4 position;
 	vec3 rotation;
 	vec3 scaleValue;
 	IMesh* mesh;

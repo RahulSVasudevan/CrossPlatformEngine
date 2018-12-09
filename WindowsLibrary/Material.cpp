@@ -54,4 +54,6 @@ ID3D11SamplerState * Material::getsamplerState()
 
 Material::~Material()
 {
+	SRV->Release();
+	Sampler->Release();
 }

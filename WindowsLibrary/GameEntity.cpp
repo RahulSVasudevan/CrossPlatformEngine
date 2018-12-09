@@ -26,8 +26,9 @@ void GameEntity::setRotation(float x, float y, float z)
 
 void GameEntity::updateWorld()
 {
-	worldMatrix = glm::mat4(1.0f);
-	worldMatrix = glm::translate(worldMatrix, wmTrans);
+	//worldMatrix = glm::mat4(1.0f);
+	worldMatrix = glm::translate(mat4(1.0f), wmTrans);
+
 	worldMatrix = glm::scale(worldMatrix, wmScale);
 	//worldMatrix = glm::rotate(worldMatrix, 0.0f, wmRot);
 }
@@ -41,6 +42,7 @@ GameEntity::GameEntity(IMesh* m, IRenderer* renderer)
 	wmTrans = glm::vec3(0.0f, 0.0f, 0.0f);
 	wmScale = glm::vec3(1.0f, 1.0f, 1.0f);
 	wmRot = glm::vec3(0.0f,0.0f,0.0f);
+	position = vec4(0.0f, 0.0f, 0.0f,1.0f);
 	updateWorld();
 }
 
@@ -104,6 +106,5 @@ void  LightingInfo(DirectionalLight light)
 GameEntity::~GameEntity()
 {
 	//delete material;
-	SRV->Release();
-	Sampler->Release();
+	
 }

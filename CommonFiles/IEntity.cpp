@@ -18,5 +18,5 @@ void IEntity::InitializeMaterial()
 
 Material * IEntity::getMaterial()
 {
-	return nullptr;
+	return 0;
 }

@@ -6,6 +6,7 @@
 #ifdef _WIN32
 	#include "..\WindowsLibrary\WinRenderer.h"
 	#include "..\WindowsLibrary\WinMesh.h"
+	#include"..\WindowsLibrary\GameEntity.h"
 #elif __clang__
 	#include "..\PS4Library\PS4Renderer.h"
 #endif
@@ -58,10 +59,12 @@ Game::Game()
 	//mesh2 = new WinMesh(VertexData2, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
 	
 	mesh2 = new WinMesh("../CommonFiles/Lamborghini_Aventador.obj", dynamic_cast<WinRenderer*>(renderer)->GetDevice());
-	Entity = new IEntity(mesh2, renderer);
+	Entity = new GameEntity(mesh2, renderer);
 	//Entity->LoadTextures();
+	
 	Entity->InitializeMaterial();
 	Entity->getMaterial()->LoadTextures();
+	
 	renderer->LightingInfo(light);
 #elif __clang__
 	renderer = new PS4Renderer();
@@ -88,6 +91,7 @@ Game::~Game() {
 
 	//delete mesh;
 	delete mesh2;
+	delete Entity->getMaterial();
 	delete Entity;
 	delete[] VertexData;
 	delete[] VertexData2;
@@ -95,6 +99,7 @@ Game::~Game() {
 	delete[] IndexData2;
 
 	delete renderer;
+	
 }
 
 void Game::Init()
