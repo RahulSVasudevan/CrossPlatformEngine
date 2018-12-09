@@ -26,10 +26,11 @@ public:
 	glm::mat4x4 GetProjectionMatrix();
 
 	void moveFront();
+	void moveBack();
+	void moveLeft();
+	void moveRight();
 
-
-
-	float cameraSpeed = 0.05f;
+	float cameraSpeed = 0.5f;
 	glm::vec3 cameraPos;
 
 	glm::vec3 cameraTarget;

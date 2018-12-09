@@ -464,6 +464,15 @@
 		if (a == 'w')
 			camera->moveFront();
 
+		if (a == 's')
+			camera->moveBack();
+
+		if (a == 'a')
+			camera->moveLeft();
+
+		if (a == 'd')
+			camera->moveRight();
+
 	}
 
 

@@ -130,6 +130,24 @@ void Game::Run()
 			renderer->checkInput('w');
 			//mesh2->CheckInput(1.0f);
 		}
+		if (getInput->GetKeyDown('S') || getInput->isButtonDown(Button::BUTTON_SQUARE))
+		{
+			printf("## square\n");
+			renderer->checkInput('s');
+			//mesh2->CheckInput(1.0f);
+		}
+		if (getInput->GetKeyDown('A') || getInput->isButtonDown(Button::BUTTON_SQUARE))
+		{
+			printf("## square\n");
+			renderer->checkInput('a');
+			//mesh2->CheckInput(1.0f);
+		}
+		if (getInput->GetKeyDown('D') || getInput->isButtonDown(Button::BUTTON_SQUARE))
+		{
+			printf("## square\n");
+			renderer->checkInput('d');
+			//mesh2->CheckInput(1.0f);
+		}
 		if (getInput->isButtonDown(Button::BUTTON_CIRCLE) || getInput->GetKeyDown('V'))
 		{
 			printf("## CIRCLE \n");
