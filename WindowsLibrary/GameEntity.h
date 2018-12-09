@@ -1,4 +1,5 @@
 #pragma once
+#include"../CommonFiles/IEntity.h"
 #include "../CommonFiles/Maths.h"
 #include "Material.h"
 #include"WinMesh.h"
@@ -6,10 +7,10 @@
 #include"../CommonFiles/IRenderer.h"
 #include "SimpleShader.h"
 #include <DirectXMath.h>
-#include "WICTextureLoader.h"
+//#include "WICTextureLoader.h"
 
 using namespace glm;
-class GameEntity
+class GameEntity	: public IEntity
 {	vec3 position;
 	vec3 rotation;
 	vec3 scaleValue;
@@ -32,11 +33,11 @@ public:
 	void setScale(float, float, float);
 	void setRotation(float, float, float);
 	void updateWorld();
-	void LoadTextures();
+	//void LoadTextures();
 	void InitializeMaterial();
 	IMesh* getMesh();
 	Material* getMaterial();
-	void prepareMaterial();
+	//void prepareMaterial();
 	//void  LightingInfo(DirectionalLight light);
 	~GameEntity();
 };

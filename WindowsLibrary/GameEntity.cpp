@@ -54,47 +54,47 @@ Material * GameEntity::getMaterial()
 	return material;
 }
 
-void GameEntity::prepareMaterial()
-{
-	mat4x4 w, v, p;
-	//w = Renderer->getworldMatrix();
-	v = dynamic_cast<WinRenderer*>(Renderer)->getviewMatrix();
-	p = dynamic_cast<WinRenderer*>(Renderer)->getprojectionMatrix();
-	
-	//const float* world = (const float*)value_ptr(worldMatrix);
-	const float* world = (const float*)value_ptr(glm::mat4(1.0f));
-	const float* convertedView = (const float*)value_ptr(v);
-	const float* convertedProjection = (const float*)value_ptr(p);
-	localvertexShader->SetMatrix4x4("world", world);
-	localvertexShader->SetMatrix4x4("view", convertedView);
-	localvertexShader->SetMatrix4x4("projection", convertedProjection);
-	localvertexShader->CopyAllBufferData();
-	localvertexShader->SetShader();
+//void GameEntity::prepareMaterial()
+//{
+//	mat4x4 w, v, p;
+//	//w = Renderer->getworldMatrix();
+//	v = dynamic_cast<WinRenderer*>(Renderer)->getviewMatrix();
+//	p = dynamic_cast<WinRenderer*>(Renderer)->getprojectionMatrix();
+//	
+//	//const float* world = (const float*)value_ptr(worldMatrix);
+//	const float* world = (const float*)value_ptr(glm::mat4(1.0f));
+//	const float* convertedView = (const float*)value_ptr(v);
+//	const float* convertedProjection = (const float*)value_ptr(p);
+//	localvertexShader->SetMatrix4x4("world", world);
+//	localvertexShader->SetMatrix4x4("view", convertedView);
+//	localvertexShader->SetMatrix4x4("projection", convertedProjection);
+//	localvertexShader->CopyAllBufferData();
+//	localvertexShader->SetShader();
+//
+//	localpixelShader->SetShaderResourceView("wallTexture", this->getMaterial()->getSRV());
+//	localpixelShader->SetSamplerState("basicSampler", this->getMaterial()->getsamplerState());
+//	
+//	localpixelShader->CopyAllBufferData();
+//	localpixelShader->SetShader();
+//}
 
-	localpixelShader->SetShaderResourceView("wallTexture", this->getMaterial()->getSRV());
-	localpixelShader->SetSamplerState("basicSampler", this->getMaterial()->getsamplerState());
-	
-	localpixelShader->CopyAllBufferData();
-	localpixelShader->SetShader();
-}
-
-void GameEntity::LoadTextures()
-{
-	CreateWICTextureFromFile(dynamic_cast<WinRenderer*>(Renderer)->GetDevice(), dynamic_cast<WinRenderer*>(Renderer)->GetContext(), L"../CommonFiles/Lamborginhi_Aventador_diffuse.jpeg", 0, &SRV);
-	D3D11_SAMPLER_DESC sd = {}; // Zeros it out
-	sd.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-	sd.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-	sd.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-	sd.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR; // Tri-linear filtering
-												 //sd.Filter = D3D11_FILTER_ANISOTROPIC;
-												 //sd.MaxAnisotropy = 16;
-	sd.MaxLOD = D3D11_FLOAT32_MAX;
-
-	dynamic_cast<WinRenderer*>(Renderer)->GetDevice()->CreateSamplerState(&sd, &Sampler);
-}
+//void GameEntity::LoadTextures()
+//{
+//	CreateWICTextureFromFile(dynamic_cast<WinRenderer*>(Renderer)->GetDevice(), dynamic_cast<WinRenderer*>(Renderer)->GetContext(), L"../CommonFiles/Lamborginhi_Aventador_diffuse.jpeg", 0, &SRV);
+//	D3D11_SAMPLER_DESC sd = {}; // Zeros it out
+//	sd.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+//	sd.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+//	sd.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+//	sd.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR; // Tri-linear filtering
+//												 //sd.Filter = D3D11_FILTER_ANISOTROPIC;
+//												 //sd.MaxAnisotropy = 16;
+//	sd.MaxLOD = D3D11_FLOAT32_MAX;
+//
+//	dynamic_cast<WinRenderer*>(Renderer)->GetDevice()->CreateSamplerState(&sd, &Sampler);
+//}
 void GameEntity::InitializeMaterial()
 {
-	material = new Material(localvertexShader, localpixelShader, SRV, Sampler);
+	material = new Material(localvertexShader, localpixelShader,Renderer);
 
 }
 void  LightingInfo(DirectionalLight light)
@@ -103,6 +103,7 @@ void  LightingInfo(DirectionalLight light)
 }
 GameEntity::~GameEntity()
 {
+	//delete material;
 	SRV->Release();
 	Sampler->Release();
 }

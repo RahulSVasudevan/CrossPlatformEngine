@@ -3,7 +3,7 @@
 #include "..\CommonFiles\IRenderer.h"
 #include "..\CommonFiles\Lights.h"
 #include"..\CommonFiles\Input.h"
-#include"..\WindowsLibrary\GameEntity.h"
+#include"..\CommonFiles\IEntity.h"
 //#include <unordered_map>
 
 
@@ -17,7 +17,7 @@ class Game
 	IMesh * mesh;
 	IMesh * mesh2;
 	Input* getInput;
-	GameEntity* Entity;
+	IEntity* Entity;
 	VertexCommon * VertexData;
 	VertexCommon * VertexData2;
 	uint16_t * IndexData;

@@ -31,6 +31,7 @@
 		if (swapChain) { swapChain->Release(); }
 		if (context) { context->Release(); }
 		if (device) { device->Release(); }
+		if (rasterizer) { rasterizer->Release(); }
 	}
 
 	void WinRenderer::Init()
@@ -193,6 +194,17 @@
 
 	void WinRenderer::DrawMesh(IMesh* Mesh)
 	{
+
+		const float* world = (const float*)value_ptr(glm::mat4(1.0f));
+		const float* convertedView = (const float*)value_ptr(viewMatrix);
+		const float* convertedProjection = (const float*)value_ptr(projectionMatrix);
+		vertexShader->SetMatrix4x4("world", world);
+		vertexShader->SetMatrix4x4("view", convertedView);
+		vertexShader->SetMatrix4x4("projection", convertedProjection);
+		vertexShader->CopyAllBufferData();
+		vertexShader->SetShader();
+
+
 		pixelShader->SetData("light", &Light, sizeof(DirectionalLight));
 	
 
