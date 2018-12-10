@@ -30,9 +30,9 @@ public:
 	vec3 wmTrans;
 	vec3 wmScale;
 	vec3 wmRot;
-	void setTranslation(float, float, float);
-	void setScale(float, float, float);
-	void setRotation(float, float, float);
+	virtual void setTranslation(float, float, float) override;
+	virtual void setScale(float, float, float) override;
+	virtual void setRotation(float, float, float) override;
 	void updateWorld();
 	//void LoadTextures();
 	//void InitializeMaterial();

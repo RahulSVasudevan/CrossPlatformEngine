@@ -9,5 +9,8 @@ class IEntity {
 public:
 	IEntity();
 	IEntity(IMesh* m, IMaterial* mat);
+	virtual void setTranslation(float, float, float) {};
+	virtual void setScale(float, float, float) {};
+	virtual void setRotation(float, float, float) {};
 	~IEntity();
 };

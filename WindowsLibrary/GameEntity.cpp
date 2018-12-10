@@ -6,7 +6,7 @@ using namespace DirectX;
 
 void GameEntity::setTranslation(float x, float y, float z)
 {
-	wmTrans = vec3(x, y, z);
+	wmTrans += vec3(x, y, z);
 	
 	this->updateWorld();
 	
@@ -26,8 +26,7 @@ void GameEntity::setRotation(float x, float y, float z)
 
 void GameEntity::updateWorld()
 {
-	worldMatrix = mesh->GetWorldMatrix();
-	//worldMatrix = glm::mat4(1.0f);
+
 	worldMatrix = glm::translate(mat4(1.0f), wmTrans);
 
 	worldMatrix = glm::scale(worldMatrix, wmScale);
