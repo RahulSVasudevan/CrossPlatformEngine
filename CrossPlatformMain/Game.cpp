@@ -133,8 +133,7 @@ void Game::Run()
 		
 		if (getInput->GetKeyDown('W') || getInput->isButtonDown(Button::BUTTON_SQUARE))
 		{
-			printf("## square\n");
-			//mesh2->CheckInput(1.0f);
+			Entity->setTranslation(0, 1, 0);
 		}
 		if (getInput->isButtonDown(Button::BUTTON_CIRCLE) || getInput->GetKeyDown('V'))
 		{

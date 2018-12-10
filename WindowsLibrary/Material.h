@@ -5,9 +5,10 @@
 #include"SimpleShader.h"
 #include"WinMesh.h"
 #include <DirectXMath.h>
-#include"WICTextureLoader.h"
-#pragma comment(lib,"../packages/directxtk_desktop_2015.2018.11.20.1/lib/x64/Debug/DirectXTK.lib")
 
+#pragma comment(lib,"../packages/directxtk_desktop_2015.2018.11.20.1/lib/x64/Debug/DirectXTK.lib")
+//#include <WICTextureLoader.h>
+#include "../packages/directxtk_desktop_2015.2018.11.20.1/include/WICTextureLoader.h"
 
 
 class Material : public IMaterial

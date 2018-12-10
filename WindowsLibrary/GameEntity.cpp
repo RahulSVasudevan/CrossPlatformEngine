@@ -30,6 +30,7 @@ void GameEntity::updateWorld()
 	worldMatrix = glm::translate(mat4(1.0f), wmTrans);
 
 	worldMatrix = glm::scale(worldMatrix, wmScale);
+	worldMatrix = glm::transpose(worldMatrix);
 	//worldMatrix = glm::rotate(worldMatrix, 0.0f, wmRot);
 }
 
