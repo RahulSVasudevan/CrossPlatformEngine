@@ -10,7 +10,7 @@
 #include <DirectXMath.h>
 #include "WinMesh.h"
 
-//#include"GameEntity.h"
+#include"GameEntity.h"
 #include"..\CommonFiles\Maths.h"
 #pragma comment(lib, "d3d11.lib")
 
@@ -59,7 +59,7 @@ using namespace DirectX;
 		void BeginFrame();
 		void EndFrame();
 		//void DrawQuad();
-		void DrawMesh(IMesh *Mesh);
+		virtual void DrawMesh(void *Mesh) override;
 		void  LightingInfo(DirectionalLight light);
 
 		static WinRenderer* WinRendererInstance;

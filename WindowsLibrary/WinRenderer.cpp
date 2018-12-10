@@ -192,10 +192,12 @@
 	//}
 
 
-	void WinRenderer::DrawMesh(IMesh* Mesh)
+	void WinRenderer::DrawMesh(void* vEntity)
 	{
+		GameEntity *entity = reinterpret_cast<GameEntity*>(vEntity);
+		WinMesh* WMesh = entity->GetMesh();
 
-		const float* world = (const float*)value_ptr(glm::mat4(1.0f));
+		const float* world = (const float*)value_ptr(entity->GetWorldMatrix());
 		const float* convertedView = (const float*)value_ptr(viewMatrix);
 		const float* convertedProjection = (const float*)value_ptr(projectionMatrix);
 		vertexShader->SetMatrix4x4("world", world);
@@ -211,7 +213,6 @@
 		UINT stride = sizeof(VertexCommon);
 		UINT offset = 0;
 
-		WinMesh* WMesh = dynamic_cast<WinMesh*>(Mesh);
 
 		ID3D11Buffer * v = WMesh->GetVertexBuffer();
 

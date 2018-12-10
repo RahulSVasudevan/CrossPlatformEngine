@@ -38,9 +38,13 @@ void IRenderer::EndFrame()
 //{
 //}
 
-void IRenderer::DrawMesh(IMesh* Mesh)
+void IRenderer::DrawMesh(void* entity)
 {
 }
+
+//void IRenderer::DrawEntity(IEntity * Entity)
+//{
+//}
 
 void IRenderer::LightingInfo(DirectionalLight light)
 {

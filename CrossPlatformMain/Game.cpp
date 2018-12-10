@@ -118,7 +118,7 @@ void Game::Draw()
 	//Entity->prepareMaterial();
 	//Entity->getMaterial()->DatatoShader();
 	Mat->DatatoShader();
-	renderer->DrawMesh(mesh2);
+	renderer->DrawMesh((void*)Entity);
 }
 
 void Game::Run()

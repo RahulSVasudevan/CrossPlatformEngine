@@ -24,6 +24,11 @@ void GameEntity::setRotation(float x, float y, float z)
 	this->updateWorld();
 }
 
+WinMesh* GameEntity::GetMesh()
+{
+	return (WinMesh*)mesh;
+}
+
 void GameEntity::updateWorld()
 {
 
@@ -32,6 +37,11 @@ void GameEntity::updateWorld()
 	worldMatrix = glm::scale(worldMatrix, wmScale);
 	worldMatrix = glm::transpose(worldMatrix);
 	//worldMatrix = glm::rotate(worldMatrix, 0.0f, wmRot);
+}
+
+mat4x4 GameEntity::GetWorldMatrix()
+{
+	return worldMatrix;
 }
 
 GameEntity::GameEntity(IMesh* m, IMaterial* mat)

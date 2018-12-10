@@ -1,7 +1,6 @@
 #pragma once
 
 #include "IMesh.h"
-
 class IRenderer
 {
 
@@ -16,7 +15,8 @@ public:
 	virtual void BeginFrame();
 	virtual void EndFrame();
 	//virtual void DrawQuad();
-	virtual void DrawMesh(IMesh* Mesh);
+	virtual void DrawMesh(void* entity);
+	/*virtual void DrawEntity(IEntity* Entity);*/
 	virtual void LightingInfo(DirectionalLight light);
 
 };

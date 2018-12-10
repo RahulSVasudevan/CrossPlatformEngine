@@ -5,7 +5,7 @@
 #include "Material.h"
 #include"WinMesh.h"
 #include"../WindowsLibrary/WinRenderer.h"
-#include"../CommonFiles/IRenderer.h"
+//#include"../CommonFiles/IRenderer.h"
 #include "SimpleShader.h"
 #include <DirectXMath.h>
 //#include "WICTextureLoader.h"
@@ -33,7 +33,10 @@ public:
 	virtual void setTranslation(float, float, float) override;
 	virtual void setScale(float, float, float) override;
 	virtual void setRotation(float, float, float) override;
+	WinMesh* GetMesh();
 	void updateWorld();
+
+	mat4x4 GetWorldMatrix();
 	//void LoadTextures();
 	//void InitializeMaterial();
 	//IMesh* getMesh();
