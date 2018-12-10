@@ -7,6 +7,7 @@
 #include"..\CommonFiles\IMaterial.h"
 #include"..\CommonFiles\Parser.h"
 #include"..\CommonFiles\SceneObjectData.h"
+#include "..\CommonFiles\IAudio.h"
 #include <fstream>
 #include <map>
 #include <string>
@@ -19,6 +20,7 @@ class Game
 {
 
 	IRenderer * renderer;
+	IAudio * audioRenderer;
 
 	IMesh * mesh;
 	IMesh * mesh2;

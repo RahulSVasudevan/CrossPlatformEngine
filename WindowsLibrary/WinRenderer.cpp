@@ -13,6 +13,7 @@
 
 		width = 1280;
 		height = 720;
+		camera = new ICamera();
 	}
 
 	WinRenderer::~WinRenderer()
@@ -21,6 +22,7 @@
 
 		delete vertexShader;
 		delete pixelShader;
+		delete camera;
 
 		vertexBufferPointer->Release();
 		indexBufferPointer->Release();
@@ -38,6 +40,7 @@
 	{
 		hInstance = GetModuleHandle(0);
 		HRESULT status = InitWindow();
+		camera->InitialiseCamera(width, height);
 		status = InitDirectX();
 
 		LoadShaders();
@@ -45,7 +48,7 @@
 		context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		
 
-
+		/*
 		// Temp Code
 		vec3 cameraPos = vec3(0.0f, 160.0f, 400.0f);
 		vec3 cameraTarget = vec3(0.0f, 0.0f, 0.0f);
@@ -60,6 +63,8 @@
 
 		projectionMatrix = perspective(0.25f * 3.1415926535f, (float)width / height, 0.1f, 1000.0f);
 		projectionMatrix = transpose(projectionMatrix);
+
+		*/
 		//XMMATRIX W = XMMatrixIdentity();
 		//XMStoreFloat4x4(&worldMatrix, XMMatrixTranspose(W));
 
@@ -198,8 +203,8 @@
 		WinMesh* WMesh = entity->GetMesh();
 
 		const float* world = (const float*)value_ptr(entity->GetWorldMatrix());
-		const float* convertedView = (const float*)value_ptr(viewMatrix);
-		const float* convertedProjection = (const float*)value_ptr(projectionMatrix);
+		const float* convertedView = (const float*)value_ptr(getviewMatrix());
+		const float* convertedProjection = (const float*)value_ptr(getprojectionMatrix());
 		vertexShader->SetMatrix4x4("world", world);
 		vertexShader->SetMatrix4x4("view", convertedView);
 		vertexShader->SetMatrix4x4("projection", convertedProjection);
@@ -467,19 +472,37 @@
 		success = pixelShader->LoadShaderFile(L"../CrossPlatformMain/PixelShader.cso");
 	}
 
+	void WinRenderer::checkInput(char a)
+	{
+		if (a == 'w')
+			camera->moveFront();
+
+		if (a == 's')
+			camera->moveBack();
+
+		if (a == 'a')
+			camera->moveLeft();
+
+		if (a == 'd')
+			camera->moveRight();
+
+	}
 
 	glm::mat4x4 WinRenderer::getworldMatrix()
 	{
+		worldMatrix = camera->GetWorldMatrix();
 		return worldMatrix;
 	}
 
 	glm::mat4x4 WinRenderer::getviewMatrix()
 	{
+		viewMatrix = camera->GetViewMatrix();
 		return viewMatrix;
 	}
 
 	glm::mat4x4 WinRenderer::getprojectionMatrix()
 	{
+		projectionMatrix = camera->GetProjectionMatrix();
 		return projectionMatrix;
 	}
 

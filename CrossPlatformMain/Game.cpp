@@ -7,11 +7,12 @@
 	#include "..\WindowsLibrary\WinRenderer.h"
 	#include "..\WindowsLibrary\WinMesh.h"
 	#include"..\WindowsLibrary\GameEntity.h"
+	#include "..\WindowsLibrary\WinAudio.h"
 #elif __clang__
 	#include "..\PS4Library\PS4Renderer.h"
 #endif
 
-
+#define audioSound				((char*)"../Assets/Sounds/RollingSpace.wav")
 
 
 Game::Game()
@@ -53,6 +54,7 @@ Game::Game()
 
 #ifdef _WIN32
 	renderer = new WinRenderer();
+	audioRenderer = new WinAudio();
 	getInput = Keyboard::getInstance();
 	renderer->Init();
 	//mesh = new WinMesh(VertexData, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
@@ -101,6 +103,7 @@ Game::~Game() {
 	delete[] IndexData2;
 
 	delete renderer;
+	delete audioRenderer;
 	delete Mat;
 
 	for (auto pair : meshes) {
@@ -191,7 +194,7 @@ void Game::Run()
 	//CreateEntity("carEntity", "carMesh");
 	//CreateEntity("carEntity2", "carMesh");
 	//LoadScene("../Assets/Scenes/CarScene1.txt");
-
+	audioRenderer->Play(audioSound);
 	while (renderer->MessageExist())
 	{
 		renderer->BeginFrame();
@@ -200,24 +203,42 @@ void Game::Run()
 
 
 		
-		if (getInput->GetKeyDown('W') || getInput->isButtonDown(Button::BUTTON_SQUARE))
-		{
-			//Entity->setTranslation(0, 1, 0);
-			//entities["carEntity"]->setTranslation(0, 1, 0);
-		}
-		if (getInput->isButtonDown(Button::BUTTON_CIRCLE) || getInput->GetKeyDown('V'))
-		{
-			printf("## CIRCLE \n");
-			//mesh2->CheckInput(2.0f);
-		}
-		if (getInput->GetKeyDown('D')) {
-			//DestroyEntity("carEntity2");
-		}
+
+
 		if (getInput->GetKeyDown('1')) {
 			LoadScene("../Assets/Scenes/CarScene1.txt");
 		}
 		if (getInput->GetKeyDown('2')) {
 			LoadScene("../Assets/Scenes/CarScene2.txt");
+		}
+		if (getInput->GetKeyDown('W') || getInput->isButtonDown(Button::BUTTON_SQUARE))
+		{
+			//printf("## square\n");
+			renderer->checkInput('w');
+			//mesh2->CheckInput(1.0f);
+		}
+		if (getInput->GetKeyDown('S') || getInput->isButtonDown(Button::BUTTON_SQUARE))
+		{
+			//printf("## square\n");
+			renderer->checkInput('s');
+			//mesh2->CheckInput(1.0f);
+		}
+		if (getInput->GetKeyDown('A') || getInput->isButtonDown(Button::BUTTON_SQUARE))
+		{
+			//printf("## square\n");
+			renderer->checkInput('a');
+			//mesh2->CheckInput(1.0f);
+		}
+		if (getInput->GetKeyDown('D') || getInput->isButtonDown(Button::BUTTON_SQUARE))
+		{
+			//printf("## square\n");
+			renderer->checkInput('d');
+			//mesh2->CheckInput(1.0f);
+		}
+		if (getInput->isButtonDown(Button::BUTTON_CIRCLE) || getInput->GetKeyDown('V'))
+		{
+			printf("## CIRCLE \n");
+			//mesh2->CheckInput(2.0f);
 		}
 		renderer->EndFrame();
 	}
