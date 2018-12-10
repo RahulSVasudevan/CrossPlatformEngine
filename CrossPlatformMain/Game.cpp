@@ -153,11 +153,44 @@ void Game::DestroyEntity(string entityName) {
 	entities.erase(entityName);
 }
 
+void Game::UnloadScene() {
+	for (auto pair : meshes) {
+		delete pair.second;
+	}
+
+	for (auto pair : entities) {
+		delete pair.second;
+	}
+}
+
+void Game::LoadScene(string filename) {
+	UnloadScene();
+
+	ifstream file(filename);
+	string str;
+	if (file) {
+		while (getline(file, str)) {
+			SceneObjectData data = Parser::GetSceneObjectData(str);
+			//Load meshes
+			if (data.type == SceneObjectType::mesh) {
+				CreateMeshFromFile(data.name, data.path);
+			}
+			//Load entities
+			else if (data.type == SceneObjectType::entity) {
+				CreateEntity(data.name, data.meshID);
+				cout << data.x;
+				entities[data.name]->setTranslation(data.x, data.y, data.z);
+			}
+		}
+	}
+}
+
 void Game::Run()
 {
-	CreateMeshFromFile("carMesh", "../CommonFiles/Lamborghini_Aventador.obj");
-	CreateEntity("carEntity", "carMesh");
-	CreateEntity("carEntity2", "carMesh");
+	//CreateMeshFromFile("carMesh", "../CommonFiles/Lamborghini_Aventador.obj");
+	//CreateEntity("carEntity", "carMesh");
+	//CreateEntity("carEntity2", "carMesh");
+	//LoadScene("../Assets/Scenes/CarScene1.txt");
 
 	while (renderer->MessageExist())
 	{
@@ -170,7 +203,7 @@ void Game::Run()
 		if (getInput->GetKeyDown('W') || getInput->isButtonDown(Button::BUTTON_SQUARE))
 		{
 			//Entity->setTranslation(0, 1, 0);
-			entities["carEntity"]->setTranslation(1, 0, 0);
+			//entities["carEntity"]->setTranslation(0, 1, 0);
 		}
 		if (getInput->isButtonDown(Button::BUTTON_CIRCLE) || getInput->GetKeyDown('V'))
 		{
@@ -178,7 +211,13 @@ void Game::Run()
 			//mesh2->CheckInput(2.0f);
 		}
 		if (getInput->GetKeyDown('D')) {
-			DestroyEntity("carEntity2");
+			//DestroyEntity("carEntity2");
+		}
+		if (getInput->GetKeyDown('1')) {
+			LoadScene("../Assets/Scenes/CarScene1.txt");
+		}
+		if (getInput->GetKeyDown('2')) {
+			LoadScene("../Assets/Scenes/CarScene2.txt");
 		}
 		renderer->EndFrame();
 	}

@@ -1,2 +1,5 @@
 ﻿  Game.cpp
+d:\grad school\second year\igme 753 - console development\crossplatformengine\commonfiles\parser.h(60): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\grad school\second year\igme 753 - console development\crossplatformengine\commonfiles\parser.h(63): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\grad school\second year\igme 753 - console development\crossplatformengine\commonfiles\parser.h(66): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   CrossPlatformMain.vcxproj -> D:\Grad School\Second Year\IGME 753 - Console Development\CrossPlatformEngine\x64\Debug\CrossPlatformMain.exe

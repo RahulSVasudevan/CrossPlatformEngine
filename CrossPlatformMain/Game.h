@@ -5,6 +5,9 @@
 #include"..\CommonFiles\Input.h"
 #include"..\CommonFiles\IEntity.h"
 #include"..\CommonFiles\IMaterial.h"
+#include"..\CommonFiles\Parser.h"
+#include"..\CommonFiles\SceneObjectData.h"
+#include <fstream>
 #include <map>
 #include <string>
 //#include <unordered_map>
@@ -63,6 +66,8 @@ public:
 
 	//Create an entity and assign a mesh
 	void CreateEntity(string entityName, string meshName);
-
 	void DestroyEntity(string entityName);
+
+	void UnloadScene();
+	void LoadScene(string filename);
 };
