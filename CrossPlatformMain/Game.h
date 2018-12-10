@@ -5,6 +5,8 @@
 #include"..\CommonFiles\Input.h"
 #include"..\CommonFiles\IEntity.h"
 #include"..\CommonFiles\IMaterial.h"
+#include <map>
+#include <string>
 //#include <unordered_map>
 
 
@@ -25,6 +27,9 @@ class Game
 	uint16_t * IndexData;
 	uint16_t * IndexData2;
 	DirectionalLight light;
+
+	map<string, IEntity*> entities;
+	map<string, IMesh*> meshes;
 	enum Button
 	{
 		BUTTON_L3 = 0x00000002,
@@ -54,5 +59,10 @@ public:
 	void Draw();
 	void Run();
 
+	void CreateMeshFromFile(string meshName, string path);
 
+	//Create an entity and assign a mesh
+	void CreateEntity(string entityName, string meshName);
+
+	void DestroyEntity(string entityName);
 };

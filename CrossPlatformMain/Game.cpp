@@ -58,9 +58,10 @@ Game::Game()
 	//mesh = new WinMesh(VertexData, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
 	//mesh2 = new WinMesh(VertexData2, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
 	
-	mesh2 = new WinMesh("../CommonFiles/Lamborghini_Aventador.obj", dynamic_cast<WinRenderer*>(renderer)->GetDevice());
+	//mesh2 = new WinMesh("../CommonFiles/Lamborghini_Aventador.obj", dynamic_cast<WinRenderer*>(renderer)->GetDevice());
 	Mat = new Material(renderer, L"../CommonFiles/Lamborginhi_Aventador_diffuse.jpeg");
-	Entity = new GameEntity(mesh2,Mat);
+	//Entity = new GameEntity(mesh2,Mat);
+
 	//Entity->LoadTextures();
 	
 	//Mat->LoadTextures("../CommonFiles/Lamborginhi_Aventador_diffuse.jpeg");
@@ -101,6 +102,15 @@ Game::~Game() {
 
 	delete renderer;
 	delete Mat;
+
+	for (auto pair : meshes) {
+		delete pair.second;
+	}
+
+	for (auto pair : entities) {
+		delete pair.second;
+	}
+
 	
 }
 
@@ -118,11 +128,37 @@ void Game::Draw()
 	//Entity->prepareMaterial();
 	//Entity->getMaterial()->DatatoShader();
 	Mat->DatatoShader();
-	renderer->DrawMesh((void*)Entity);
+	//renderer->DrawMesh((void*)Entity);
+
+	for (auto pair : entities) {
+		renderer->DrawMesh((void*)pair.second);
+	}
+}
+
+void Game::CreateMeshFromFile(string meshName, string path) {
+	//Create an empty pointer to copy to the mesh map
+	IMesh *ptr;
+	meshes.insert(std::pair<string, IMesh*>(meshName, ptr));
+	meshes[meshName] = new WinMesh(path.c_str(), dynamic_cast<WinRenderer*>(renderer)->GetDevice());
+}
+
+void Game::CreateEntity(string entityName, string meshName) {
+	IEntity *ptr;
+	entities.insert(std::pair<string, IEntity*>(entityName, ptr));
+	entities[entityName] = new GameEntity(meshes[meshName], Mat);
+}
+
+void Game::DestroyEntity(string entityName) {
+	delete entities[entityName];
+	entities.erase(entityName);
 }
 
 void Game::Run()
 {
+	CreateMeshFromFile("carMesh", "../CommonFiles/Lamborghini_Aventador.obj");
+	CreateEntity("carEntity", "carMesh");
+	CreateEntity("carEntity2", "carMesh");
+
 	while (renderer->MessageExist())
 	{
 		renderer->BeginFrame();
@@ -133,12 +169,16 @@ void Game::Run()
 		
 		if (getInput->GetKeyDown('W') || getInput->isButtonDown(Button::BUTTON_SQUARE))
 		{
-			Entity->setTranslation(0, 1, 0);
+			//Entity->setTranslation(0, 1, 0);
+			entities["carEntity"]->setTranslation(1, 0, 0);
 		}
 		if (getInput->isButtonDown(Button::BUTTON_CIRCLE) || getInput->GetKeyDown('V'))
 		{
 			printf("## CIRCLE \n");
 			//mesh2->CheckInput(2.0f);
+		}
+		if (getInput->GetKeyDown('D')) {
+			DestroyEntity("carEntity2");
 		}
 		renderer->EndFrame();
 	}
