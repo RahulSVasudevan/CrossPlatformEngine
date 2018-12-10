@@ -6,7 +6,7 @@ class IMaterial {
 public:
 	IMaterial();
 	IMaterial(IRenderer*, const wchar_t * obj);
-	~IMaterial();
+	virtual ~IMaterial();
 	//virtual void LoadTextures(const char * obj);
 	virtual void DatatoShader();
 };
