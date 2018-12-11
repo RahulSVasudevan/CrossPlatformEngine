@@ -106,15 +106,21 @@ Game::~Game() {
 	delete audioRenderer;
 	delete Mat;
 
-	for (auto pair : meshes) {
-		delete pair.second;
+	//for (auto pair : meshes) {
+	//	delete pair.second;
+	//}
+
+	for (map<string, IMesh*>::iterator itr = meshes.begin(); itr != meshes.end(); itr++) {
+		delete itr->second;
 	}
 
-	for (auto pair : entities) {
-		delete pair.second;
-	}
+	//for (auto pair : entities) {
+	//	delete pair.second;
+	//}
 
-	
+	for (map<string, IEntity*>::iterator itr = entities.begin(); itr != entities.end(); itr++) {
+		delete itr->second;
+	}
 }
 
 void Game::Init()
@@ -133,22 +139,30 @@ void Game::Draw()
 	Mat->DatatoShader();
 	//renderer->DrawMesh((void*)Entity);
 
-	for (auto pair : entities) {
-		renderer->DrawMesh((void*)pair.second);
+	//for (auto pair : entities) {
+	//	renderer->DrawMesh((void*)pair.second);
+	//}
+
+	for (map<string, IEntity*>::iterator itr = entities.begin(); itr != entities.end(); itr++) {
+		renderer->DrawMesh((void*)itr->second);
 	}
 }
 
 void Game::CreateMeshFromFile(string meshName, string path) {
+#ifdef _WIN32
 	//Create an empty pointer to copy to the mesh map
 	IMesh *ptr;
 	meshes.insert(std::pair<string, IMesh*>(meshName, ptr));
 	meshes[meshName] = new WinMesh(path.c_str(), dynamic_cast<WinRenderer*>(renderer)->GetDevice());
+#endif
 }
 
 void Game::CreateEntity(string entityName, string meshName) {
+#ifdef _WIN32
 	IEntity *ptr;
 	entities.insert(std::pair<string, IEntity*>(entityName, ptr));
 	entities[entityName] = new GameEntity(meshes[meshName], Mat);
+#endif
 }
 
 void Game::DestroyEntity(string entityName) {
@@ -157,12 +171,20 @@ void Game::DestroyEntity(string entityName) {
 }
 
 void Game::UnloadScene() {
-	for (auto pair : meshes) {
-		delete pair.second;
+	//for (auto pair : meshes) {
+	//	delete pair.second;
+	//}
+
+	//for (auto pair : entities) {
+	//	delete pair.second;
+	//}
+
+	for (map<string, IMesh*>::iterator itr = meshes.begin(); itr != meshes.end(); itr++) {
+		delete itr->second;
 	}
 
-	for (auto pair : entities) {
-		delete pair.second;
+	for (map<string, IEntity*>::iterator itr = entities.begin(); itr != entities.end(); itr++) {
+		delete itr->second;
 	}
 }
 

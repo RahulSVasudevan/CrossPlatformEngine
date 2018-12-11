@@ -1,4 +1,4 @@
-#include "../WindowsLibrary/stdafx.h"
+//#include "../WindowsLibrary/stdafx.h"
 #include "ICamera.h"
 
 

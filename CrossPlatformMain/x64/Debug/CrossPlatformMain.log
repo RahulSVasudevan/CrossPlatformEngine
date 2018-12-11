@@ -1,0 +1,14 @@
+﻿  ICamera.cpp
+  IEntity.cpp
+  IMaterial.cpp
+  IRenderer.cpp
+  Game.cpp
+c:\users\igmadmin\desktop\crossplatformengine\commonfiles\parser.h(60): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\igmadmin\desktop\crossplatformengine\commonfiles\parser.h(63): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\igmadmin\desktop\crossplatformengine\commonfiles\parser.h(66): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Main.cpp
+c:\users\igmadmin\desktop\crossplatformengine\commonfiles\parser.h(60): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\igmadmin\desktop\crossplatformengine\commonfiles\parser.h(63): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\igmadmin\desktop\crossplatformengine\commonfiles\parser.h(66): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
+  CrossPlatformMain.vcxproj -> C:\Users\IGMAdmin\Desktop\CrossPlatformEngine\x64\Debug\CrossPlatformMain.exe

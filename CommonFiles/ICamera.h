@@ -4,7 +4,7 @@
 #include "../CommonFiles/glm/gtc/matrix_transform.hpp"
 #include "../CommonFiles/glm/gtc/type_ptr.hpp"
 
-#include "../WindowsLibrary/SimpleShader.h"
+//#include "../WindowsLibrary/SimpleShader.h"
 
 
 
