@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "../CommonMain/SceneObjectData.h"
 using namespace std;
 
 struct UIElementInfo {
@@ -10,6 +11,8 @@ struct UIElementInfo {
 	int y;
 	int width;
 	int height;
+	int index;		//Used by menu list buttons
 	bool hovered;	//Only used by buttons
 	bool pressed;
+	SceneObjectType type;
 };

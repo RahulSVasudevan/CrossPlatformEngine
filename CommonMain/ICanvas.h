@@ -16,6 +16,14 @@ public:
 
 	virtual void LoadScene(string filename) {}
 	virtual void UnloadScene() {}
+
+	//Input functions
+	virtual void OnPressUp() {}
+	virtual void OnPressDown() {}
+	virtual void OnPressLeft() {}
+	virtual void OnPressRight() {}
+	virtual void OnPressConfirm() {}
+	virtual void OnPressBack() {}
 	
 	//Probably more efficient to use optional parameters (x = 0), if possible in C++
 	virtual void CreateTextureFromFile(wstring filename, string textureName) = 0;

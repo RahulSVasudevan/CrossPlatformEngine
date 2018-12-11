@@ -10,6 +10,17 @@ class Parser {
 public:
 	static SceneObjectData GetSceneObjectData(string str) {
 		SceneObjectData data;
+
+		//Set default values
+		data.path = L"";
+		data.name = "Unnamed";
+		data.x = 0;
+		data.y = 0;
+		data.width = 0;
+		data.height = 0;
+		data.index = 0;
+
+		SceneObjectType type;
 		vector<string> info;
 		string newStr = "";
 		for (int i = 0; i < str.length(); i++) {
@@ -38,7 +49,7 @@ public:
 				data.path = wstring(a.begin(), a.end());
 			}
 			else if (s.substr(0, 5) == "name=") {
-				data.name = s.substr(6);
+				data.name = s.substr(5);
 			}
 			else if (s.substr(0, 2) == "x=") {
 				data.x = stoi(s.substr(2));
@@ -51,6 +62,9 @@ public:
 			}
 			else if (s.substr(0, 7) == "height=") {
 				data.height = stoi(s.substr(7));
+			}
+			else if (s.substr(0, 6) == "index=") {
+				data.index = stoi(s.substr(6));
 			}
 		}
 		return data;

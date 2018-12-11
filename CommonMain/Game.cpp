@@ -43,7 +43,7 @@ void Game::InitializeCanvas() {
 	//wc->CreateTextureFromFile(L"../Assets/Textures/smiley.png", "smiley");
 #endif
 	//canvas->CreateTextureFromFile(L"../Assets/Textures/smiley.png", "smiley");
-	canvas->LoadScene("../Assets/Scenes/MenuTest.txt");
+	canvas->LoadScene("../Assets/Scenes/Scene.txt");
 }
 
 Game::~Game() {
@@ -87,6 +87,13 @@ void Game::UpdateCanvas() {
 #endif
 	canvas->Update(x, y);
 	//PrepareCanvas();
+
+	if ((GetAsyncKeyState(VK_UP) & 0x0001) == 1) {
+		canvas->OnPressUp();
+	}
+	if ((GetAsyncKeyState(VK_RETURN) & 0x0001) == 1) {
+		canvas->OnPressConfirm();
+	}
 }
 
 void UnloadCanvas(ICanvas &canvas) {

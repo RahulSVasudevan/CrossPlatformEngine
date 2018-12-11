@@ -1,6 +1,10 @@
 #include "WinCanvas.h"
 
 WinCanvas::WinCanvas() {
+	containsMenuList = false;
+	menuListIndex = 0;
+	menuListSize = 0;
+	selectedMenuButton = "";
 }
 
 //WinCanvas::WinCanvas(ID3D11Device *device, ID3D11DeviceContext *context) {
@@ -59,7 +63,9 @@ void WinCanvas::Update(int mousex, int mousey) {
 	}
 
 	for (map<string, UIElementInfo>::iterator itr = uiElementInfo.begin(); itr != uiElementInfo.end(); itr++) {
-		{
+
+		//Buttons
+		if (itr->second.type == SceneObjectType::button){
 			itr->second.hovered = MouseIsOnButton(itr->second, mousex, mousey);
 			if (itr->second.hovered && mouseButtonPressed) {
 				itr->second.pressed = true;
@@ -79,6 +85,12 @@ void WinCanvas::Update(int mousex, int mousey) {
 				}
 				itr->second.pressed = false;
 			}
+		}
+
+		//Menu buttons
+		else if (itr->second.type == SceneObjectType::listbutton) {
+			itr->second.hovered = (itr->second.index == menuListIndex);
+			if (itr->second.hovered) selectedMenuButton = itr->second.key;
 		}
 	}
 
@@ -115,11 +127,17 @@ void WinCanvas::Render() {
 		//info->key = itr->first;
 		//info->pressed = false;
 
-		if (!info.hovered) {
-			color = Colors::White;
+		//Determine how sprite dimming should work
+		if (info.type == SceneObjectType::button) {
+			if (!info.hovered) {
+				color = Colors::White;
+			}
+			else {
+				color = (info.pressed) ? Colors::Gray : Colors::LightGray;
+			}
 		}
-		else {
-			color = (info.pressed) ? Colors::Gray : Colors::LightGray;
+		else if (info.type == SceneObjectType::listbutton) {
+			color = (info.hovered) ? Colors::White : Colors::Gray;
 		}
 
 		tempRect.bottom = info.y + (info.height / 2);
@@ -146,11 +164,11 @@ void WinCanvas::LoadScene(string filename) {
 	ifstream file(filename);
 	string str;
 	if (file) {
-		cout << "Loading file";
+		//cout << "Loading file " << filename;
 		while (getline(file, str)) {
 			SceneObjectData data = Parser::GetSceneObjectData(str);
 			//TODO: Implement error handling
-			CreateTextureFromFile(data.path, data.name, data.x, data.y, data.width, data.height);
+			CreateTextureFromFile(data.path, data.name, data.x, data.y, data.width, data.height, data.index, data.type);
 		}
 	}
 }
@@ -164,6 +182,37 @@ void WinCanvas::UnloadScene() {
 	//TODO: Clearing UI Element info causes an error. Fix.
 	//uiElementInfo.clear();
 	uiButtonFunctions.clear();
+
+	containsMenuList = false;
+	menuListIndex = 0;
+	menuListSize = 0;
+	selectedMenuButton = "";
+}
+
+void WinCanvas::OnPressUp() {
+	menuListIndex--;
+	if (menuListIndex < 0)
+		menuListIndex += menuListSize;
+}
+void WinCanvas::OnPressDown() {
+	menuListIndex++;
+	if (menuListIndex >= menuListSize)
+		menuListIndex -= menuListSize;
+}
+void WinCanvas::OnPressLeft() {
+
+}
+void WinCanvas::OnPressRight() {
+
+}
+void WinCanvas::OnPressConfirm() {
+	//cout << selectedMenuButton;
+	if (uiButtonFunctions.count(selectedMenuButton)) {
+		uiButtonFunctions[selectedMenuButton]();
+	}
+}
+void WinCanvas::OnPressBack() {
+
 }
 
 //Not sure if proper way to add pointers into maps
@@ -178,19 +227,21 @@ void WinCanvas::CreateTextureFromFile(wstring filename, string textureName) {
 	string str = string(filename.begin(), filename.end());
 
 	UIElementInfo info;
-	info.key = str;
+	info.key = textureName;
 	info.x = 50;
 	info.y = 50;
 	info.width = 25;
 	info.height = 25;
 	info.hovered = false;
 	info.pressed = false;
+	info.index = 0;
+	info.type = SceneObjectType::sprite;
 	uiElementInfo.insert(std::pair<string, UIElementInfo>(textureName, info));
 	//uiButtonFunctions.insert(std::pair<string, std::function<void()>>(textureName, FunctionTest));
 }
 
 //Called by the scene loader
-void WinCanvas::CreateTextureFromFile(wstring filename, string textureName, int x, int y, int width, int height) {
+void WinCanvas::CreateTextureFromFile(wstring filename, string textureName, int x, int y, int width, int height, int index, SceneObjectType type) {
 	if (device == nullptr || context == nullptr) return;
 	if (shaderResourceViews[textureName] != nullptr) return;
 
@@ -200,20 +251,38 @@ void WinCanvas::CreateTextureFromFile(wstring filename, string textureName, int 
 	string str = string(filename.begin(), filename.end());
 
 	UIElementInfo info;
-	info.key = str;
+	info.key = textureName;
 	info.x = x;
 	info.y = y;
 	info.width = width;
 	info.height = height;
 	info.hovered = false;
 	info.pressed = false;
+	info.index = index;
+	info.type = type;
+	if (uiElementInfo.count(textureName)) {
+		uiElementInfo.erase(textureName);
+	}
 	uiElementInfo.insert(std::pair<string, UIElementInfo>(textureName, info));
 	//TODO: Let the Game assign individual functions to buttons
-	//AssignButtonFunction(str, [&]() {LoadScene("../Assets/Scenes/Scene2.txt") ;});
+	if (info.index == 0) {
+		AssignButtonFunction(textureName, [&]() {LoadScene("../Assets/Scenes/MenuTest2.txt"); });
+	}
+	else if (info.index == 1) {
+		AssignButtonFunction(textureName, [&]() {LoadScene("../Assets/Scenes/MenuTest1.txt"); });
+	}
 	//uiButtonFunctions.insert(std::pair<string, std::function<void()>>(textureName, FunctionTest));
+	//AssignButtonFunction(str, FunctionTest);
+
+	if (type == SceneObjectType::listbutton) {
+		menuListSize++;
+	}
 }
 
 void WinCanvas::AssignButtonFunction(string buttonName, function<void()> func) {
+	if (uiButtonFunctions.count(buttonName)) {
+		uiButtonFunctions.erase(buttonName);
+	}
 	uiButtonFunctions.insert(std::pair<string, std::function<void()>>(buttonName, func));
 }
 

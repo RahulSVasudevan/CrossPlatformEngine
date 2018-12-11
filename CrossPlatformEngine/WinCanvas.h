@@ -35,8 +35,17 @@ public:
 	//textureName, to be looked up in map
 	void LoadScene(string filename);
 	void UnloadScene();
+
+	//Input functions
+	void OnPressUp();
+	void OnPressDown();
+	void OnPressLeft();
+	void OnPressRight();
+	void OnPressConfirm();
+	void OnPressBack();
+
 	void CreateTextureFromFile(wstring filename, string textureName);
-	void CreateTextureFromFile(wstring filename, string textureName, int x, int y, int width, int height);
+	void CreateTextureFromFile(wstring filename, string textureName, int x, int y, int width, int height, int index, SceneObjectType type);
 	void AssignButtonFunction(string buttonName, function<void()> func);
 	bool IsReady();
 
@@ -56,5 +65,8 @@ private:
 	map<string, UIElementInfo> uiElementInfo;
 	map<string, std::function<void()>> uiButtonFunctions;
 
-	mutex m;
+	bool containsMenuList;
+	int menuListIndex;
+	int menuListSize;
+	string selectedMenuButton;
 };

@@ -1,13 +1,8 @@
-﻿  compilation object save succeeded; see C:\Users\IGMAdmin\Desktop\CrossPlatformEngine\x64\Debug\PixelShader.cso
-  compilation object save succeeded; see C:\Users\IGMAdmin\Desktop\CrossPlatformEngine\x64\Debug\VertexShader.cso
-  stdafx.cpp
-  Game.cpp
-  IMesh.cpp
-  IRenderer.cpp
+﻿  Game.cpp
+c:\users\igmadmin\desktop\crossplatformengine\commonmain\parser.h(23): warning C4101: 'type': unreferenced local variable
   Main.cpp
-  SimpleShader.cpp
+c:\users\igmadmin\desktop\crossplatformengine\commonmain\parser.h(23): warning C4101: 'type': unreferenced local variable
   WinCanvas.cpp
-  WinMesh.cpp
-  WinRenderer.cpp
+c:\users\igmadmin\desktop\crossplatformengine\commonmain\parser.h(23): warning C4101: 'type': unreferenced local variable
   Generating Code...
   CrossPlatformEngine.vcxproj -> C:\Users\IGMAdmin\Desktop\CrossPlatformEngine\x64\Debug\CrossPlatformEngine.exe

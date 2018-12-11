@@ -16,5 +16,6 @@ struct SceneObjectData {
 	int y;
 	int width;
 	int height;
+	int index;	//Used by menu list buttons
 	SceneObjectType type;
 };
