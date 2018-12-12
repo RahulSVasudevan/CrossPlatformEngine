@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2026
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CrossPlatformMain", "CrossPlatformMain\CrossPlatformMain.vcxproj", "{BC016818-5AEE-43EF-9FF4-73D5EF6256FF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WindowsLibrary", "WindowsLibrary\WindowsLibrary.vcxproj", "{4E3A8E3C-B59D-4216-8993-52057EDEA2D2}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PS4Library", "PS4Library\PS4Library.vcxproj", "{DB683E14-053B-43AF-912A-78111C33C288}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,14 +37,6 @@ Global
 		{4E3A8E3C-B59D-4216-8993-52057EDEA2D2}.Release|x64.Build.0 = Release|x64
 		{4E3A8E3C-B59D-4216-8993-52057EDEA2D2}.Release|x86.ActiveCfg = Release|Win32
 		{4E3A8E3C-B59D-4216-8993-52057EDEA2D2}.Release|x86.Build.0 = Release|Win32
-		{DB683E14-053B-43AF-912A-78111C33C288}.Debug|ORBIS.ActiveCfg = Debug|ORBIS
-		{DB683E14-053B-43AF-912A-78111C33C288}.Debug|ORBIS.Build.0 = Debug|ORBIS
-		{DB683E14-053B-43AF-912A-78111C33C288}.Debug|x64.ActiveCfg = Debug|ORBIS
-		{DB683E14-053B-43AF-912A-78111C33C288}.Debug|x86.ActiveCfg = Debug|ORBIS
-		{DB683E14-053B-43AF-912A-78111C33C288}.Release|ORBIS.ActiveCfg = Release|ORBIS
-		{DB683E14-053B-43AF-912A-78111C33C288}.Release|ORBIS.Build.0 = Release|ORBIS
-		{DB683E14-053B-43AF-912A-78111C33C288}.Release|x64.ActiveCfg = Release|ORBIS
-		{DB683E14-053B-43AF-912A-78111C33C288}.Release|x86.ActiveCfg = Release|ORBIS
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

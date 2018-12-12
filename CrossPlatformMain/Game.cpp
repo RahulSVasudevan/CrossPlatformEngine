@@ -19,32 +19,18 @@ Game::Game()
 {
 	// Temp Mesh Data
 	VertexData = new VertexCommon[4];
-	*VertexData = VertexCommon(vec3(+0.0f, +1.0f, +0.0f), vec4(0.0f, 1.0f, 0.0f, 1.0f));
-	*(VertexData + 1) = VertexCommon(vec3(-1.0f, +1.0f, +0.0f), vec4(0.0f, 1.0f, 0.0f, 1.0f));
-	*(VertexData + 2) = VertexCommon(vec3(+0.0f, -1.0f, +0.0f), vec4(0.0f, 1.0f, 0.0f, 1.0f));
-	*(VertexData + 3) = VertexCommon(vec3(-1.0f, -1.0f, +0.0f), vec4(0.0f, 1.0f, 0.0f, 1.0f));
-
-	VertexData2 = new VertexCommon[4];
-	*VertexData2 = VertexCommon(vec3(+1.0f, +1.0f, +0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f));
-	*(VertexData2 + 1) = VertexCommon(vec3(0.0f, +1.0f, +0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f));
-	*(VertexData2 + 2) = VertexCommon(vec3(+1.0f, -1.0f, +0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f));
-	*(VertexData2 + 3) = VertexCommon(vec3(0.0f, -1.0f, +0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	*VertexData = VertexCommon(vec3(+1000.0f, 0.0f, +1000.0f), vec4(0.0f, 1.0f, 0.0f, 1.0f), vec3(0, 1, 0), vec2(1, 1));
+	*(VertexData + 1) = VertexCommon(vec3(-1000.0f, 0.0f, +1000.0f), vec4(0.0f, 1.0f, 0.0f, 1.0f), vec3(0, 1, 0), vec2(0, 1));
+	*(VertexData + 2) = VertexCommon(vec3(+1000.0f, 0.0f, -1000.0f), vec4(0.0f, 1.0f, 0.0f, 1.0f), vec3(0, 1, 0), vec2(1, 0));
+	*(VertexData + 3) = VertexCommon(vec3(-1000.0f, 0.0f, -1000.0f), vec4(0.0f, 1.0f, 0.0f, 1.0f), vec3(0, 1, 0), vec2(0, 0));
 
 	IndexData = new uint16_t[6];
 	*IndexData = 0;
-	*(IndexData + 1) = 1;
-	*(IndexData + 2) = 2;
+	*(IndexData + 1) = 2;
+	*(IndexData + 2) = 1;
 	*(IndexData + 3) = 1;
 	*(IndexData + 4) = 2;
 	*(IndexData + 5) = 3;
-
-	IndexData2 = new uint16_t[6];
-	*IndexData2 = 0;
-	*(IndexData2 + 1) = 1;
-	*(IndexData2 + 2) = 2;
-	*(IndexData2 + 3) = 1;
-	*(IndexData2 + 4) = 2;
-	*(IndexData2 + 5) = 3;
 
 
 	light.DirLightColor = vec4(1, 0, 0, 1.0f);
@@ -57,17 +43,15 @@ Game::Game()
 	audioRenderer = new WinAudio();
 	getInput = Keyboard::getInstance();
 	renderer->Init();
-	//mesh = new WinMesh(VertexData, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
-	//mesh2 = new WinMesh(VertexData2, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
-	
-	//mesh2 = new WinMesh("../CommonFiles/Lamborghini_Aventador.obj", dynamic_cast<WinRenderer*>(renderer)->GetDevice());
-	Mat = new Material(renderer, L"../CommonFiles/Lamborginhi_Aventador_diffuse.jpeg");
-	//Entity = new GameEntity(mesh2,Mat);
 
-	//Entity->LoadTextures();
-	
-	//Mat->LoadTextures("../CommonFiles/Lamborginhi_Aventador_diffuse.jpeg");
 	renderer->LightingInfo(light);
+
+	Mat = new Material(renderer, L"../CommonFiles/Lamborginhi_Aventador_diffuse.jpeg");
+
+	FloorMesh = new WinMesh(VertexData, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
+	FloorMat = new Material(renderer, L"../CommonFiles/Knockdown_texture.jpg");
+	Floor = new GameEntity(FloorMesh, FloorMat);
+
 #elif __clang__
 	renderer = new PS4Renderer();
 	getInput = ControllerInput::getInstance();
@@ -91,16 +75,15 @@ Game::Game()
 
 Game::~Game() {
 
-	//delete mesh;
-	delete mesh2;
-	//delete Entity->getMaterial();
-	delete Entity;
+	delete Floor;
+	delete  FloorMesh;
+	delete  FloorMat;
 	
 	
 	delete[] VertexData;
-	delete[] VertexData2;
+
 	delete[] IndexData;
-	delete[] IndexData2;
+
 
 	delete renderer;
 	delete audioRenderer;
@@ -130,18 +113,15 @@ void Game::Init()
 
 void Game::Draw()
 {
-	//renderer->DrawQuad();
 
-	//renderer->DrawMesh(mesh);
 	getInput->update();
-	//Entity->prepareMaterial();
-	//Entity->getMaterial()->DatatoShader();
-	Mat->DatatoShader();
-	//renderer->DrawMesh((void*)Entity);
 
-	//for (auto pair : entities) {
-	//	renderer->DrawMesh((void*)pair.second);
-	//}
+	// Draw Floor
+	FloorMat->DatatoShader();
+	renderer->DrawMesh(Floor);
+
+	Mat->DatatoShader();
+
 
 	for (map<string, IEntity*>::iterator itr = entities.begin(); itr != entities.end(); itr++) {
 		renderer->DrawMesh((void*)itr->second);

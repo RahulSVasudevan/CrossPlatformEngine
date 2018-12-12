@@ -37,7 +37,7 @@ void ICamera::InitialiseCamera(int h, int w)
 
 	worldMatrix = glm::mat4(1.0f);
 
-	projectionMatrix = glm::perspective(0.25f * 3.1415926535f, (float)height / width, 0.1f, 1000.0f);
+	projectionMatrix = glm::perspective(0.25f * 3.1415926535f, (float)height / width, 0.1f, 10000.0f);
 
 	projectionMatrix = glm::transpose(projectionMatrix);
 }

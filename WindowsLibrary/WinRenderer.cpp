@@ -24,8 +24,8 @@
 		delete pixelShader;
 		delete camera;
 
-		vertexBufferPointer->Release();
-		indexBufferPointer->Release();
+		//vertexBufferPointer->Release();
+		//indexBufferPointer->Release();
 
 		if (depthStencilView) { depthStencilView->Release(); }
 		if (backBufferRTV) { backBufferRTV->Release(); }
@@ -85,49 +85,49 @@
 		//XMStoreFloat4x4(&projectionMatrix, XMMatrixTranspose(P)); // Transpose for HLSL!
 
 
-		Vertex vertices[]
-		{
-		{ XMFLOAT3(+1.0f, +1.0f, +0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f) },
-		{ XMFLOAT3(-1.0f, +1.0f, +0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f) },
-		{ XMFLOAT3(+1.0f, -1.0f, +0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f) },
-		{ XMFLOAT3(-1.0f, -1.0f, +0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f) },
-		};
+		//Vertex vertices[]
+		//{
+		//{ XMFLOAT3(+1.0f, +1.0f, +0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f) },
+		//{ XMFLOAT3(-1.0f, +1.0f, +0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f) },
+		//{ XMFLOAT3(+1.0f, -1.0f, +0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f) },
+		//{ XMFLOAT3(-1.0f, -1.0f, +0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f) },
+		//};
 
 
-		unsigned int indices[] = { 0, 2,1, 3, 1, 2 };
+		//unsigned int indices[] = { 0, 2,1, 3, 1, 2 };
 
-		vertexBufferPointer = 0;
-		indexBufferPointer = 0;
+		//vertexBufferPointer = 0;
+		//indexBufferPointer = 0;
 
-		D3D11_BUFFER_DESC vbd;
-		vbd.Usage = D3D11_USAGE_DEFAULT;
-		vbd.ByteWidth = sizeof(Vertex) * 4;
-		vbd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		vbd.CPUAccessFlags = 0;
-		vbd.MiscFlags = 0;
-		vbd.StructureByteStride = 0;
+		//D3D11_BUFFER_DESC vbd;
+		//vbd.Usage = D3D11_USAGE_DEFAULT;
+		//vbd.ByteWidth = sizeof(Vertex) * 4;
+		//vbd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		//vbd.CPUAccessFlags = 0;
+		//vbd.MiscFlags = 0;
+		//vbd.StructureByteStride = 0;
 
-		D3D11_SUBRESOURCE_DATA initialVertexData;
-		initialVertexData.pSysMem = vertices;
+		//D3D11_SUBRESOURCE_DATA initialVertexData;
+		//initialVertexData.pSysMem = vertices;
 
-		HRESULT hResult = device->CreateBuffer(&vbd, &initialVertexData, &vertexBufferPointer);
-
-
-		//Index Buffer Creation
-
-		D3D11_BUFFER_DESC ibd;
-		ibd.Usage = D3D11_USAGE_DEFAULT;
-		ibd.ByteWidth = sizeof(unsigned int) * 6;
-		ibd.BindFlags = D3D11_BIND_INDEX_BUFFER;
-		ibd.CPUAccessFlags = 0;
-		ibd.MiscFlags = 0;
-		ibd.StructureByteStride = 0;
+		//HRESULT hResult = device->CreateBuffer(&vbd, &initialVertexData, &vertexBufferPointer);
 
 
-		D3D11_SUBRESOURCE_DATA initialIndexData;
-		initialIndexData.pSysMem = indices;
+		////Index Buffer Creation
 
-		hResult = device->CreateBuffer(&ibd, &initialIndexData, &indexBufferPointer);
+		//D3D11_BUFFER_DESC ibd;
+		//ibd.Usage = D3D11_USAGE_DEFAULT;
+		//ibd.ByteWidth = sizeof(unsigned int) * 6;
+		//ibd.BindFlags = D3D11_BIND_INDEX_BUFFER;
+		//ibd.CPUAccessFlags = 0;
+		//ibd.MiscFlags = 0;
+		//ibd.StructureByteStride = 0;
+
+
+		//D3D11_SUBRESOURCE_DATA initialIndexData;
+		//initialIndexData.pSysMem = indices;
+
+		//hResult = device->CreateBuffer(&ibd, &initialIndexData, &indexBufferPointer);
 
 		
 	}
@@ -170,15 +170,16 @@
 
 	}
 
-	//void WinRenderer::DrawQuad()
+	//void WinRenderer::DrawVertices()
 	//{
-	//	const float color[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	//	const float color[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	//	context->ClearRenderTargetView(backBufferRTV, color);
 	//	context->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
-	//	vertexShader->SetMatrix4x4("world", worldMatrix);
-	//	vertexShader->SetMatrix4x4("view", viewMatrix);
-	//	vertexShader->SetMatrix4x4("projection", projectionMatrix);
+	//	mat4x4 identity = mat4x4(vec4(1, 0, 0, 0), vec4(0, 1, 0, 0), vec4(0, 0, 1, 0), vec4(0, 0, 0, 1));
+	//	vertexShader->SetMatrix4x4("world", (const float*)&identity);
+	//	vertexShader->SetMatrix4x4("view", (const float*)&identity);
+	//	vertexShader->SetMatrix4x4("projection", (const float*)&identity);
 
 	//	vertexShader->CopyAllBufferData();
 
@@ -188,7 +189,7 @@
 	//	UINT stride = sizeof(Vertex);
 	//	UINT offset = 0;
 
-	//	//ID3D11Buffer * v = vertexBufferPointer;
+	//	ID3D11Buffer * v = vertexBufferPointer;
 
 	//	context->IASetVertexBuffers(0, 1, &vertexBufferPointer, &stride, &offset);
 	//	context->IASetIndexBuffer(indexBufferPointer, DXGI_FORMAT_R32_UINT, 0);

@@ -22,15 +22,17 @@ class Game
 	IRenderer * renderer;
 	IAudio * audioRenderer;
 
-	IMesh * mesh;
-	IMesh * mesh2;
 	Input* getInput;
-	IEntity* Entity;
 	IMaterial* Mat;
+
+	IMesh * FloorMesh;
+	IMaterial*  FloorMat;
+	IEntity* Floor;
+	
+	
 	VertexCommon * VertexData;
-	VertexCommon * VertexData2;
 	uint16_t * IndexData;
-	uint16_t * IndexData2;
+
 	DirectionalLight light;
 
 	map<string, IEntity*> entities;

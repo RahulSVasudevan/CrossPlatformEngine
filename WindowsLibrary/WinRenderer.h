@@ -59,7 +59,7 @@ using namespace DirectX;
 		bool MessageExist();
 		void BeginFrame();
 		void EndFrame();
-		//void DrawQuad();
+		//void DrawVertices();
 		ICamera* camera;
 		virtual void DrawMesh(void *Mesh) override;
 		void  LightingInfo(DirectionalLight light);
