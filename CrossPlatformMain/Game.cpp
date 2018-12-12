@@ -52,6 +52,8 @@ Game::Game()
 	FloorMat = new Material(renderer, L"../CommonFiles/Knockdown_texture.jpg");
 	Floor = new GameEntity(FloorMesh, FloorMat);
 
+	LoadScene("../Assets/Scenes/CarScene1.txt");
+
 #elif __clang__
 	renderer = new PS4Renderer();
 	getInput = ControllerInput::getInstance();
@@ -200,16 +202,9 @@ void Game::Run()
 	while (renderer->MessageExist())
 	{
 		renderer->BeginFrame();
-		
-		Draw();
-
+	
 
 		
-
-
-		if (getInput->GetKeyDown('1')) {
-			LoadScene("../Assets/Scenes/CarScene1.txt");
-		}
 		if (getInput->GetKeyDown('2')) {
 			LoadScene("../Assets/Scenes/CarScene2.txt");
 		}
@@ -220,7 +215,8 @@ void Game::Run()
 			//mesh2->CheckInput(1.0f);
 
 			//entities["carEntity"]->setTranslation(0,0,-10);
-			entities["carEntity"]->moveForward(-10);
+			entities["carEntity"]->moveForward(10);
+
 		}
 		if (getInput->GetKeyDown('S') || getInput->isButtonDown(Button::BUTTON_SQUARE))
 		{
@@ -229,7 +225,7 @@ void Game::Run()
 			//mesh2->CheckInput(1.0f);
 
 			//entities["carEntity"]->setTranslation(0, 0, 10);
-			entities["carEntity"]->moveForward(10);
+			entities["carEntity"]->moveForward(-10);
 		}
 		if (getInput->GetKeyDown('A') || getInput->isButtonDown(Button::BUTTON_SQUARE))
 		{
@@ -250,6 +246,14 @@ void Game::Run()
 			printf("## CIRCLE \n");
 			//mesh2->CheckInput(2.0f);
 		}
+
+		renderer->camera->cameraPos = entities["carEntity"]->wmTrans + vec3(0, 160, 400);
+		renderer->camera->cameraTarget = entities["carEntity"]->wmTrans;
+		//renderer->camera->GetViewMatrix();
+		
+
+		Draw();
+
 		renderer->EndFrame();
 	}
 

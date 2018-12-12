@@ -27,7 +27,6 @@ using namespace DirectX;
 
 	class WinRenderer : public IRenderer
 	{
-		int x;
 
 		HINSTANCE	hInstance;		// The handle to the application
 		HWND		hWnd;			// The handle to the window itself
@@ -60,7 +59,7 @@ using namespace DirectX;
 		void BeginFrame();
 		void EndFrame();
 		//void DrawVertices();
-		ICamera* camera;
+
 		virtual void DrawMesh(void *Mesh) override;
 		void  LightingInfo(DirectionalLight light);
 		void checkInput(char);

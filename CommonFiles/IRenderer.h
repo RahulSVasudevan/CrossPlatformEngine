@@ -8,6 +8,7 @@ class IRenderer
 
 public:
 
+
 	IRenderer();
 	virtual ~IRenderer();
 	virtual void Init();

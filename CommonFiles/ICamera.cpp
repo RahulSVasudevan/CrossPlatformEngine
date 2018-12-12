@@ -44,12 +44,21 @@ void ICamera::InitialiseCamera(int h, int w)
 
 void ICamera::MakeViewMatrix()
 {
-	viewMatrix = glm::lookAt(cameraPos, cameraDirection, up);
-	viewMatrix = glm::transpose(viewMatrix);
+	//cameraPos = glm::vec3(0.0f, 160.0f, 400.0f);
+	//cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+	//cameraDirection = glm::normalize(cameraPos - cameraTarget);
+	//viewMatrix = glm::lookAt(cameraPos, cameraDirection, up);
+	//viewMatrix = glm::transpose(viewMatrix);
 }
 
 glm::mat4x4 ICamera::GetViewMatrix()
 {
+
+	cameraDirection = glm::normalize(cameraPos - cameraTarget);
+	//cameraRight = glm::normalize(glm::cross(up, cameraDirection));
+	//cameraUp = glm::cross(cameraDirection, cameraRight);
+	viewMatrix = glm::lookAt(cameraPos, cameraTarget, up);
+	viewMatrix = glm::transpose(viewMatrix);
 	return viewMatrix;
 }
 
@@ -66,23 +75,23 @@ glm::mat4x4 ICamera::GetProjectionMatrix()
 void ICamera::moveFront()
 {
 	cameraPos -= (cameraSpeed * cameraDirection);
-	MakeViewMatrix();
+	GetViewMatrix();
 }
 
 void ICamera::moveBack()
 {
 	cameraPos += (cameraSpeed * cameraDirection);
-	MakeViewMatrix();
+	GetViewMatrix();
 }
 
 void ICamera::moveLeft()
 {
 	cameraPos -= cameraRight * cameraSpeed;
-	MakeViewMatrix();
+	GetViewMatrix();
 }
 
 void ICamera::moveRight()
 {
 	cameraPos += cameraRight * cameraSpeed;
-	MakeViewMatrix();
+	GetViewMatrix();
 }

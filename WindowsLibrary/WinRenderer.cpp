@@ -18,14 +18,12 @@
 
 	WinRenderer::~WinRenderer()
 	{
-		OutputDebugStringW(L"Destructor\n");
+
 
 		delete vertexShader;
 		delete pixelShader;
-		delete camera;
+		//delete camera;
 
-		//vertexBufferPointer->Release();
-		//indexBufferPointer->Release();
 
 		if (depthStencilView) { depthStencilView->Release(); }
 		if (backBufferRTV) { backBufferRTV->Release(); }

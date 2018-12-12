@@ -12,9 +12,9 @@
 
 using namespace glm;
 class GameEntity	: public IEntity
-{	vec4 position;
-	vec3 rotation;
-	vec3 scaleValue;
+{	//vec4 position;
+	//vec3 rotation;
+	//vec3 scaleValue;
 	IMesh* mesh;
 	IMaterial* material;
 	IRenderer* Renderer;
@@ -26,11 +26,7 @@ class GameEntity	: public IEntity
 
 public:
 	GameEntity(IMesh* m, IMaterial* mat);
-	mat4x4 worldMatrix;
-	vec3 wmTrans;
-	vec3 wmScale;
-	float wmRot;
-	vec3 forward;
+
 	virtual void setTranslation(float, float, float) override;
 	virtual void setScale(float, float, float) override;
 	virtual void setRotation(float) override;

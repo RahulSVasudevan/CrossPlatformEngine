@@ -65,7 +65,7 @@ GameEntity::GameEntity(IMesh* m, IMaterial* mat)
 	wmScale = glm::vec3(1.0f, 1.0f, 1.0f);
 	wmRot = 0;
 	forward = vec3(0, 0, -1);
-	position = vec4(0.0f, 0.0f, 0.0f,1.0f);
+	//position = vec4(0.0f, 0.0f, 0.0f,1.0f);
 	updateWorld();
 }
 
