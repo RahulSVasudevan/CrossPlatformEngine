@@ -29,10 +29,12 @@ public:
 	mat4x4 worldMatrix;
 	vec3 wmTrans;
 	vec3 wmScale;
-	vec3 wmRot;
+	float wmRot;
+	vec3 forward;
 	virtual void setTranslation(float, float, float) override;
 	virtual void setScale(float, float, float) override;
-	virtual void setRotation(float, float, float) override;
+	virtual void setRotation(float) override;
+	void moveForward(float speed);
 	WinMesh* GetMesh();
 	void updateWorld();
 

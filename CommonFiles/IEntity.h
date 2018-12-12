@@ -9,6 +9,7 @@ public:
 	IEntity(IMesh* m, IMaterial* mat);
 	virtual void setTranslation(float, float, float) {};
 	virtual void setScale(float, float, float) {};
-	virtual void setRotation(float, float, float) {};
+	virtual void setRotation(float) {};
+	virtual void moveForward(float speed) {};
 	~IEntity();
 };

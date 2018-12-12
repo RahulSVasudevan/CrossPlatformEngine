@@ -6,8 +6,8 @@ using namespace DirectX;
 
 void GameEntity::setTranslation(float x, float y, float z)
 {
-	wmTrans += vec3(x, y, z);
-	
+	//wmTrans += vec3(x, y, z);
+	wmTrans += forward;
 	this->updateWorld();
 	
 }
@@ -18,9 +18,16 @@ void GameEntity::setScale(float x, float y , float z)
 	this->updateWorld();
 }
 
-void GameEntity::setRotation(float x, float y, float z)
+void GameEntity::setRotation(float angle)
 {
-	wmRot = vec3(x, y, z);
+	wmRot += angle;
+	forward = vec3(sin(wmRot), 0, cos(wmRot));
+	this->updateWorld();
+}
+
+void GameEntity::moveForward(float speed)
+{
+	wmTrans += forward * speed;
 	this->updateWorld();
 }
 
@@ -32,11 +39,14 @@ WinMesh* GameEntity::GetMesh()
 void GameEntity::updateWorld()
 {
 
-	worldMatrix = glm::translate(mat4(1.0f), wmTrans);
 
+	worldMatrix = glm::translate(mat4(1.0f), wmTrans);
+	worldMatrix = glm::rotate(worldMatrix, wmRot, vec3(0,1,0));
 	worldMatrix = glm::scale(worldMatrix, wmScale);
+	
+
 	worldMatrix = glm::transpose(worldMatrix);
-	//worldMatrix = glm::rotate(worldMatrix, 0.0f, wmRot);
+
 }
 
 mat4x4 GameEntity::GetWorldMatrix()
@@ -53,7 +63,8 @@ GameEntity::GameEntity(IMesh* m, IMaterial* mat)
 	localpixelShader = dynamic_cast<WinRenderer*>(Renderer)->getPixelShader();*/
 	wmTrans = glm::vec3(0.0f, 0.0f, 0.0f);
 	wmScale = glm::vec3(1.0f, 1.0f, 1.0f);
-	wmRot = glm::vec3(0.0f,0.0f,0.0f);
+	wmRot = 0;
+	forward = vec3(0, 0, -1);
 	position = vec4(0.0f, 0.0f, 0.0f,1.0f);
 	updateWorld();
 }

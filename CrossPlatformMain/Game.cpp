@@ -216,26 +216,34 @@ void Game::Run()
 		if (getInput->GetKeyDown('W') || getInput->isButtonDown(Button::BUTTON_SQUARE))
 		{
 			//printf("## square\n");
-			renderer->checkInput('w');
+			//renderer->checkInput('w');
 			//mesh2->CheckInput(1.0f);
+
+			//entities["carEntity"]->setTranslation(0,0,-10);
+			entities["carEntity"]->moveForward(-10);
 		}
 		if (getInput->GetKeyDown('S') || getInput->isButtonDown(Button::BUTTON_SQUARE))
 		{
 			//printf("## square\n");
-			renderer->checkInput('s');
+			//renderer->checkInput('s');
 			//mesh2->CheckInput(1.0f);
+
+			//entities["carEntity"]->setTranslation(0, 0, 10);
+			entities["carEntity"]->moveForward(10);
 		}
 		if (getInput->GetKeyDown('A') || getInput->isButtonDown(Button::BUTTON_SQUARE))
 		{
 			//printf("## square\n");
-			renderer->checkInput('a');
+			//renderer->checkInput('a');
 			//mesh2->CheckInput(1.0f);
+			entities["carEntity"]->setRotation(0.1);
 		}
 		if (getInput->GetKeyDown('D') || getInput->isButtonDown(Button::BUTTON_SQUARE))
 		{
 			//printf("## square\n");
-			renderer->checkInput('d');
+			//renderer->checkInput('d');
 			//mesh2->CheckInput(1.0f);
+			entities["carEntity"]->setRotation(-0.1);
 		}
 		if (getInput->isButtonDown(Button::BUTTON_CIRCLE) || getInput->GetKeyDown('V'))
 		{
