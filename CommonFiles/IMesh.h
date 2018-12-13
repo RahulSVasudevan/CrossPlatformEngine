@@ -23,8 +23,11 @@ struct VertexCommon
 	vec2 UV; 
 	vec2 pad3;
 
-	VertexCommon() { Position = vec3(0, 0, 0); Color = vec4(1, 1, 1, 1); Normal = vec3(0, 0, 0); UV = vec2(0, 0); pad1 = 0; pad2 = 0; pad3 = vec2(0, 0); };
-	VertexCommon(vec3 pos, vec4 color, vec3 normal, vec2 uv) { Position = pos; Color = color; Normal = normal; UV = uv; pad1 = 0; pad2 = 0; pad3 = vec2(0, 0);}
+	VertexCommon() { Position = vec3(0, 0, 0); Color = vec4(1, 1, 1, 1); Normal = vec3(0, 0, 0); UV = vec2(0, 0);
+	pad1 = 0; pad2 = 0; pad3 = vec2(0, 0);
+	};
+	VertexCommon(vec3 pos, vec4 color, vec3 normal, vec2 uv) { Position = pos; Color = color; Normal = normal; UV = uv; pad1 = 0; pad2 = 0; pad3 = vec2(0, 0);
+	}
 };
 
 

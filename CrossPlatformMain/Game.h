@@ -23,6 +23,11 @@ class Game
 	IAudio * audioRenderer;
 
 	Input* getInput;
+
+	IMesh * skyMesh;
+	//IMaterial*  skyMat;
+	IEntity* sky;
+
 	IMaterial* Mat;
 
 	IMesh * FloorMesh;
@@ -32,6 +37,9 @@ class Game
 	
 	VertexCommon * VertexData;
 	uint16_t * IndexData;
+
+	VertexCommon * skyVertexData;
+	uint16_t * skyIndexData;
 
 	DirectionalLight light;
 

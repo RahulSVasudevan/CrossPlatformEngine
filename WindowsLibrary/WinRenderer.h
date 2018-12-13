@@ -10,6 +10,7 @@
 #include <DirectXMath.h>
 #include "WinMesh.h"
 #include "WinCamera.h"
+#include "../packages/directxtk_desktop_2015.2018.11.20.1/include/DDSTextureLoader.h"
 
 #include"GameEntity.h"
 #include"..\CommonFiles\Maths.h"
@@ -41,6 +42,17 @@ using namespace DirectX;
 		ID3D11Device*			device;
 		ID3D11DeviceContext*	context;
 
+		// SKY Shader data
+		//SkyBox
+		SimpleVertexShader* skyVS;
+		SimplePixelShader* skyPS;
+		//Pixel shader data
+		ID3D11ShaderResourceView* skySRV;
+		ID3D11SamplerState* skySampler;
+		// Sky render states
+		ID3D11RasterizerState* skyRastState;
+		ID3D11DepthStencilState* skyDepthState;
+
 		ID3D11RenderTargetView* backBufferRTV;
 		ID3D11DepthStencilView* depthStencilView;
 		ID3D11RasterizerState*  rasterizer;
@@ -48,6 +60,8 @@ using namespace DirectX;
 		SimpleVertexShader* vertexShader;
 		SimplePixelShader* pixelShader;
 		DirectionalLight Light;
+
+
 	
 	public:
 
@@ -60,6 +74,7 @@ using namespace DirectX;
 		void EndFrame();
 		//void DrawVertices();
 
+		virtual void DrawSkyMesh(void *Mesh) override;
 		virtual void DrawMesh(void *Mesh) override;
 		void  LightingInfo(DirectionalLight light);
 		void checkInput(char);
@@ -72,14 +87,14 @@ using namespace DirectX;
 		ID3D11DeviceContext* GetContext();
 		SimpleVertexShader* getVertexShader();
 		SimplePixelShader* getPixelShader();
+
+		SimpleVertexShader* getSkyVS();
+		SimplePixelShader* getskyPS();
 		void LoadShaders();
 		glm::mat4x4 getworldMatrix();
 		glm::mat4x4 getviewMatrix();
 		glm::mat4x4 getprojectionMatrix();
-		//Temp Variables
-		/*DirectX::XMFLOAT4X4 worldMatrix;
-		DirectX::XMFLOAT4X4 viewMatrix;
-		DirectX::XMFLOAT4X4 projectionMatrix;*/
+
 		glm::mat4x4 worldMatrix;
 		glm::mat4x4 viewMatrix;
 		glm::mat4x4 projectionMatrix;

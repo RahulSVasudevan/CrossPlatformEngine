@@ -39,6 +39,10 @@ void IRenderer::EndFrame()
 //{
 //}
 
+void IRenderer::DrawSkyMesh(void * entity)
+{
+}
+
 void IRenderer::DrawMesh(void* entity)
 {
 }

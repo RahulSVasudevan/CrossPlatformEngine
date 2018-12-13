@@ -7,6 +7,8 @@ Material::Material(IRenderer* renderer, const wchar_t * obj)
 	
 	vertexShader = dynamic_cast<WinRenderer*>(Renderer)->getVertexShader();
 	pixelShader = dynamic_cast<WinRenderer*>(Renderer)->getPixelShader();
+
+
 	filename = obj;
 	LoadTextures();
 }
@@ -20,6 +22,7 @@ SimplePixelShader* Material::getpixelShader()
 {
 	return pixelShader;
 }
+
 
 void Material::LoadTextures()
 {
@@ -36,6 +39,27 @@ void Material::LoadTextures()
 	dynamic_cast<WinRenderer*>(Renderer)->GetDevice()->CreateSamplerState(&sd, &Sampler);
 }
 
+/*
+void Material::LoadSky()
+{
+	CreateDDSTextureFromFile(dynamic_cast<WinRenderer*>(Renderer)->GetDevice(), dynamic_cast<WinRenderer*>(Renderer)->GetContext(), DDSFilename, 0, &skySRV);
+
+	// Create a sampler state that holds options for sampling
+	// The descriptions should always just be local variables
+	D3D11_SAMPLER_DESC samplerDesc = {};
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
+	samplerDesc.MaxAnisotropy = 16;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX; // Setting this allows for mip maps to work! (if they exist)
+
+											// Ask DirectX for the actual object
+	dynamic_cast<WinRenderer*>(Renderer)->GetDevice()->CreateSamplerState(&samplerDesc, &skySampler);
+}
+
+*/
+
 void Material::DatatoShader()
 {
 	pixelShader->SetShaderResourceView("wallTexture", SRV);
@@ -44,6 +68,7 @@ void Material::DatatoShader()
 	pixelShader->CopyAllBufferData();
 	pixelShader->SetShader();
 }
+
 ID3D11ShaderResourceView * Material::getSRV()
 {
 	return SRV;

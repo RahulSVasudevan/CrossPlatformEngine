@@ -24,6 +24,16 @@
 		delete pixelShader;
 		//delete camera;
 
+		//DELETE SKY shaders
+
+		delete skyVS;
+		delete skyPS;
+
+		if (skyDepthState) { skyDepthState->Release(); }
+		if (skySRV) { skySRV->Release(); }
+		if (skySampler) { skySampler->Release(); }
+		if (skyRastState) { skyRastState->Release(); }
+
 
 		if (depthStencilView) { depthStencilView->Release(); }
 		if (backBufferRTV) { backBufferRTV->Release(); }
@@ -196,6 +206,47 @@
 	//}
 
 
+	void WinRenderer::DrawSkyMesh(void * vEntity)
+	{
+		GameEntity *entity = reinterpret_cast<GameEntity*>(vEntity);
+		WinMesh* WMesh = entity->GetMesh();
+
+		UINT stride = sizeof(VertexCommon);
+		UINT offset = 0;
+
+		ID3D11Buffer * v = WMesh->GetVertexBuffer();
+		ID3D11Buffer * i = WMesh->GetIndexBuffer();
+
+		context->IASetVertexBuffers(0, 1, &v, &stride, &offset);
+		context->IASetIndexBuffer(WMesh->GetIndexBuffer(), DXGI_FORMAT_R16_UINT, 0);
+
+		glm::mat4 view = getviewMatrix();
+		glm::mat4 projection = getprojectionMatrix();
+
+		// Set up the sky shaders
+		const float* convertedView = (const float*)value_ptr(view);
+		const float* convertedProjection = (const float*)value_ptr(projection);
+		skyVS->SetMatrix4x4("view", convertedView);
+		skyVS->SetMatrix4x4("projection", convertedProjection);
+		skyVS->CopyAllBufferData();
+		skyVS->SetShader();
+
+		skyPS->SetShaderResourceView("wallTexture", skySRV);
+		skyPS->SetSamplerState("basicSampler", skySampler);
+		skyVS->CopyAllBufferData();
+		skyPS->SetShader();
+
+		// Set up the render states necessary for the sky
+		context->RSSetState(skyRastState);
+		context->OMSetDepthStencilState(skyDepthState, 0);
+		context->DrawIndexed(WMesh->indexSize, 0, 0);
+
+		// When done rendering, reset any and all states for the next frame
+		context->RSSetState(0);
+		context->OMSetDepthStencilState(0, 0);
+
+	}
+
 	void WinRenderer::DrawMesh(void* vEntity)
 	{
 		GameEntity *entity = reinterpret_cast<GameEntity*>(vEntity);
@@ -212,7 +263,6 @@
 
 
 		pixelShader->SetData("light", &Light, sizeof(DirectionalLight));
-	
 
 		UINT stride = sizeof(VertexCommon);
 		UINT offset = 0;
@@ -225,6 +275,9 @@
 		context->DrawIndexed(WMesh->indexSize, 0, 0);
 
 		int a = 0;
+
+
+
 	}
 
 	void WinRenderer::LightingInfo(DirectionalLight light)
@@ -462,13 +515,65 @@
 		return pixelShader;
 	}
 
+	SimpleVertexShader * WinRenderer::getSkyVS()
+	{
+		return skyVS;
+	}
+
+	SimplePixelShader * WinRenderer::getskyPS()
+	{
+		return skyPS;
+	}
+
 	void WinRenderer::LoadShaders()
 	{
+
+		CreateDDSTextureFromFile(device, context, L"../Assets/Materials/SunnyCubeMap.dds", 0, &skySRV);
+
+		skyVS = new SimpleVertexShader(device, context);
+		bool success1 = skyVS->LoadShaderFile(L"../CrossPlatformMain/skyVS.cso");
+
+		skyPS = new SimplePixelShader(device, context);
+		success1 = skyPS->LoadShaderFile(L"../CrossPlatformMain/skyPS.cso");
+
+
+		// Create a sampler state that holds options for sampling
+		// The descriptions should always just be local variables
+		D3D11_SAMPLER_DESC samplerDesc = {};
+		samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+		samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+		samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+		samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
+		samplerDesc.MaxAnisotropy = 16;
+		samplerDesc.MaxLOD = D3D11_FLOAT32_MAX; // Setting this allows for mip maps to work! (if they exist)
+
+												// Ask DirectX for the actual object
+		device->CreateSamplerState(&samplerDesc, &skySampler);
+
+		// Create states for sky rendering
+		D3D11_RASTERIZER_DESC rs = {};
+		rs.CullMode = D3D11_CULL_NONE;
+		rs.FillMode = D3D11_FILL_SOLID;
+		device->CreateRasterizerState(&rs, &skyRastState);
+
+		D3D11_DEPTH_STENCIL_DESC ds = {};
+		ds.DepthEnable = true;
+		ds.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+		ds.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
+		device->CreateDepthStencilState(&ds, &skyDepthState);
+
+		// Tell the input assembler stage of the pipeline what kind of
+		// geometric primitives (points, lines or triangles) we want to draw.  
+		// Essentially: "What kind of shape should the GPU draw with our data?"
+		context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+
 		vertexShader = new SimpleVertexShader(device, context);
 		bool success = vertexShader->LoadShaderFile(L"../CrossPlatformMain/VertexShader.cso");
 
 		pixelShader = new SimplePixelShader(device, context);
 		success = pixelShader->LoadShaderFile(L"../CrossPlatformMain/PixelShader.cso");
+
 	}
 
 	void WinRenderer::checkInput(char a)
