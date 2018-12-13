@@ -36,7 +36,16 @@ Game::Game()
 	light.DirLightColor = vec4(1, 0, 0, 1.0f);
 	light.AmbientColor = vec4(0.9, 0.9, 0, 1.0f);
 	light.DirLightDirection = vec3(0, 10, 0);
+
+
 	
+	dynamicsWorld = new rp3d::DynamicsWorld(rp3d::Vector3(0, -0.1f, 0));
+
+	//rp3d::Vector3 initPosition(0.0, 3.0, 0.0);
+	//rp3d::Quaternion initOrientation = rp3d::Quaternion::identity();
+	//rp3d::Transform transform(initPosition, initOrientation);
+
+	//rigidbody = dynamicsWorld->createRigidBody(transform);
 
 #ifdef _WIN32
 	renderer = new WinRenderer();
@@ -51,8 +60,15 @@ Game::Game()
 	FloorMesh = new WinMesh(VertexData, 4, IndexData, 6, dynamic_cast<WinRenderer*>(renderer)->GetDevice());
 	FloorMat = new Material(renderer, L"../CommonFiles/Knockdown_texture.jpg");
 	Floor = new GameEntity(FloorMesh, FloorMat);
-
+	
 	LoadScene("../Assets/Scenes/CarScene1.txt");
+
+	rp3d::Vector3 initPosition(0.0, 0.0, 0.0);
+	rp3d::Quaternion initOrientation = rp3d::Quaternion::identity();
+	rp3d::Transform transform(initPosition, initOrientation);
+	entities["carEntity"]->rigidbody = dynamicsWorld->createRigidBody(transform);
+	
+	Floor->rigidbody = dynamicsWorld->createRigidBody(transform);
 
 #elif __clang__
 	renderer = new PS4Renderer();
@@ -85,8 +101,8 @@ Game::~Game() {
 	delete[] VertexData;
 
 	delete[] IndexData;
-
-
+	//delete rigidbody;
+	delete dynamicsWorld;
 	delete renderer;
 	delete audioRenderer;
 	delete Mat;
@@ -116,6 +132,10 @@ void Game::Init()
 void Game::Draw()
 {
 
+	dynamicsWorld->update(0.1f);
+
+	//rp3d::Vector3 pos= rigidbody->getLinearVelocity();
+	
 	getInput->update();
 
 	// Draw Floor

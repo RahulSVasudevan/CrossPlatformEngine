@@ -1,5 +1,7 @@
 #pragma once
-
+#define NOMINMAX
+#undef min
+#undef max
 #include "..\CommonFiles\IRenderer.h"
 #include "..\CommonFiles\Lights.h"
 #include"..\CommonFiles\Input.h"
@@ -12,7 +14,7 @@
 #include <map>
 #include <string>
 //#include <unordered_map>
-
+#include "reactphysics3d.h"
 
 using namespace std;
 
@@ -20,6 +22,9 @@ class Game
 {
 
 	IRenderer * renderer;
+	rp3d::DynamicsWorld* dynamicsWorld;
+	//rp3d::RigidBody* rigidbody;
+
 	IAudio * audioRenderer;
 
 	Input* getInput;

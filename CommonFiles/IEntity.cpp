@@ -10,6 +10,7 @@ IEntity::IEntity(IMesh* m, IMaterial* mat)
 
 IEntity::~IEntity()
 {
+	rigidbody = nullptr;
 }
 
 //void IEntity::InitializeMaterial()

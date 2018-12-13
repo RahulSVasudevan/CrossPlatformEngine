@@ -10,6 +10,8 @@
 #include <DirectXMath.h>
 //#include "WICTextureLoader.h"
 
+
+
 using namespace glm;
 class GameEntity	: public IEntity
 {	//vec4 position;

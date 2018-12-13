@@ -10,7 +10,6 @@
 #include <DirectXMath.h>
 #include "WinMesh.h"
 #include "WinCamera.h"
-
 #include"GameEntity.h"
 #include"..\CommonFiles\Maths.h"
 #pragma comment(lib, "d3d11.lib")

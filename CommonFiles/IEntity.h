@@ -1,6 +1,9 @@
 #pragma once
-
+#define NOMINMAX
+#undef min
+#undef max
 #include"../CommonFiles/IMaterial.h"
+#include "reactphysics3d.h"
 using namespace glm;
 class IEntity {
 public:
@@ -11,6 +14,7 @@ public:
 	float wmRot;
 	vec3 forward;
 
+	rp3d::RigidBody* rigidbody;
 
 	IEntity();
 	IEntity(IMesh* m, IMaterial* mat);

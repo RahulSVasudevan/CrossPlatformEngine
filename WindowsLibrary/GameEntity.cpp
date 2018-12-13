@@ -6,8 +6,8 @@ using namespace DirectX;
 
 void GameEntity::setTranslation(float x, float y, float z)
 {
-	//wmTrans += vec3(x, y, z);
-	wmTrans += forward;
+	wmTrans += vec3(x, y, z);
+	//wmTrans += forward;
 	this->updateWorld();
 	
 }
@@ -51,6 +51,16 @@ void GameEntity::updateWorld()
 
 mat4x4 GameEntity::GetWorldMatrix()
 {
+	rp3d::Transform t= rigidbody->getTransform();
+
+	float matrix[16];
+	t.getOpenGLMatrix(matrix);
+	glm::vec4 v1 = glm::vec4(matrix[0], matrix[4], matrix[8], matrix[12]);
+	glm::vec4 v2 = glm::vec4(matrix[1], matrix[5], matrix[9], matrix[13]);
+	glm::vec4 v3 = glm::vec4(matrix[2], matrix[6], matrix[10], matrix[14]);
+	glm::vec4 v4 = glm::vec4(matrix[3], matrix[7], matrix[11], matrix[15]);
+	worldMatrix = glm::mat4x4(v1,v2,v3,v4);
+
 	return worldMatrix;
 }
 
