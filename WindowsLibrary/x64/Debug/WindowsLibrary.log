@@ -1,0 +1,18 @@
+﻿  compilation object save succeeded; see C:\Users\IGMAdmin\Desktop\CrossPlatformEngine\CrossPlatformMain\PixelShader.cso
+C:\Users\IGMAdmin\Desktop\CrossPlatformEngine\WindowsLibrary\VertexShader.hlsl(63,18-45): warning X3578: Output value 'main' is not completely initialized
+  
+  compilation object save succeeded; see C:\Users\IGMAdmin\Desktop\CrossPlatformEngine\CrossPlatformMain\VertexShader.cso
+  stdafx.cpp
+  IMesh.cpp
+  IRenderer.cpp
+  GameEntity.cpp
+  InputEvent.cpp
+  Keyboard.cpp
+  Material.cpp
+  SimpleShader.cpp
+  WinAudio.cpp
+  WinCamera.cpp
+  WinMesh.cpp
+  WinRenderer.cpp
+  Generating Code...
+  WindowsLibrary.vcxproj -> C:\Users\IGMAdmin\Desktop\CrossPlatformEngine\CrossPlatformMain\WindowsLibrary.lib

@@ -6,8 +6,8 @@ using namespace DirectX;
 
 void GameEntity::setTranslation(float x, float y, float z)
 {
-	//wmTrans += vec3(x, y, z);
-	wmTrans += forward;
+	wmTrans = vec3(x, y, z);
+	//wmTrans += forward;
 	this->updateWorld();
 	
 }

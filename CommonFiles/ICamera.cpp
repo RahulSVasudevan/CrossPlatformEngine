@@ -17,8 +17,11 @@ void ICamera::InitialiseCamera(int h, int w)
 	int height = h;
 	int width = w;
 
-
-	cameraPos = glm::vec3(0.0f, 0.0f, 20.0f);
+#ifdef _WIN32
+	cameraPos = glm::vec3(0, 160, 400);
+#else
+	cameraPos = glm::vec3(0.0f, 0.0f, 20.0f);	
+#endif
 
 	cameraTarget = glm::vec3(0.0f, 0.0f, -1.0f);
 	//cameraDirection = glm::normalize(cameraPos - cameraTarget);
@@ -40,7 +43,7 @@ void ICamera::InitialiseCamera(int h, int w)
 
 	worldMatrix = glm::mat4(1.0f);
 
-	projectionMatrix = glm::perspective(45.0f * 3.1415926535f / 180.0f, (float)height / width, 0.1f, 1000.0f);
+	projectionMatrix = glm::perspective(45.0f * 3.1415926535f / 180.0f, (float)height / width, 0.1f, 10000.0f);
 
 	projectionMatrix = glm::transpose(projectionMatrix);
 }

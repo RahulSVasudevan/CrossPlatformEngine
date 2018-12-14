@@ -27,9 +27,9 @@ class GameEntity	: public IEntity
 public:
 	GameEntity(IMesh* m, IMaterial* mat);
 
-	virtual void setTranslation(float, float, float) override;
-	virtual void setScale(float, float, float) override;
-	virtual void setRotation(float) override;
+	void setTranslation(float, float, float);
+	void setScale(float, float, float);
+	void setRotation(float);
 	void moveForward(float speed);
 	WinMesh* GetMesh();
 	void updateWorld();

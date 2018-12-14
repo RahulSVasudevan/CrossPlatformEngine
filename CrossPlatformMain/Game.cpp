@@ -116,9 +116,10 @@ void Game::Draw()
 
 	// Draw Floor
 	//FloorMat->DatatoShader();
-	//renderer->DrawMesh(Floor);
-
-	//renderer->DrawMesh((void*)entity, (void*)Mat);
+	renderer->DrawMesh(Floor, FloorMat);
+#ifdef __clang__
+	renderer->DrawMesh((void*)entity, (void*)Mat);
+#endif
 
 
 	for (map<string, IEntity*>::iterator itr = entities.begin(); itr != entities.end(); itr++) {
@@ -200,6 +201,9 @@ void Game::Run()
 		renderer->BeginFrame();
 	
 
+		if (getInput->GetKeyDown('1')) {
+			LoadScene("../Assets/Scenes/CarScene1.txt");
+		}
 		if (getInput->GetKeyDown('2')) {
 			LoadScene("../Assets/Scenes/CarScene2.txt");
 		}
