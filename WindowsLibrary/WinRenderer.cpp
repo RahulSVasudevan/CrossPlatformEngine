@@ -144,19 +144,14 @@
 	bool WinRenderer::MessageExist()
 	{
 		MSG msg = {};
-		if (PeekMessage(&msg, NULL, 0, 0, 0))
+		if (GetMessage(&msg, NULL, 0, 0))
 		{
-			if (msg.message == WM_QUIT)
-				return false;
-			else
-			{
-				GetMessage(&msg, NULL, 0, 0);
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
-			}
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	void WinRenderer::BeginFrame()
