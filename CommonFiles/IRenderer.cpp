@@ -38,6 +38,10 @@ void IRenderer::EndFrame()
 //void IRenderer::DrawQuad()
 //{
 //}
+void IRenderer::DrawSkyMesh(void * entity)
+{
+}
+
 
 void IRenderer::DrawMesh(void* entity, void *material)
 {

@@ -25,6 +25,7 @@ class GameEntity	: public IEntity
 	ID3D11SamplerState* Sampler;
 
 public:
+	GameEntity(IMesh* m);
 	GameEntity(IMesh* m, IMaterial* mat);
 
 	void setTranslation(float, float, float);

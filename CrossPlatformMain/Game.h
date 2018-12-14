@@ -24,11 +24,18 @@ class Game
 	IAudio * audioRenderer;
 
 	Input* getInput;
+
+	IMesh * skyMesh;
+	IEntity* sky;
+
 	IMaterial* Mat;
 
 	IMesh * FloorMesh;
 	IMaterial*  FloorMat;
 	IEntity* Floor;
+
+	VertexCommon * skyVertexData;
+	uint16_t * skyIndexData;
 	
 	
 	VertexCommon * VertexData;

@@ -52,7 +52,12 @@ Game::Game()
 	FloorMat = new Material(renderer, L"../CommonFiles/Knockdown_texture.jpg");
 	Floor = new GameEntity(FloorMesh, FloorMat);
 
+
+
 	LoadScene("../Assets/Scenes/CarScene1.txt");
+
+	skyMesh = new WinMesh("../cube.obj", dynamic_cast<WinRenderer*>(renderer)->GetDevice());
+	sky = new GameEntity(skyMesh);
 
 #elif __clang__
 	renderer = new PS4Renderer();
@@ -62,15 +67,17 @@ Game::Game()
 
 	renderer->LightingInfo(light);
 
-	mesh = new PS4Mesh("/app0/sphere.obj", dynamic_cast<PS4Renderer*>(renderer)->GetStackAllocater());
+	mesh = new PS4Mesh("/app0/Lamborghini_Aventador.obj", dynamic_cast<PS4Renderer*>(renderer)->GetStackAllocater());
 	Mat = new PS4Material(renderer, "/app0/texture.raw");
 	entity = new PS4Entity(mesh, Mat);
 
+	FloorMesh = new PS4Mesh(VertexData, 4, IndexData, 6, dynamic_cast<PS4Renderer*>(renderer)->GetStackAllocater());
+	FloorMat = new PS4Material(renderer, "/app0/texture.raw");
+	Floor = new PS4Entity(FloorMesh, FloorMat);
 
 #endif 
 
 
-	
 
 }
 
@@ -79,6 +86,9 @@ Game::Game()
 Game::~Game() {
 
 #ifdef _WIN32
+	delete sky;
+	delete  skyMesh;
+
 	delete Floor;
 	delete  FloorMesh;
 	delete  FloorMat;
@@ -122,9 +132,14 @@ void Game::Draw()
 #endif
 
 
+
 	for (map<string, IEntity*>::iterator itr = entities.begin(); itr != entities.end(); itr++) {
 		renderer->DrawMesh((void*)itr->second, Mat);
 	}
+
+#ifdef _WIN32
+	renderer->DrawSkyMesh(sky);
+#endif
 }
 
 void Game::CreateMeshFromFile(string meshName, string path) {

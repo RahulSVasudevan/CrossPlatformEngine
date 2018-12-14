@@ -17,11 +17,9 @@ void ICamera::InitialiseCamera(int h, int w)
 	int height = h;
 	int width = w;
 
-#ifdef _WIN32
+
 	cameraPos = glm::vec3(0, 160, 400);
-#else
-	cameraPos = glm::vec3(0.0f, 0.0f, 20.0f);	
-#endif
+
 
 	cameraTarget = glm::vec3(0.0f, 0.0f, -1.0f);
 	//cameraDirection = glm::normalize(cameraPos - cameraTarget);

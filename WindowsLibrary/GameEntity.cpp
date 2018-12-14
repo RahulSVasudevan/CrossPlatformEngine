@@ -54,6 +54,20 @@ mat4x4 GameEntity::GetWorldMatrix()
 	return worldMatrix;
 }
 
+GameEntity::GameEntity(IMesh* m)
+{
+	mesh = m;
+	//Renderer = renderer;
+	/*localvertexShader = dynamic_cast<WinRenderer*>(Renderer)->getVertexShader();
+	localpixelShader = dynamic_cast<WinRenderer*>(Renderer)->getPixelShader();*/
+	wmTrans = glm::vec3(0.0f, 0.0f, 0.0f);
+	wmScale = glm::vec3(1.0f, 1.0f, 1.0f);
+	wmRot = 0;
+	forward = vec3(0, 0, -1);
+	//position = vec4(0.0f, 0.0f, 0.0f,1.0f);
+	updateWorld();
+}
+
 GameEntity::GameEntity(IMesh* m, IMaterial* mat)
 {
 	mesh = m;
