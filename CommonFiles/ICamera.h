@@ -25,6 +25,8 @@ public:
 
 	glm::mat4x4 GetProjectionMatrix();
 
+	glm::mat4x4 GetViewProjMatrix();
+
 	void moveFront();
 	void moveBack();
 	void moveLeft();
@@ -37,10 +39,12 @@ public:
 
 	glm::vec3 cameraDirection;
 	glm::vec3 up;
+	glm::vec3 front;
 	glm::vec3 cameraRight;
 	glm::vec3 cameraUp;
+	glm::vec3 cameraFront;
 	glm::mat4 viewMatrix;
 	glm::mat4 worldMatrix;
 	glm::mat4 projectionMatrix;
-	
+
 };

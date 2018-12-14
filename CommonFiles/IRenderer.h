@@ -18,7 +18,7 @@ public:
 	virtual void EndFrame();
 	ICamera * camera;
 	//virtual void DrawQuad();
-	virtual void DrawMesh(void* entity);
+	virtual void DrawMesh(void* entity, void* material);
 	/*virtual void DrawEntity(IEntity* Entity);*/
 	virtual void LightingInfo(DirectionalLight light);
 	virtual void checkInput(char);

@@ -144,14 +144,19 @@
 	bool WinRenderer::MessageExist()
 	{
 		MSG msg = {};
-		if (GetMessage(&msg, NULL, 0, 0))
+		if (PeekMessage(&msg, NULL, 0, 0, 0))
 		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-			return true;
+			if (msg.message == WM_QUIT)
+				return false;
+			else
+			{
+				GetMessage(&msg, NULL, 0, 0);
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
 		}
 
-		return false;
+		return true;
 	}
 
 	void WinRenderer::BeginFrame()
@@ -196,10 +201,11 @@
 	//}
 
 
-	void WinRenderer::DrawMesh(void* vEntity)
+	void WinRenderer::DrawMesh(void* vEntity, void *material)
 	{
 		GameEntity *entity = reinterpret_cast<GameEntity*>(vEntity);
 		WinMesh* WMesh = entity->GetMesh();
+		Material* mat = reinterpret_cast<Material*>(material);
 
 		const float* world = (const float*)value_ptr(entity->GetWorldMatrix());
 		const float* convertedView = (const float*)value_ptr(getviewMatrix());
@@ -210,7 +216,11 @@
 		vertexShader->CopyAllBufferData();
 		vertexShader->SetShader();
 
+		pixelShader->SetShaderResourceView("wallTexture", mat->getSRV());
+		pixelShader->SetSamplerState("basicSampler", mat->getsamplerState());
 
+		pixelShader->CopyAllBufferData();
+		pixelShader->SetShader();
 		pixelShader->SetData("light", &Light, sizeof(DirectionalLight));
 	
 

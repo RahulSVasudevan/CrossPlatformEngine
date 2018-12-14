@@ -34,7 +34,7 @@ Game::Game()
 
 
 	light.DirLightColor = vec4(1, 0, 0, 1.0f);
-	light.AmbientColor = vec4(0.9, 0.9, 0, 1.0f);
+	light.AmbientColor = vec4(0.9, 0.9, 0.9, 1.0f);
 	light.DirLightDirection = vec3(0, 10, 0);
 	
 
@@ -59,11 +59,12 @@ Game::Game()
 	getInput = ControllerInput::getInstance();
 	getInput->initialize();
 	renderer->Init();
-	
-	//mesh = new PS4Mesh(VertexData, 4, IndexData, 6, dynamic_cast<PS4Renderer*>(renderer)->GetStackAllocater());
-	//mesh2 = new PS4Mesh(VertexData2, 4, IndexData2, 6, dynamic_cast<PS4Renderer*>(renderer)->GetStackAllocater());
 
-	mesh2 = new PS4Mesh("/app0/sphere.obj", dynamic_cast<PS4Renderer*>(renderer)->GetStackAllocater());
+	renderer->LightingInfo(light);
+
+	mesh = new PS4Mesh("/app0/sphere.obj", dynamic_cast<PS4Renderer*>(renderer)->GetStackAllocater());
+	Mat = new PS4Material(renderer, "/app0/texture.raw");
+	entity = new PS4Entity(mesh, Mat);
 
 
 #endif 
@@ -77,31 +78,26 @@ Game::Game()
 
 Game::~Game() {
 
+#ifdef _WIN32
 	delete Floor;
 	delete  FloorMesh;
 	delete  FloorMat;
+#endif
 	
 	
 	delete[] VertexData;
 
 	delete[] IndexData;
+	delete mesh;
 
 
 	delete renderer;
 	delete audioRenderer;
 	delete Mat;
 
-	//for (auto pair : meshes) {
-	//	delete pair.second;
-	//}
-
 	for (map<string, IMesh*>::iterator itr = meshes.begin(); itr != meshes.end(); itr++) {
 		delete itr->second;
 	}
-
-	//for (auto pair : entities) {
-	//	delete pair.second;
-	//}
 
 	for (map<string, IEntity*>::iterator itr = entities.begin(); itr != entities.end(); itr++) {
 		delete itr->second;
@@ -119,14 +115,14 @@ void Game::Draw()
 	getInput->update();
 
 	// Draw Floor
-	FloorMat->DatatoShader();
-	renderer->DrawMesh(Floor);
+	//FloorMat->DatatoShader();
+	//renderer->DrawMesh(Floor);
 
-	Mat->DatatoShader();
+	//renderer->DrawMesh((void*)entity, (void*)Mat);
 
 
 	for (map<string, IEntity*>::iterator itr = entities.begin(); itr != entities.end(); itr++) {
-		renderer->DrawMesh((void*)itr->second);
+		renderer->DrawMesh((void*)itr->second, Mat);
 	}
 }
 
@@ -198,48 +194,47 @@ void Game::Run()
 	//CreateEntity("carEntity", "carMesh");
 	//CreateEntity("carEntity2", "carMesh");
 	//LoadScene("../Assets/Scenes/CarScene1.txt");
-	audioRenderer->Play(audioSound);
+	//audioRenderer->Play(audioSound);
 	while (renderer->MessageExist())
 	{
 		renderer->BeginFrame();
 	
 
-		
 		if (getInput->GetKeyDown('2')) {
 			LoadScene("../Assets/Scenes/CarScene2.txt");
 		}
-		if (getInput->GetKeyDown('W') || getInput->isButtonDown(Button::BUTTON_SQUARE))
+		if (getInput->GetKeyDown('W') || getInput->isButtonDown(Button::BUTTON_UP))
 		{
 			//printf("## square\n");
-			//renderer->checkInput('w');
+			renderer->checkInput('w');
 			//mesh2->CheckInput(1.0f);
 
 			//entities["carEntity"]->setTranslation(0,0,-10);
-			entities["carEntity"]->moveForward(10);
+			//entities["carEntity"]->moveForward(10);
 
 		}
-		if (getInput->GetKeyDown('S') || getInput->isButtonDown(Button::BUTTON_SQUARE))
+		if (getInput->GetKeyDown('S') || getInput->isButtonDown(Button::BUTTON_DOWN))
 		{
 			//printf("## square\n");
-			//renderer->checkInput('s');
+			renderer->checkInput('s');
 			//mesh2->CheckInput(1.0f);
 
 			//entities["carEntity"]->setTranslation(0, 0, 10);
-			entities["carEntity"]->moveForward(-10);
+			//entities["carEntity"]->moveForward(-10);
 		}
-		if (getInput->GetKeyDown('A') || getInput->isButtonDown(Button::BUTTON_SQUARE))
+		if (getInput->GetKeyDown('A') || getInput->isButtonDown(Button::BUTTON_LEFT))
 		{
 			//printf("## square\n");
-			//renderer->checkInput('a');
+			renderer->checkInput('a');
 			//mesh2->CheckInput(1.0f);
-			entities["carEntity"]->setRotation(0.1);
+			//entities["carEntity"]->setRotation(0.1);
 		}
-		if (getInput->GetKeyDown('D') || getInput->isButtonDown(Button::BUTTON_SQUARE))
+		if (getInput->GetKeyDown('D') || getInput->isButtonDown(Button::BUTTON_RIGHT))
 		{
 			//printf("## square\n");
-			//renderer->checkInput('d');
+			renderer->checkInput('d');
 			//mesh2->CheckInput(1.0f);
-			entities["carEntity"]->setRotation(-0.1);
+			//entities["carEntity"]->setRotation(-0.1);
 		}
 		if (getInput->isButtonDown(Button::BUTTON_CIRCLE) || getInput->GetKeyDown('V'))
 		{
@@ -247,9 +242,8 @@ void Game::Run()
 			//mesh2->CheckInput(2.0f);
 		}
 
-		renderer->camera->cameraPos = entities["carEntity"]->wmTrans + vec3(0, 160, 400);
-		renderer->camera->cameraTarget = entities["carEntity"]->wmTrans;
-		//renderer->camera->GetViewMatrix();
+		//renderer->camera->cameraPos = entities["carEntity"]->wmTrans + vec3(0, 160, 400);
+		//renderer->camera->cameraTarget = entities["carEntity"]->wmTrans;
 		
 
 		Draw();

@@ -5,7 +5,7 @@ IMaterial::IMaterial()
 {
 }
 
-IMaterial::IMaterial(IRenderer * renderer, const wchar_t* obj)
+IMaterial::IMaterial(IRenderer * renderer, const char * obj)
 {
 }
 

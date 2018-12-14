@@ -18,7 +18,8 @@ using namespace std;
 
 class Game
 {
-
+	IMesh *mesh;
+	IEntity *entity;
 	IRenderer * renderer;
 	IAudio * audioRenderer;
 

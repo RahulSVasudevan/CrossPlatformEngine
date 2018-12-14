@@ -39,7 +39,7 @@ void IRenderer::EndFrame()
 //{
 //}
 
-void IRenderer::DrawMesh(void* entity)
+void IRenderer::DrawMesh(void* entity, void *material)
 {
 }
 

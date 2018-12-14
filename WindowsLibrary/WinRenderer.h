@@ -60,7 +60,7 @@ using namespace DirectX;
 		void EndFrame();
 		//void DrawVertices();
 
-		virtual void DrawMesh(void *Mesh) override;
+		void DrawMesh(void *Mesh, void *material);
 		void  LightingInfo(DirectionalLight light);
 		void checkInput(char);
 
