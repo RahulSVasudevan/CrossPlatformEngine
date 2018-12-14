@@ -201,6 +201,7 @@
     <ClInclude Include="..\CommonFiles\Maths.h" />
     <ClInclude Include="..\CommonFiles\Parser.h" />
     <ClInclude Include="..\CommonFiles\SceneObjectData.h" />
+    <ClInclude Include="..\CommonFiles\UIElementInfo.h" />
     <ClInclude Include="Game.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

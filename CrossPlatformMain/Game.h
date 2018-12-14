@@ -36,6 +36,10 @@ class Game
 	IMaterial*  FloorMat;
 	IEntity* Floor;
 
+	IMesh *planeMesh;
+	IMaterial *planeMaterial;
+	IEntity *planeEntity;
+
 	VertexCommon * skyVertexData;
 	uint16_t * skyIndexData;
 	
@@ -67,6 +71,10 @@ class Game
 		BUTTON_TOUCH_PAD = 0x00100000,
 		BUTTON_INTERCEPTED = 0x80000000,
 	};
+
+	bool upPressed;
+	bool downPressed;
+	bool confirmPressed;
 	//DirectionalLight light1;
 
 public:
@@ -74,6 +82,7 @@ public:
 	~Game();
 	void Init();
 	void Draw();
+	void UpdateCanvas();
 	void Run();
 
 	void InitializeCanvas();

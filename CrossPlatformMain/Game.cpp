@@ -1,16 +1,22 @@
+#ifdef _WIN32
+#define ASSETS "../CrossPlatformMain/UIScenes/"
+#else
+#define ASSETS "/app0/UIScenes/"
+#endif
 
 #include "Game.h"
 
 
 
 #ifdef _WIN32
-	#include "..\WindowsLibrary\WinRenderer.h"
-	#include "..\WindowsLibrary\WinCanvas.h"
-	#include "..\WindowsLibrary\WinMesh.h"
-	#include"..\WindowsLibrary\GameEntity.h"
-	#include "..\WindowsLibrary\WinAudio.h"
+#include "..\WindowsLibrary\WinRenderer.h"
+#include "..\WindowsLibrary\WinCanvas.h"
+#include "..\WindowsLibrary\WinMesh.h"
+#include"..\WindowsLibrary\GameEntity.h"
+#include "..\WindowsLibrary\WinAudio.h"
 #elif __clang__
-	#include "..\PS4Library\PS4Renderer.h"
+#include "..\PS4Library\PS4Renderer.h"
+#include "..\PS4Library\PS4Canvas.h"
 #endif
 
 #define audioSound				((char*)"../Assets/Sounds/RollingSpace.wav")
@@ -36,17 +42,21 @@ Game::Game()
 
 	light.DirLightColor = vec4(1, 0, 0, 1.0f);
 	light.AmbientColor = vec4(0.9, 0.9, 0.9, 1.0f);
-	light.DirLightDirection = vec3(0, 10, 0);
-	
+	light.DirLightDirection = vec3(0, -10, 0);
+
+	upPressed = false;
+	downPressed = false;
+	confirmPressed;
+
 
 #ifdef _WIN32
 	renderer = new WinRenderer();
+	renderer->Init();
+	renderer->LightingInfo(light);
 	canvas = new WinCanvas();
 	audioRenderer = new WinAudio();
 	getInput = Keyboard::getInstance();
-	renderer->Init();
 
-	renderer->LightingInfo(light);
 
 	Mat = new Material(renderer, L"../CommonFiles/Lamborginhi_Aventador_diffuse.jpeg");
 
@@ -63,6 +73,7 @@ Game::Game()
 
 #elif __clang__
 	renderer = new PS4Renderer();
+	canvas = new PS4Canvas();
 	getInput = ControllerInput::getInstance();
 	getInput->initialize();
 	renderer->Init();
@@ -76,6 +87,15 @@ Game::Game()
 	FloorMesh = new PS4Mesh(VertexData, 4, IndexData, 6, dynamic_cast<PS4Renderer*>(renderer)->GetStackAllocater());
 	FloorMat = new PS4Material(renderer, "/app0/texture.raw");
 	Floor = new PS4Entity(FloorMesh, FloorMat);
+
+
+	//Create a plane mesh and give it to the PS4 canvas, which will then delete it in its destructor
+	PS4Canvas *ps4c = static_cast<PS4Canvas*>(canvas);
+	//planeMesh = new PS4Mesh(VertexData, 4, IndexData, 6, dynamic_cast<PS4Renderer*>(renderer)->GetStackAllocater());
+	planeMesh = new PS4Mesh("/app0/plane.obj", dynamic_cast<PS4Renderer*>(renderer)->GetStackAllocater());
+	planeMaterial = new PS4Material(renderer, "/app0/texture.raw");
+	planeEntity = new PS4Entity(planeMesh, planeMaterial);
+	ps4c->Assign(planeMaterial, dynamic_cast<PS4Renderer*>(renderer)->GetStackAllocater());
 
 #endif 
 
@@ -91,12 +111,15 @@ Game::~Game() {
 	delete sky;
 	delete  skyMesh;
 
+#endif
 	delete Floor;
 	delete  FloorMesh;
 	delete  FloorMat;
-#endif
-	
-	
+
+	delete planeEntity;
+	delete planeMesh;
+	delete planeMaterial;
+
 	delete[] VertexData;
 
 	delete[] IndexData;
@@ -119,15 +142,19 @@ Game::~Game() {
 
 void Game::Init()
 {
-	
+
 }
 
 void Game::InitializeCanvas() {
 #ifdef _WIN32
-	dynamic_cast<WinCanvas*>(canvas)->AssignDeviceAndContext(dynamic_cast<WinRenderer*>(renderer)->GetDevice(), dynamic_cast<WinRenderer*>(renderer)->GetContext());
-	dynamic_cast<WinCanvas*>(canvas)->Initialize();
+	WinCanvas *wc = static_cast<WinCanvas*>(canvas);
+	WinRenderer *wr = static_cast<WinRenderer*>(renderer);
+	wc->AssignDeviceAndContext(wr->GetDevice(), wr->GetContext());
 #else
+	PS4Canvas *ps4c = static_cast<PS4Canvas*>(canvas);
+	PS4Renderer *ps4r = static_cast<PS4Renderer*>(renderer);
 #endif
+	canvas->Initialize();
 }
 
 void Game::Draw()
@@ -141,6 +168,8 @@ void Game::Draw()
 #ifdef __clang__
 	renderer->DrawMesh((void*)entity, (void*)Mat);
 	renderer->DrawMesh((void*)Floor, (void*)FloorMat);
+	PS4Canvas *ps4c = static_cast<PS4Canvas*>(canvas);
+	ps4c->Render(renderer);
 #endif
 
 
@@ -151,6 +180,7 @@ void Game::Draw()
 
 #ifdef _WIN32
 	renderer->DrawSkyMesh(sky);
+	canvas->Render();
 #endif
 }
 
@@ -160,6 +190,7 @@ void Game::CreateMeshFromFile(string meshName, string path) {
 	IMesh *ptr;
 	meshes.insert(std::pair<string, IMesh*>(meshName, ptr));
 	meshes[meshName] = new WinMesh(path.c_str(), dynamic_cast<WinRenderer*>(renderer)->GetDevice());
+	//meshes[meshName] = new PS4Mesh(path.c_str(), dynamic_cast<PS4Renderer*>(renderer)->GetStackAllocater());
 #endif
 }
 
@@ -168,6 +199,7 @@ void Game::CreateEntity(string entityName, string meshName) {
 	IEntity *ptr;
 	entities.insert(std::pair<string, IEntity*>(entityName, ptr));
 	entities[entityName] = new GameEntity(meshes[meshName], Mat);
+	//entities[entityName] = new PS4Entity(meshes[meshName], Mat);
 #endif
 }
 
@@ -216,6 +248,49 @@ void Game::LoadScene(string filename) {
 	}
 }
 
+void Game::UpdateCanvas() {
+	int x = 0;
+	int y = 0;
+	canvas->Update(0, 0);
+
+	//Up
+	if ((getInput->GetKeyDown(0x26) || getInput->isButtonDown(Button::BUTTON_UP)) && !upPressed) {
+		upPressed = true;
+		canvas->OnPressUp();
+	}
+	else if (!(getInput->GetKeyDown(0x26) || getInput->isButtonDown(Button::BUTTON_UP))) {
+		upPressed = false;
+	}
+
+	//Down
+	if ((getInput->GetKeyDown(0x28) || getInput->isButtonDown(Button::BUTTON_DOWN)) && !downPressed) {
+		downPressed = true;
+		canvas->OnPressDown();
+	}
+	else if (!(getInput->GetKeyDown(0x28) || getInput->isButtonDown(Button::BUTTON_DOWN))) {
+		downPressed = false;
+	}
+
+	//Return
+	if ((getInput->GetKeyDown(0x0D) || getInput->isButtonDown(Button::BUTTON_CROSS)) && !confirmPressed) {
+		confirmPressed = true;
+		canvas->OnPressConfirm();
+	}
+	else if (!(getInput->GetKeyDown(0x0D) || getInput->isButtonDown(Button::BUTTON_CROSS))) {
+		confirmPressed = false;
+	}
+
+	//if ((GetAsyncKeyState(VK_UP) & 0x0001) == 1) {
+	//	canvas->OnPressUp();
+	//}
+	//if ((GetAsyncKeyState(VK_DOWN) & 0x0001) == 1) {
+	//	canvas->OnPressDown();
+	//}
+	//if ((GetAsyncKeyState(VK_RETURN) & 0x0001) == 1) {
+	//	canvas->OnPressConfirm();
+	//}
+}
+
 void Game::Run()
 {
 	//CreateMeshFromFile("carMesh", "../CommonFiles/Lamborghini_Aventador.obj");
@@ -223,10 +298,24 @@ void Game::Run()
 	//CreateEntity("carEntity2", "carMesh");
 	//LoadScene("../Assets/Scenes/CarScene1.txt");
 	//audioRenderer->Play(audioSound);
+
+	while (!canvas->IsReady()) {
+		InitializeCanvas();
+	}
+//#ifdef _WIN32
+//	canvas->LoadScene("../CrossPlatformMain/UIScenes/MenuTest1.txt");
+//#else
+//	canvas->LoadScene("/app0/UIScenes/MenuTest1.txt");
+//#endif
+	canvas->LoadScene(ASSETS + (string)"MenuTest1.txt");
+	canvas->AssignButtonFunction("smiley1", [&]() {LoadScene("../Assets/Scenes/CarScene1.txt"); });
+	canvas->AssignButtonFunction("smiley2", [&]() {LoadScene("../Assets/Scenes/CarScene2.txt"); });
+	canvas->AssignButtonFunction("smiley3", [&]() {canvas->LoadScene(ASSETS + (string)"MenuTest2.txt"); });
+
 	while (renderer->MessageExist())
 	{
 		renderer->BeginFrame();
-	
+
 
 		if (getInput->GetKeyDown('1')) {
 			LoadScene("../Assets/Scenes/CarScene1.txt");
@@ -275,8 +364,8 @@ void Game::Run()
 
 		//renderer->camera->cameraPos = entities["carEntity"]->wmTrans + vec3(0, 160, 400);
 		//renderer->camera->cameraTarget = entities["carEntity"]->wmTrans;
-		
 
+		UpdateCanvas();
 		Draw();
 
 		renderer->EndFrame();

@@ -83,5 +83,8 @@
     <ClInclude Include="..\CommonFiles\ICanvas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\CommonFiles\UIElementInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

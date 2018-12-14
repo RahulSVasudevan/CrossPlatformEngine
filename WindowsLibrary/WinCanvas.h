@@ -1,6 +1,6 @@
 #pragma once
 
-#include "UIElementInfo.h"
+#include "../CommonFiles/UIElementInfo.h"
 #include "../packages/directxtk_desktop_2015.2018.11.20.1/include/CommonStates.h"
 #include <d3d11.h>
 #include "../CommonFiles/ICanvas.h"
@@ -10,12 +10,11 @@
 #include <map>
 #include "../CommonFiles/SceneObjectData.h"
 #include "../CommonFiles/Parser.h"
-#include "SimpleMath.h"
-#include "SpriteBatch.h"
-#include "SpriteFont.h"
+#include "../packages/directxtk_desktop_2015.2018.11.20.1/include/SimpleMath.h"
+#include "../packages/directxtk_desktop_2015.2018.11.20.1/include/SpriteBatch.h"
+#include "../packages/directxtk_desktop_2015.2018.11.20.1/include/SpriteFont.h"
 #include <string>
-#include "WICTextureLoader.h"
-#include <mutex>
+#include "../packages/directxtk_desktop_2015.2018.11.20.1/include/WICTextureLoader.h"
 
 using namespace DirectX;
 using namespace std;
@@ -53,7 +52,6 @@ private:
 	ID3D11Device * device;
 	ID3D11DeviceContext *context;
 	unique_ptr<SpriteBatch> spriteBatch;
-	unique_ptr<SpriteFont> spriteFont;
 	int mousex;
 	int mousey;
 	bool mouseButtonPressed;

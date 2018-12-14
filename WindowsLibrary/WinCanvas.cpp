@@ -20,7 +20,6 @@ WinCanvas::~WinCanvas() {
 		itr->second->Release();
 	}
 	spriteBatch.reset();
-	spriteFont.reset();
 	//Function maps should be released automatically
 }
 
@@ -36,7 +35,6 @@ bool MouseButtonDown() {
 
 void WinCanvas::Initialize() {
 	spriteBatch.reset(new SpriteBatch(context));
-	spriteFont.reset(new SpriteFont(device, L"../Assets/Fonts/calibri.spritefont", false));
 }
 
 void FunctionTest() {
@@ -110,9 +108,8 @@ void WinCanvas::Render() {
 	spriteBatch->Begin(SpriteSortMode_Deferred, states.NonPremultiplied());
 
 	SimpleMath::Vector2 pos = SimpleMath::Vector2(80.0f, 80.0f);
-	spriteFont->DrawString(spriteBatch.get(), L"Hello", pos);
 
-	XMVECTOR color;
+	XMVECTOR color = Colors::White;
 
 	for (map<string, ID3D11ShaderResourceView*>::iterator itr = shaderResourceViews.begin(); itr != shaderResourceViews.end(); itr++) {
 		if (uiElementInfo.size() == 0) { cout << "Empty"; }
@@ -166,6 +163,7 @@ void WinCanvas::LoadScene(string filename) {
 	if (file) {
 		//cout << "Loading file " << filename;
 		while (getline(file, str)) {
+			cout << str << endl;
 			UISceneObjectData data = Parser::GetUISceneObjectData(str);
 			//TODO: Implement error handling
 			CreateTextureFromFile(data.path, data.name, data.x, data.y, data.width, data.height, data.index, data.type);
@@ -247,7 +245,7 @@ void WinCanvas::CreateTextureFromFile(wstring filename, string textureName, int 
 
 	ID3D11ShaderResourceView *ptr;
 	shaderResourceViews.insert(std::pair<string, ID3D11ShaderResourceView*>(textureName, ptr));
-	CreateWICTextureFromFile(device, filename.c_str(), nullptr, &shaderResourceViews[textureName]);
+	HRESULT result = CreateWICTextureFromFile(device, filename.c_str(), nullptr, &shaderResourceViews[textureName]);
 	string str = string(filename.begin(), filename.end());
 
 	UIElementInfo info;
@@ -264,13 +262,12 @@ void WinCanvas::CreateTextureFromFile(wstring filename, string textureName, int 
 		uiElementInfo.erase(textureName);
 	}
 	uiElementInfo.insert(std::pair<string, UIElementInfo>(textureName, info));
-	//TODO: Let the Game assign individual functions to buttons
-	if (info.index == 0) {
-		AssignButtonFunction(textureName, [&]() {LoadScene("../Assets/Scenes/MenuTest2.txt"); });
-	}
-	else if (info.index == 1) {
-		AssignButtonFunction(textureName, [&]() {LoadScene("../Assets/Scenes/MenuTest1.txt"); });
-	}
+	//if (info.index == 0) {
+	//	AssignButtonFunction(textureName, [&]() {LoadScene("../CrossPlatformMain/UIScenes/MenuTest2.txt"); });
+	//}
+	//else if (info.index == 1) {
+	//	AssignButtonFunction(textureName, [&]() {LoadScene("../CrossPlatformMain/UIScenes/MenuTest1.txt"); });
+	//}
 	//uiButtonFunctions.insert(std::pair<string, std::function<void()>>(textureName, FunctionTest));
 	//AssignButtonFunction(str, FunctionTest);
 

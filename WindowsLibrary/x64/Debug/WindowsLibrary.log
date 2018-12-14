@@ -1,7 +1,9 @@
-﻿  compilation object save succeeded; see C:\Users\IGMAdmin\Desktop\CrossPlatformEngine\CrossPlatformMain\PixelShader.cso
-C:\Users\IGMAdmin\Desktop\CrossPlatformEngine\WindowsLibrary\VertexShader.hlsl(63,18-45): warning X3578: Output value 'main' is not completely initialized
+﻿  compilation object save succeeded; see C:\Users\IGMAdmin\Documents\GitHub\CrossPlatformEngine\CrossPlatformMain\PixelShader.cso
+  compilation object save succeeded; see C:\Users\IGMAdmin\Documents\GitHub\CrossPlatformEngine\CrossPlatformMain\skyPS.cso
+  compilation object save succeeded; see C:\Users\IGMAdmin\Documents\GitHub\CrossPlatformEngine\CrossPlatformMain\skyVS.cso
+C:\Users\IGMAdmin\Documents\GitHub\CrossPlatformEngine\WindowsLibrary\VertexShader.hlsl(63,18-45): warning X3578: Output value 'main' is not completely initialized
   
-  compilation object save succeeded; see C:\Users\IGMAdmin\Desktop\CrossPlatformEngine\CrossPlatformMain\VertexShader.cso
+  compilation object save succeeded; see C:\Users\IGMAdmin\Documents\GitHub\CrossPlatformEngine\CrossPlatformMain\VertexShader.cso
   stdafx.cpp
   IMesh.cpp
   IRenderer.cpp
@@ -13,11 +15,19 @@ C:\Users\IGMAdmin\Desktop\CrossPlatformEngine\WindowsLibrary\VertexShader.hlsl(6
   WinAudio.cpp
   WinCamera.cpp
   WinCanvas.cpp
-c:\users\igmadmin\desktop\crossplatformengine\commonfiles\parser.h(56): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\igmadmin\desktop\crossplatformengine\commonfiles\parser.h(59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\igmadmin\desktop\crossplatformengine\commonfiles\parser.h(62): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\igmadmin\desktop\crossplatformengine\commonfiles\parser.h(79): warning C4101: 'type': unreferenced local variable
+c:\users\igmadmin\documents\github\crossplatformengine\commonfiles\parser.h(56): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\igmadmin\documents\github\crossplatformengine\commonfiles\parser.h(59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\igmadmin\documents\github\crossplatformengine\commonfiles\parser.h(62): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\igmadmin\documents\github\crossplatformengine\commonfiles\parser.h(79): warning C4101: 'type': unreferenced local variable
+c:\users\igmadmin\documents\github\crossplatformengine\windowslibrary\wincanvas.cpp(140): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+c:\users\igmadmin\documents\github\crossplatformengine\windowslibrary\wincanvas.cpp(141): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+c:\users\igmadmin\documents\github\crossplatformengine\windowslibrary\wincanvas.cpp(142): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+c:\users\igmadmin\documents\github\crossplatformengine\windowslibrary\wincanvas.cpp(143): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+c:\users\igmadmin\documents\github\crossplatformengine\windowslibrary\wincanvas.cpp(253): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\igmadmin\documents\github\crossplatformengine\windowslibrary\wincanvas.cpp(254): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\igmadmin\documents\github\crossplatformengine\windowslibrary\wincanvas.cpp(255): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\igmadmin\documents\github\crossplatformengine\windowslibrary\wincanvas.cpp(256): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   WinMesh.cpp
   WinRenderer.cpp
   Generating Code...
-  WindowsLibrary.vcxproj -> C:\Users\IGMAdmin\Desktop\CrossPlatformEngine\CrossPlatformMain\WindowsLibrary.lib
+  WindowsLibrary.vcxproj -> C:\Users\IGMAdmin\Documents\GitHub\CrossPlatformEngine\CrossPlatformMain\WindowsLibrary.lib

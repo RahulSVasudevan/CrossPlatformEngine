@@ -1,5 +1,6 @@
 #pragma once
 
+#include "SceneObjectData.h"
 #include <string>
 #include <functional>
 using namespace std;
@@ -27,7 +28,7 @@ public:
 
 	//Probably more efficient to use optional parameters (x = 0), if possible in C++
 	virtual void CreateTextureFromFile(wstring filename, string textureName) = 0;
-	virtual void CreateTextureFromFile(wstring filename, string textureName, int x, int y, int width, int height) {};
+	virtual void CreateTextureFromFile(wstring filename, string textureName, int x, int y, int width, int height, int index, SceneObjectType type) {};
 	virtual void CreateButtonFromFile(wstring filename, string textureName) {}	//Shouldn't cause an error on the PS4 side
 
 	virtual void AssignButtonFunction(string buttonName, function<void()> func) {}
