@@ -1,0 +1,2 @@
+type=listbutton,path=../Assets/Textures/smiley.png,name=smiley5,x=640,y=360,width=25,height=25,index=4
+type=listbutton,path=../Assets/Textures/smiley.png,name=smiley6,x=1268,y=12,width=25,height=25,index=5

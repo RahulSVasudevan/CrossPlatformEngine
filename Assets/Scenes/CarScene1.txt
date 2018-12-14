@@ -1,0 +1,2 @@
+type=mesh,path=../CommonFiles/Lamborghini_Aventador.obj,name=carMesh
+type=entity,name=carEntity,meshID=carMesh,x=-50,y=0,z=0

@@ -1,0 +1,7 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets(1877,5): warning : The referenced project '..\PS4_Project2\PS4_Project2.vcxproj' does not exist.
+  Game.cpp
+  IMesh.cpp
+  IRenderer.cpp
+  Main.cpp
+  Generating Code...
+  CommonMain.vcxproj -> C:\Users\IGMAdmin\Desktop\CrossPlatformEngine\x64\Debug\CommonMain.exe

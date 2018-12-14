@@ -1,0 +1,8 @@
+﻿  Game.cpp
+c:\users\igmadmin\desktop\crossplatformengine\commonmain\parser.h(23): warning C4101: 'type': unreferenced local variable
+  Main.cpp
+c:\users\igmadmin\desktop\crossplatformengine\commonmain\parser.h(23): warning C4101: 'type': unreferenced local variable
+  WinCanvas.cpp
+c:\users\igmadmin\desktop\crossplatformengine\commonmain\parser.h(23): warning C4101: 'type': unreferenced local variable
+  Generating Code...
+  CrossPlatformEngine.vcxproj -> C:\Users\IGMAdmin\Desktop\CrossPlatformEngine\x64\Debug\CrossPlatformEngine.exe
