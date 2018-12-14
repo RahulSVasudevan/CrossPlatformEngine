@@ -191,6 +191,7 @@
   <ItemGroup>
     <ClInclude Include="..\CommonFiles\IAudio.h" />
     <ClInclude Include="..\CommonFiles\ICamera.h" />
+    <ClInclude Include="..\CommonFiles\ICanvas.h" />
     <ClInclude Include="..\CommonFiles\IEntity.h" />
     <ClInclude Include="..\CommonFiles\IMaterial.h" />
     <ClInclude Include="..\CommonFiles\IMesh.h" />

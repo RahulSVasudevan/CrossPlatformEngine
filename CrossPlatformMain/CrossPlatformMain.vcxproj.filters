@@ -80,5 +80,8 @@
     <ClInclude Include="..\CommonFiles\ICamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\CommonFiles\ICanvas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

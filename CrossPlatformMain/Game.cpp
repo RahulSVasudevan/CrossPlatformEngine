@@ -5,6 +5,7 @@
 
 #ifdef _WIN32
 	#include "..\WindowsLibrary\WinRenderer.h"
+	#include "..\WindowsLibrary\WinCanvas.h"
 	#include "..\WindowsLibrary\WinMesh.h"
 	#include"..\WindowsLibrary\GameEntity.h"
 	#include "..\WindowsLibrary\WinAudio.h"
@@ -40,6 +41,7 @@ Game::Game()
 
 #ifdef _WIN32
 	renderer = new WinRenderer();
+	canvas = new WinCanvas();
 	audioRenderer = new WinAudio();
 	getInput = Keyboard::getInstance();
 	renderer->Init();
@@ -102,6 +104,7 @@ Game::~Game() {
 
 
 	delete renderer;
+	delete canvas;
 	delete audioRenderer;
 	delete Mat;
 
@@ -119,6 +122,14 @@ void Game::Init()
 	
 }
 
+void Game::InitializeCanvas() {
+#ifdef _WIN32
+	dynamic_cast<WinCanvas*>(canvas)->AssignDeviceAndContext(dynamic_cast<WinRenderer*>(renderer)->GetDevice(), dynamic_cast<WinRenderer*>(renderer)->GetContext());
+	dynamic_cast<WinCanvas*>(canvas)->Initialize();
+#else
+#endif
+}
+
 void Game::Draw()
 {
 
@@ -129,6 +140,7 @@ void Game::Draw()
 	renderer->DrawMesh(Floor, FloorMat);
 #ifdef __clang__
 	renderer->DrawMesh((void*)entity, (void*)Mat);
+	renderer->DrawMesh((void*)Floor, (void*)FloorMat);
 #endif
 
 

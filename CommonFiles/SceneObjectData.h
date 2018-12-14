@@ -10,8 +10,10 @@ enum SceneObjectType {
 	sprite,
 	button,
 	listbutton,
+
 	mesh,
-	entity
+	entity,
+	material
 };
 
 struct SceneObjectData {
@@ -31,5 +33,6 @@ struct UISceneObjectData {
 	int y;
 	int width;
 	int height;
+	int index;
 	SceneObjectType type;
 };
