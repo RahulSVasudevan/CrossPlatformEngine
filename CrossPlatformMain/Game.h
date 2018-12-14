@@ -8,6 +8,7 @@
 #include"..\CommonFiles\Parser.h"
 #include"..\CommonFiles\SceneObjectData.h"
 #include "..\CommonFiles\IAudio.h"
+#include "..\CommonFiles\ICanvas.h"
 #include <fstream>
 #include <map>
 #include <string>
@@ -21,6 +22,7 @@ class Game
 	IMesh *mesh;
 	IEntity *entity;
 	IRenderer * renderer;
+	ICanvas *canvas;
 	IAudio * audioRenderer;
 
 	Input* getInput;
@@ -66,6 +68,8 @@ public:
 	void Init();
 	void Draw();
 	void Run();
+
+	void InitializeCanvas();
 
 	void CreateMeshFromFile(string meshName, string path);
 

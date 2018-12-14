@@ -12,6 +12,11 @@ C:\Users\IGMAdmin\Desktop\CrossPlatformEngine\WindowsLibrary\VertexShader.hlsl(6
   SimpleShader.cpp
   WinAudio.cpp
   WinCamera.cpp
+  WinCanvas.cpp
+c:\users\igmadmin\desktop\crossplatformengine\commonfiles\parser.h(56): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\igmadmin\desktop\crossplatformengine\commonfiles\parser.h(59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\igmadmin\desktop\crossplatformengine\commonfiles\parser.h(62): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\igmadmin\desktop\crossplatformengine\commonfiles\parser.h(79): warning C4101: 'type': unreferenced local variable
   WinMesh.cpp
   WinRenderer.cpp
   Generating Code...

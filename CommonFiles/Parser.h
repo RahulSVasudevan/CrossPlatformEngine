@@ -3,12 +3,23 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "SceneObjectData.h"
+#include "..\CommonFiles\SceneObjectData.h"
 using namespace std;
 
 class Parser {
 public:
-	static vector<string> ParseLine(string str) {
+	static SceneObjectData GetSceneObjectData(string str) {
+		SceneObjectData data;
+
+		//Set default values
+		data.path = "";
+		data.meshID = "";
+		data.name = "Unnamed";
+		data.x = 0;
+		data.y = 0;
+		data.z = 0;
+		data.type = SceneObjectType::none;
+
 		vector<string> info;
 		string newStr = "";
 		for (int i = 0; i < str.length(); i++) {
@@ -22,36 +33,21 @@ public:
 		}
 		info.push_back(newStr);
 
-		return info;
-	}
-	static SceneObjectData GetSceneObjectData(string str) {
-		//Create data and initialize with default values
-		SceneObjectData data;
-		data.path = "";
-		data.meshID = "";
-		data.name = "";
-		data.x = 0;
-		data.y = 0;
-		data.z = 0;
-		data.type = SceneObjectType::none;
-
-		vector<string> info = ParseLine(str);
-
 		for (string s : info) {
 			if (s.substr(0, 5) == "type=") {
 				string test = s.substr(5);
-				if (test == "mesh") {
+				if (test == "mesh")
 					data.type = SceneObjectType::mesh;
-				}
-				else if (test == "entity") {
+				else if (test == "entity")
 					data.type = SceneObjectType::entity;
-				}
-			}
-			else if (s.substr(0, 7) == "meshID=") {
-				data.meshID = s.substr(7);
+				else if (test == "material")
+					data.type = SceneObjectType::material;
 			}
 			else if (s.substr(0, 5) == "path=") {
 				data.path = s.substr(5);
+			}
+			else if (s.substr(0, 7) == "meshID=") {
+				data.meshID = s.substr(7);
 			}
 			else if (s.substr(0, 5) == "name=") {
 				data.name = s.substr(5);
@@ -69,16 +65,30 @@ public:
 		return data;
 	}
 	static UISceneObjectData GetUISceneObjectData(string str) {
-		//Create data and initialize with default values
 		UISceneObjectData data;
+
+		//Set default values
 		data.path = L"";
-		data.name = "";
+		data.name = "Unnamed";
 		data.x = 0;
 		data.y = 0;
 		data.width = 0;
 		data.height = 0;
-		data.type = SceneObjectType::none;
-		vector<string> info = ParseLine(str);
+		data.index = 0;
+
+		SceneObjectType type;
+		vector<string> info;
+		string newStr = "";
+		for (int i = 0; i < str.length(); i++) {
+			if (str[i] != ',') {
+				newStr += str[i];
+			}
+			else {
+				info.push_back(newStr);
+				newStr = "";
+			}
+		}
+		info.push_back(newStr);
 
 		for (string s : info) {
 			if (s.substr(0, 5) == "type=") {
@@ -95,7 +105,7 @@ public:
 				data.path = wstring(a.begin(), a.end());
 			}
 			else if (s.substr(0, 5) == "name=") {
-				data.name = s.substr(6);
+				data.name = s.substr(5);
 			}
 			else if (s.substr(0, 2) == "x=") {
 				data.x = stoi(s.substr(2));
@@ -108,6 +118,9 @@ public:
 			}
 			else if (s.substr(0, 7) == "height=") {
 				data.height = stoi(s.substr(7));
+			}
+			else if (s.substr(0, 6) == "index=") {
+				data.index = stoi(s.substr(6));
 			}
 		}
 		return data;
