@@ -1,1 +1,0 @@
-type=button,path=../Assets/Textures/smiley.png,name=smiley,x=12,y=12,width=25,height=25
